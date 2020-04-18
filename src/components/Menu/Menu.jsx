@@ -1,7 +1,8 @@
 import React from "react";
+import style from "./Menu.module.css";
 
 const Menu = ()=>{
-    return <div className="menu">
+    return <div className={style.menu}>
         <div className="menu-item">Факультеты</div>
         <div className="menu-item">Кафедры</div>
         <div className="menu-item">Преподаватели</div>

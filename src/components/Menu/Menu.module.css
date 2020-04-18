@@ -1,0 +1,6 @@
+.menu {
+    background-color: cadetblue;
+    grid-area: menu;
+    display: flex;
+}
+

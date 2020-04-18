@@ -1,36 +1,15 @@
 .wrapper {
-  width: 1200px;
-min-height: 700px;
-  margin: 0 auto;
+    width: 1150px;
+    min-height: 780px;
+    margin: 0 auto;
 
     display: grid;
-    grid-template-rows: 30px 40px 90% 50px;
+    grid-template-rows: 30px 40px 90% 30px;
     grid-template-columns: 1fr;
 
     grid-template-areas: "header" "menu" "content" "footer";
     grid-gap: 5px;
 }
 
-.header {
-    background-color: gainsboro;
-    grid-area: header;
-}
 
-.menu {
-    background-color: cadetblue;
-    grid-area: menu;
-}
 
-.content {
-    background-color: whitesmoke;
-    grid-area: content;
-}
-
-.footer {
-    background-color: darkgrey;
-    grid-area: footer;
-}
-
-.menu {
-  display: flex;
-}
