@@ -9,8 +9,7 @@
 
     grid-template-areas: "header" "menu" "content" "footer";
     grid-gap: 5px;
-
-
+    font-family: Lato;
 }
 
 

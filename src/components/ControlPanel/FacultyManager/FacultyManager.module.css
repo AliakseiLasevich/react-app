@@ -1,0 +1,12 @@
+.FacultyManager{
+
+}
+
+.active {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+}

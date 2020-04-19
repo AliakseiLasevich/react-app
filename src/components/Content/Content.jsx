@@ -6,7 +6,6 @@ const Content = (props) =>{
     return (
     <div className={style.content}>
         <ControlPanel/>
-
     </div>
 )
 }
