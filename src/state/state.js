@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = () => {
+    console.log("state changed");
+}
 
 let state = {
     allFaculties: [
@@ -24,5 +26,9 @@ export let redrawTextInput = (facultyText) => {
     state.inputTextField = facultyText;
     rerenderEntireTree(state);
 };
+
+export let subscribe = (observer) => {
+    rerenderEntireTree = observer;
+}
 
 export default state;
