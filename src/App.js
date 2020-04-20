@@ -5,13 +5,16 @@ import Header from "./components/Header/Header";
 import Menu from "./components/Menu/Menu";
 import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
+import {redrawTextInput} from "./state/state";
 
 function App(props) {
     return (
             <div className="wrapper">
                 <Header/>
                 <Menu/>
-                <Content state={props.state} addFaculty={props.addFaculty}/>
+                <Content state={props.state}
+                         addFaculty={props.addFaculty}
+                         redrawTextInput={props.redrawTextInput}/>
                 <Footer/>
             </div>
     );

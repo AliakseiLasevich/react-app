@@ -9,13 +9,19 @@ let state = {
         {name: "Инженерно-технологический"},
         {name: "Экономический факультет"},
         {name: "Бухгалтерского учёта"},
-    ]
+    ],
+    inputTextField: ""
 
 };
 
 export let addFaculty = (facultyName) => {
     let faculty = {name: facultyName};
     state.allFaculties.push(faculty);
+    rerenderEntireTree(state);
+};
+
+export let redrawTextInput = (facultyText) => {
+    state.inputTextField = facultyText;
     rerenderEntireTree(state);
 };
 
