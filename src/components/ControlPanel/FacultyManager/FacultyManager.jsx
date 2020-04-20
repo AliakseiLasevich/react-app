@@ -6,17 +6,9 @@ import AllFaculties from "../AllFaculties/AllFaculties";
 
 const FacultyManager = (props) => {
 
-    let allFaculties = [
-        {name: "Агрономический"},
-        {name: "Защиты растений"},
-        {name: "Ветеринарной медицины"},
-        {name: "Биотехнологический"},
-        {name: "Инженерно-технологический"},
-        {name: "Экономический факультет"},
-        {name: "Бухгалтерского учёта"},
-    ];
 
     return (
+
         <div className={style.FacultyManager}>
 
             Управление факультетами.
@@ -28,7 +20,7 @@ const FacultyManager = (props) => {
             {/*TODO  Добавить подменю. Разобраться с вложенным роутингом*/}
 
             <Route path="/facultyManager/addFaculty" component={AddFaculty}/>
-            <Route path="/facultyManager/allFaculties" render={() => <AllFaculties allFaculties={allFaculties}/>}/>
+            <Route path="/facultyManager/allFaculties" render={() => <AllFaculties source={props.source}/>}/>
 
         </div>
     )

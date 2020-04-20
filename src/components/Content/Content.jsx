@@ -5,7 +5,7 @@ import ControlPanel from "../ControlPanel/ControlPanel";
 const Content = (props) =>{
     return (
     <div className={style.content}>
-        <ControlPanel/>
+        <ControlPanel source={props.source}/>
     </div>
 )
 }
