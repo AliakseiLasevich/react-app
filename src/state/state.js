@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 let state = {
     allFaculties: [
         {name: "Агрономический"},
@@ -14,6 +16,7 @@ let state = {
 export let addFaculty = (facultyName) => {
     let faculty = {name: facultyName};
     state.allFaculties.push(faculty);
+    rerenderEntireTree(state);
 };
 
 export default state;

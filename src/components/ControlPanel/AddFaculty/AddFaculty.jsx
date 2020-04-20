@@ -8,7 +8,7 @@ const AddFaculty = (props) => {
     let addFaculty = () => {
         let text = newFacultyElement.current.value;
         props.addFaculty(text);
-        alert(text);
+        newFacultyElement.current.value="";
     };
 
     return (

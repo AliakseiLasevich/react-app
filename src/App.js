@@ -7,7 +7,6 @@ import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
 
 function App(props) {
-
     return (
             <div className="wrapper">
                 <Header/>
@@ -15,7 +14,6 @@ function App(props) {
                 <Content state={props.state} addFaculty={props.addFaculty}/>
                 <Footer/>
             </div>
-
     );
 }
 
