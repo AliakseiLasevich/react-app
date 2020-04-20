@@ -9,6 +9,11 @@ let state = {
         {name: "Бухгалтерского учёта"},
     ]
 
-}
+};
+
+export let addFaculty = (facultyName) => {
+    let faculty = {name: facultyName};
+    state.allFaculties.push(faculty);
+};
 
 export default state;

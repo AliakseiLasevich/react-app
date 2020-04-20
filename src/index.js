@@ -5,10 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
 import state from "./state/state"
+import {addFaculty} from "./state/state";
 
 ReactDOM.render(<BrowserRouter>
         <React.StrictMode>
-            <App state={state}/>
+            <App state={state} addFaculty={addFaculty}/>
         </React.StrictMode>
     </BrowserRouter>,
     document.getElementById('root')

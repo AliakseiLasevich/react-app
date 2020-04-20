@@ -7,12 +7,14 @@ const AddFaculty = (props) => {
 
     let addFaculty = () => {
         let text = newFacultyElement.current.value;
+        props.addFaculty(text);
         alert(text);
     };
 
     return (
         <div className={style.addFaculty}>
-            <div><textarea ref={newFacultyElement}/></div>
+            {/*<div><textarea ref/></div>*/}
+            <input type="text" ref={newFacultyElement}/>
             <div><input type="button" value="+факультет" onClick={addFaculty}/></div>
         </div>
 

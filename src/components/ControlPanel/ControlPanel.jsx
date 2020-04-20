@@ -13,7 +13,7 @@ const ControlPanel = (props) => {
                 <li><NavLink activeClassName={style.active} to="/addCathedra">Добавить кафедру</NavLink></li>
                 <li><NavLink activeClassName={style.active} to="/addTeacher">Добавить Преподавателя</NavLink></li>
             </ul>
-            <Route path="/facultyManager" render={() => <FacultyManager state={props.state}/>}/>
+            <Route path="/facultyManager" render={() => <FacultyManager state={props.state} addFaculty={props.addFaculty}/>}/>
             <Route path="/addCathedra" component={AddCathedra}/>
             <Route path="/addTeacher" component={AddTeacher}/>
         </div>
