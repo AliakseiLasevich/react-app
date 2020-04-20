@@ -1,4 +1,4 @@
-let source = {
+let state = {
     allFaculties: [
         {name: "Агрономический"},
         {name: "Защиты растений"},
@@ -11,4 +11,4 @@ let source = {
 
 }
 
-export default source;
+export default state;

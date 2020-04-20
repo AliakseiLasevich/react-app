@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
-import source from "./Source/source"
+import state from "./state/state"
 
 ReactDOM.render(<BrowserRouter>
         <React.StrictMode>
-            <App source={source}/>
+            <App state={state}/>
         </React.StrictMode>
     </BrowserRouter>,
     document.getElementById('root')

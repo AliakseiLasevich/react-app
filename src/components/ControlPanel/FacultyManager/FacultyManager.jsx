@@ -20,7 +20,7 @@ const FacultyManager = (props) => {
             {/*TODO  Добавить подменю. Разобраться с вложенным роутингом*/}
 
             <Route path="/facultyManager/addFaculty" component={AddFaculty}/>
-            <Route path="/facultyManager/allFaculties" render={() => <AllFaculties source={props.source}/>}/>
+            <Route path="/facultyManager/allFaculties" render={() => <AllFaculties state={props.state}/>}/>
 
         </div>
     )

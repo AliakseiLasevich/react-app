@@ -12,7 +12,7 @@ function App(props) {
             <div className="wrapper">
                 <Header/>
                 <Menu/>
-                <Content source={props.source}/>
+                <Content state={props.state}/>
                 <Footer/>
             </div>
 
