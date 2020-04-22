@@ -2,7 +2,6 @@ import React from "react";
 import style from "./FacultyManager.module.css";
 import AddFaculty from "../AddFaculty/AddFaculty";
 import AllFaculties from "../AllFaculties/AllFaculties";
-import {redrawTextInput} from "../../../state/state";
 
 const FacultyManager = (props) => {
 

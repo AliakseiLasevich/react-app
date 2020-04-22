@@ -1,6 +1,6 @@
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import state, {addFaculty, redrawTextInput, subscribe} from "./state/state";
+import store from "./state/state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import React from "react";
@@ -11,20 +11,18 @@ let rerenderEntireTree = (state) => {
         <BrowserRouter>
             <React.StrictMode>
                 <App
-                    state={state}
-                    addFaculty={addFaculty}
-                    redrawTextInput={redrawTextInput} />
+                    state={store.getState()}
+                    addFaculty={store.addFaculty.bind(store)}
+                    redrawTextInput={store.redrawTextInput.bind(store)}/>
             </React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
     );
 };
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState());
 
-subscribe(rerenderEntireTree);
-
-
+store.subscribe(rerenderEntireTree);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

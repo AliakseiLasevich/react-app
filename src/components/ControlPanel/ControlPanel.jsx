@@ -4,7 +4,6 @@ import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager/FacultyManager";
 import AddCathedra from "./AddCathedra/AddCathedra";
 import AddTeacher from "./AddTeacher/AddTeacher";
-import {redrawTextInput} from "../../state/state";
 
 const ControlPanel = (props) => {
     return (
