@@ -12,8 +12,8 @@ function App(props) {
                 <Header/>
                 <Menu/>
                 <Content state={props.state}
-                         addFaculty={props.addFaculty}
-                         redrawTextInput={props.redrawTextInput}/>
+                         dispatch={props.dispatch}
+                />
                 <Footer/>
             </div>
     );

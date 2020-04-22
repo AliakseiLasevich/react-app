@@ -1,5 +1,5 @@
-let store ={
-    _state : {
+let store = {
+    _state: {
         allFaculties: [
             {name: "Агрономический"},
             {name: "Защиты растений"},
@@ -11,25 +11,26 @@ let store ={
         ],
         inputTextField: ""
     },
-    getState(){
-        debugger
-      return this._state;
-    },
     _callSubscriber() {
     },
-    addFaculty (facultyName) {
-        let faculty = {name: facultyName};
-        this._state.allFaculties.push(faculty);
-        this._callSubscriber(this._state);
-    },
-    redrawTextInput  (facultyText) {
-        debugger
-        this._state.inputTextField = facultyText;
-        this._callSubscriber(this._state);
+    getState() {
+        return this._state;
     },
     subscribe(observer) {
         this._callSubscriber = observer;
+    },
+
+    dispatch(action) {
+        if (action.type === "ADD-FACULTY") {
+            let faculty = {name: action.facultyName};
+            this._state.allFaculties.push(faculty);
+            this._callSubscriber(this._state);
+        } else if (action.type === "REDRAW-TEXT-INPUT") {
+            this._state.inputTextField = action.facultyText;
+            this._callSubscriber(this._state);
+        }
     }
 };
 
 export default store;
+window.store = store;

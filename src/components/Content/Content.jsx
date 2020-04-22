@@ -6,8 +6,8 @@ const Content = (props) =>{
     return (
     <div className={style.content}>
         <ControlPanel state={props.state}
-                      addFaculty={props.addFaculty}
-                      redrawTextInput={props.redrawTextInput}/>
+                      dispatch={props.dispatch}
+        />
     </div>
 )
 }

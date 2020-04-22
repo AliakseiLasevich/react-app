@@ -15,8 +15,8 @@ const ControlPanel = (props) => {
             </ul>
             <Route path="/facultyManager" render={() => <FacultyManager
                 state={props.state}
-                addFaculty={props.addFaculty}
-                redrawTextInput={props.redrawTextInput}/>}/>
+                dispatch={props.dispatch}
+            />}/>
             <Route path="/addCathedra" component={AddCathedra}/>
             <Route path="/addTeacher" component={AddTeacher}/>
         </div>

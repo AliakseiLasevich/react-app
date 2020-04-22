@@ -12,8 +12,8 @@ const FacultyManager = (props) => {
 
             <AllFaculties state={props.state}/>
             <AddFaculty state={props.state}
-                        addFaculty={props.addFaculty}
-                        redrawTextInput={props.redrawTextInput}/>
+                        dispatch={props.dispatch}
+            />
 
         </div>
     )

@@ -7,20 +7,34 @@ const AddFaculty = (props) => {
 
     let addFaculty = () => {
         let text = newFacultyElement.current.value;
-        props.addFaculty(text);
-        props.redrawTextInput("");
+
+        let emptyInputField = {
+            type: "REDRAW-TEXT-INPUT",
+            facultyText: ""
+        }
+
+        let obj = {
+            type: "ADD-FACULTY",
+            facultyName: text
+        }
+        props.dispatch(obj);
+        props.dispatch(emptyInputField);
     };
 
-    let onInputChange = ()=>{
+    let onInputChange = () => {
         let text = newFacultyElement.current.value;
-        props.redrawTextInput(text);
+        let obj = {
+            type: "REDRAW-TEXT-INPUT",
+            facultyText: text
+        }
+        props.dispatch(obj);
     };
 
     return (
         <div className={style.addFaculty}>
             <input type="text" ref={newFacultyElement}
                    onChange={onInputChange}
-                   value={props.state.inputTextField} />
+                   value={props.state.inputTextField}/>
             <div><input type="button" value="+факультет" onClick={addFaculty}/></div>
         </div>
 

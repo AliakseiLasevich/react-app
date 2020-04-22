@@ -12,8 +12,8 @@ let rerenderEntireTree = (state) => {
             <React.StrictMode>
                 <App
                     state={store.getState()}
-                    addFaculty={store.addFaculty.bind(store)}
-                    redrawTextInput={store.redrawTextInput.bind(store)}/>
+                    dispatch={store.dispatch.bind(store)}
+                />
             </React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
