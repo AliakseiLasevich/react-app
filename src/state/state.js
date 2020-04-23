@@ -1,6 +1,9 @@
+import addFacultyReducer from "./addFacultyReducer";
+import addCathedraReducer from "./addCathedraReducer";
+
 const ADD_FACULTY = "ADD-FACULTY";
-const ADD_CATHEDRA = "ADD-CATHEDRA";
 const FACULTY_UPDATE_TEXT_FIELD = "FACULTY-UPDATE-TEXT-FIELD";
+const ADD_CATHEDRA = "ADD-CATHEDRA";
 const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
 
 let store = {
@@ -31,23 +34,9 @@ let store = {
     },
 
     dispatch(action) {
-        if (action.type === ADD_FACULTY) {
-            let faculty = {name: action.facultyName};
-            this._state.facultyInputTextField = "";
-            this._state.allFaculties.push(faculty);
-            this._callSubscriber(this._state);
-        } else if (action.type === FACULTY_UPDATE_TEXT_FIELD) {
-            this._state.facultyInputTextField = action.inputText;
-            this._callSubscriber(this._state);
-        } else if (action.type === CATHEDRA_UPDATE_TEXT_FIELD) {
-            this._state.cathedraInputTextField = action.inputText;
-            this._callSubscriber(this._state);
-        } else if (action.type === ADD_CATHEDRA) {
-            let cathedra = {name: action.cathedraName};
-            this._state.cathedraInputTextField = "";
-            this._state.allCathedras.push(cathedra);
-            this._callSubscriber(this._state);
-        }
+        this._state = addFacultyReducer(this._state, action);
+        this._state = addCathedraReducer(this._state, action);
+        this._callSubscriber(this._state);
     }
 };
 
