@@ -12,8 +12,8 @@ const cathedraReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CATHEDRA:
             let cathedra = {name: action.cathedraName};
-            state.cathedraInputTextField = "";
             state.allCathedras.push(cathedra);
+            state.cathedraInputTextField = "";
             return state;
         case CATHEDRA_UPDATE_TEXT_FIELD:
             state.cathedraInputTextField = action.inputText;

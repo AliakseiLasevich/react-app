@@ -7,12 +7,14 @@ import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
 
 function App(props) {
+
     return (
             <div className="wrapper">
                 <Header/>
                 <Menu/>
                 <Content state={props.state}
                          dispatch={props.dispatch}
+                         store={props.store}
                 />
                 <Footer/>
             </div>
