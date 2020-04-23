@@ -1,10 +1,10 @@
 import React from "react";
 import style from "./AllFaculties.module.css";
-import Faculty from "../Faculty/Faculty";
+import Cathedra from "../../CathedraManager/Cathedra/Cathedra";
 
 const AllFaculties = (props) => {
 
-    let facultiesWithName = props.state.allFaculties.map(faculty => <Faculty name={faculty.name}/>);
+    let facultiesWithName = props.state.allFaculties.map(faculty => <Cathedra name={faculty.name}/>);
 
     return (
         <div className={style.AllFaculties}>
