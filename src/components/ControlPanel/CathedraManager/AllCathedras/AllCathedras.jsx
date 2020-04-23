@@ -3,6 +3,7 @@ import style from "./AllCathedras.module.css";
 import Cathedra from "../Cathedra/Cathedra";
 
 const AllCathedras = (props) => {
+    debugger
     let cathedrassWithName = props.state.allCathedras.map(cathedra => <Cathedra name={cathedra.name}/>);
 
     return (

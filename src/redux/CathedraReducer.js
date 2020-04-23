@@ -1,7 +1,14 @@
 const ADD_CATHEDRA = "ADD-CATHEDRA";
 const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
 
-const addCathedraReducer = (state, action) => {
+let initialState = {
+    cathedraInputTextField: "",
+    allCathedras: [
+        {name: "Агрохимии"}
+    ]
+}
+
+const cathedraReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CATHEDRA:
             let cathedra = {name: action.cathedraName};
@@ -30,4 +37,4 @@ export const CathedraTextUpdateActionCreator = (text) => {
     }
 };
 
-export default addCathedraReducer;
+export default cathedraReducer;

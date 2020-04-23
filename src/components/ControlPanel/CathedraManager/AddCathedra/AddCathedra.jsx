@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./AddCathedra.module.css";
-import {CathedraTextUpdateActionCreator, AddCathedraActionCreator} from "../../../../state/addCathedraReducer";
+import {CathedraTextUpdateActionCreator, AddCathedraActionCreator} from "../../../../redux/CathedraReducer";
 
 const AddCathedra = (props) => {
 

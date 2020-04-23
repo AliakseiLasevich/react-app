@@ -1,5 +1,5 @@
-import addFacultyReducer from "./addFacultyReducer";
-import addCathedraReducer from "./addCathedraReducer";
+import facultyReducer from "./FacultyReducer";
+import cathedraReducer from "./CathedraReducer";
 
 let store = {
     _state: {
@@ -29,15 +29,12 @@ let store = {
     },
 
     dispatch(action) {
-        this._state = addFacultyReducer(this._state, action);
-        this._state = addCathedraReducer(this._state, action);
+        this._state = facultyReducer(this._state, action);
+        this._state = cathedraReducer(this._state, action);
         this._callSubscriber(this._state);
     }
 };
 
-
-
-
-
 export default store;
 window.store = store;
+

@@ -15,12 +15,12 @@ const ControlPanel = (props) => {
             </ul>
 
             <Route path="/facultyManager" render={() => <FacultyManager
-                state={props.state}
+                state={props.state.facultyReducer}
                 dispatch={props.dispatch}
             />}/>
 
             <Route path="/cathedraManager" render={() => <CathedraManager
-                state={props.state}
+                state={props.state.cathedraReducer}
                 dispatch={props.dispatch}/>}/>
 
             <Route path="/addTeacher" component={AddTeacher}/>

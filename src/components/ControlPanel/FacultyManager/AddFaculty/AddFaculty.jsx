@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./AddFaculty.module.css";
-import {addFacultyActionCreator, FacultyTextUpdateActionCreator} from "../../../../state/addFacultyReducer";
+import {addFacultyActionCreator, FacultyTextUpdateActionCreator} from "../../../../redux/FacultyReducer";
 
 const AddFaculty = (props) => {
 

@@ -4,6 +4,7 @@ import AllCathedras from "./AllCathedras/AllCathedras";
 import AddCathedra from "./AddCathedra/AddCathedra";
 
 const CathedraManager = (props) => {
+debugger
     return (
 
         <div className={style.CathedraManager}>
