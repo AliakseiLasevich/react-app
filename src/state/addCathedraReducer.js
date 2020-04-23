@@ -16,4 +16,18 @@ const addCathedraReducer = (state, action) => {
     }
 };
 
+export const AddCathedraActionCreator = (text) => {
+    return {
+        type: ADD_CATHEDRA,
+        cathedraName: text
+    }
+};
+
+export const CathedraTextUpdateActionCreator = (text) => {
+    return {
+        type: CATHEDRA_UPDATE_TEXT_FIELD,
+        inputText: text
+    }
+};
+
 export default addCathedraReducer;

@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./AddFaculty.module.css";
-import {addFacultyActionCreator, FacultyTextUpdateActionCreator} from "../../../../state/state";
+import {addFacultyActionCreator, FacultyTextUpdateActionCreator} from "../../../../state/addFacultyReducer";
 
 const AddFaculty = (props) => {
 

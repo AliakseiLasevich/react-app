@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./AddCathedra.module.css";
-import {CathedraTextUpdateActionCreator, AddCathedraActionCreator} from "../../../../state/state";
+import {CathedraTextUpdateActionCreator, AddCathedraActionCreator} from "../../../../state/addCathedraReducer";
 
 const AddCathedra = (props) => {
 
