@@ -19,23 +19,27 @@ export const facultyReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case  ADD_FACULTY:
-            let faculty = {name: action.facultyName};
-            state.facultyInputTextField = "";
-            state.allFaculties.push(faculty);
-            return state;
+            let newFaculty = {name: state.facultyInputTextField};
+            return {
+                ...state,
+                allFaculties: [...state.allFaculties, newFaculty],
+                facultyInputTextField: ""
+            };
 
         case FACULTY_UPDATE_TEXT_FIELD:
-            state.facultyInputTextField = action.inputText;
-            return state;
+            return {
+                ...state,
+                facultyInputTextField: action.inputText
+            };
+
         default:
             return state;
     }
-}
+};
 
-export const addFacultyActionCreator = (text) => {
+export const addFacultyActionCreator = () => {
     return {
-        type: ADD_FACULTY,
-        facultyName: text
+        type: ADD_FACULTY
     }
 };
 

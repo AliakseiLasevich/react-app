@@ -4,7 +4,7 @@ import Cathedra from "../../CathedraManager/Cathedra/Cathedra";
 
 const AllFaculties = (props) => {
 
-    let facultiesWithName = props.state.allFaculties.map(faculty => <Cathedra name={faculty.name}/>);
+    let facultiesWithName = props.allFaculties.map(faculty => <Cathedra name={faculty.name}/>);
 
     return (
         <div className={style.AllFaculties}>

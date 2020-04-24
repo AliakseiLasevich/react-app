@@ -2,26 +2,6 @@ import {AddCathedraActionCreator, CathedraTextUpdateActionCreator} from "../../.
 import AddCathedra from "./AddCathedra";
 import {connect} from "react-redux";
 
-// const AddCathedraContainer = (props) => {
-//
-//     let state = props.store.getState();
-//
-//     let onAddCathedraClick = () => {
-//         let newCathedra = state.cathedraReducer.cathedraInputTextField;
-//         props.store.dispatch(AddCathedraActionCreator(newCathedra));
-//     }
-//
-//     let onInputFieldChange = (body) => {
-//         state.cathedraInputTextField = body;
-//         props.store.dispatch(CathedraTextUpdateActionCreator(body));
-//     }
-//
-//     return <AddCathedra cathedraInputTextField={state.cathedraReducer.cathedraInputTextField}
-//                         onAddCathedraClick={onAddCathedraClick}
-//                         onInputFieldChange={onInputFieldChange}
-//     />
-// }
-
 let mapStateToProps = (state) => {
     return {
         cathedraInputTextField: state.cathedraReducer.cathedraInputTextField
