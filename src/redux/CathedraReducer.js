@@ -15,17 +15,17 @@ const cathedraReducer = (state = initialState, action) => {
 
         case ADD_CATHEDRA:
             let newCathedra = {name: state.cathedraInputTextField};
-            let stateCopy = {...state};
-            stateCopy.cathedraInputTextField = state.cathedraInputTextField;
-            stateCopy.allCathedras = [...state.allCathedras];
-            stateCopy.allCathedras.push(newCathedra)
-            stateCopy.cathedraInputTextField = "";
-            return stateCopy;
+            return {
+                ...state,
+                allCathedras: [...state.allCathedras, newCathedra],
+                cathedraInputTextField: ""
+            };
 
         case CATHEDRA_UPDATE_TEXT_FIELD:
-            let stateCopy2 = {...state};
-            stateCopy2.cathedraInputTextField = action.inputText;
-            return stateCopy2;
+            return {
+                ...state,
+                cathedraInputTextField: action.inputText
+            };
 
         default:
             return state;
