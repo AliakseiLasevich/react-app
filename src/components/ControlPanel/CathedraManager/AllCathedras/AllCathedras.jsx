@@ -4,13 +4,13 @@ import Cathedra from "../Cathedra/Cathedra";
 
 const AllCathedras = (props) => {
 
-    let cathedrassWithName = props.state.allCathedras.map(cathedra => <Cathedra name={cathedra.name}/>);
+    let cathedrassWithName = props.allCathedras.map(cathedra => <Cathedra name={cathedra.name}/>);
 
     return (
         <div className={style.AllCathedras}>
             {cathedrassWithName}
         </div>
     )
-}
+};
 
 export default AllCathedras;

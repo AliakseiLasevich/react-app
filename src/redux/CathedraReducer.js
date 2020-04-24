@@ -4,29 +4,37 @@ const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
 let initialState = {
     cathedraInputTextField: "",
     allCathedras: [
-        {name: "Агрохимии"}
+        {name: "Агрохимии"},
+        {name: "Экономики"}
+
     ]
 }
 
 const cathedraReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case ADD_CATHEDRA:
-            let cathedra = {name: action.cathedraName};
-            state.allCathedras.push(cathedra);
-            state.cathedraInputTextField = "";
-            return state;
+            let newCathedra = {name: state.cathedraInputTextField};
+            let stateCopy = {...state};
+            stateCopy.cathedraInputTextField = state.cathedraInputTextField;
+            stateCopy.allCathedras = [...state.allCathedras];
+            stateCopy.allCathedras.push(newCathedra)
+            stateCopy.cathedraInputTextField = "";
+            return stateCopy;
+
         case CATHEDRA_UPDATE_TEXT_FIELD:
-            state.cathedraInputTextField = action.inputText;
-            return state;
+            let stateCopy2 = {...state};
+            stateCopy2.cathedraInputTextField = action.inputText;
+            return stateCopy2;
+
         default:
             return state;
     }
 };
 
-export const AddCathedraActionCreator = (text) => {
+export const AddCathedraActionCreator = () => {
     return {
-        type: ADD_CATHEDRA,
-        cathedraName: text
+        type: ADD_CATHEDRA
     }
 };
 

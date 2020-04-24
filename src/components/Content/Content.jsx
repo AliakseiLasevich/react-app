@@ -6,10 +6,7 @@ const Content = (props) =>{
 
     return (
     <div className={style.content}>
-        <ControlPanel state={props.state}
-                      dispatch={props.dispatch}
-                      store={props.store}
-        />
+        <ControlPanel/>
     </div>
 )
 }

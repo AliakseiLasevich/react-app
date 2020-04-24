@@ -1,28 +1,44 @@
-import React from "react";
 import {AddCathedraActionCreator, CathedraTextUpdateActionCreator} from "../../../../redux/CathedraReducer";
 import AddCathedra from "./AddCathedra";
+import {connect} from "react-redux";
 
-const AddCathedraContainer = (props) => {
+// const AddCathedraContainer = (props) => {
+//
+//     let state = props.store.getState();
+//
+//     let onAddCathedraClick = () => {
+//         let newCathedra = state.cathedraReducer.cathedraInputTextField;
+//         props.store.dispatch(AddCathedraActionCreator(newCathedra));
+//     }
+//
+//     let onInputFieldChange = (body) => {
+//         state.cathedraInputTextField = body;
+//         props.store.dispatch(CathedraTextUpdateActionCreator(body));
+//     }
+//
+//     return <AddCathedra cathedraInputTextField={state.cathedraReducer.cathedraInputTextField}
+//                         onAddCathedraClick={onAddCathedraClick}
+//                         onInputFieldChange={onInputFieldChange}
+//     />
+// }
 
-    let state = props.store.getState();
-    window.state = state;
-
-    let onAddCathedraClick = () => {
-        let newCathedra = state.cathedraReducer.cathedraInputTextField;
-        props.store.dispatch(AddCathedraActionCreator(newCathedra));
+let mapStateToProps = (state) => {
+    return {
+        cathedraInputTextField: state.cathedraReducer.cathedraInputTextField
     }
+};
 
-    let onInputFieldChange = (body) => {
-        state.cathedraInputTextField = body;
-        props.store.dispatch(CathedraTextUpdateActionCreator(body));
+let mapDispatchToProps = (dispatch) => {
+    return {
+        onAddCathedraClick: () => {
+            dispatch(AddCathedraActionCreator());
+        },
+        onInputFieldChange: (body) => {
+            dispatch(CathedraTextUpdateActionCreator(body));
+        }
     }
+};
 
-    return <AddCathedra cathedraInputTextField={state.cathedraReducer.cathedraInputTextField}
-                        onAddCathedraClick={onAddCathedraClick}
-                        onInputFieldChange={onInputFieldChange}
-    />
-}
-
+const AddCathedraContainer = connect(mapStateToProps, mapDispatchToProps)(AddCathedra);
 
 export default AddCathedraContainer;
-

@@ -14,18 +14,11 @@ const ControlPanel = (props) => {
                 <li><NavLink activeClassName={style.active} to="/addTeacher">Добавить Преподавателя</NavLink></li>
             </ul>
 
-            <Route path="/facultyManager" render={() => <FacultyManager
-                state={props.state.facultyReducer}
-                dispatch={props.dispatch}
-                store={props.store}
-            />}/>
+            <Route path="/facultyManager" render={() => <FacultyManager/>}/>
 
-            <Route path="/cathedraManager" render={() => <CathedraManager
-                state={props.state.cathedraReducer}
-                // dispatch={props.dispatch}
-                store={props.store}/>}/>
+            <Route path="/cathedraManager" render={() => <CathedraManager/>}/>
 
-            <Route path="/addTeacher" component={AddTeacher}/>
+            <Route path="/addTeacher" render={() => <AddTeacher/>}/>
 
 
         </div>
