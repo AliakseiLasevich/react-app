@@ -1,4 +1,3 @@
-import React from "react";
 import {addFacultyActionCreator, FacultyTextUpdateActionCreator} from "../../../../redux/FacultyReducer";
 import {connect} from "react-redux";
 import AddFaculty from "./AddFaculty";
