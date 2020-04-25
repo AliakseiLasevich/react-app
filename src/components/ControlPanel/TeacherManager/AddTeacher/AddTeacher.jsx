@@ -9,20 +9,20 @@ const AddTeacher = (props) => {
         props.updateNameInputField(name);
     };
 
-    let updateLastNameInputField = (event) => {
-        let lastName = event.target.value;
-        props.updateLastNameInputField(lastName);
-    };
-
-    let updateCathedraInputField = (event) => {
-        let cathedra = event.target.value;
-        props.updateCathedraInputField(cathedra);
-    };
+    // let updateLastNameInputField = (event) => {
+    //     let lastName = event.target.value;
+    //     props.updateLastNameInputField(lastName);
+    // };
+    //
+    // let updateCathedraInputField = (event) => {
+    //     let cathedra = event.target._currentValue;
+    //     props.updateCathedraInputField(cathedra);
+    // };
 
     return <div className={style.AddTeacher}>
         <input type="text" onChange={updateNameInputField} placeholder="Имя" value={props.nameInputField}/>
-        <input type="text" onChange={updateLastNameInputField} placeholder="Фамилия"/>
-        <input type="text" onChange={updateCathedraInputField} placeholder="Кафедра"/>
+        {/*<input type="text" onChange={updateLastNameInputField} placeholder="Фамилия" value={props.lastNameInputField}/>*/}
+        {/*<input type="text" onChange={updateCathedraInputField} placeholder="Кафедра"/>*/}
         <input type="button" value="Добавить преподавателя" onClick={props.addTeacher}/>
     </div>
 }
