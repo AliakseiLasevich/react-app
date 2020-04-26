@@ -1,7 +1,6 @@
 const ADD_TEACHER = "ADD_TEACHER";
 const TEACHER_NAME_TEXT_FIELD = "TEACHER_NAME_TEXT_FIELD";
-const TEACHER_LASTNAME_TEXT_FIELD = "TEACHER_LASTNAME_TEXT_FIELD";
-const TEACHER_CATHEDRA_TEXT_FIELD = "TEACHER_CATHEDRA_TEXT_FIELD";
+
 
 let initialState = {
     allTeachers: [
@@ -43,22 +42,6 @@ export const teacherReducer = (state = initialState, action) => {
                 }
             };
 
-        // case TEACHER_LASTNAME_TEXT_FIELD:
-        //     return {
-        //         ...state,
-        //         inputField: {
-        //             lastName: action.lastName,
-        //         }
-        //     };
-        //
-        // case TEACHER_CATHEDRA_TEXT_FIELD:
-        //     return {
-        //         ...state,
-        //         inputField: {
-        //             cathedra: action.cathedra,
-        //         }
-        //     };
-
         default:
             return state;
     }
@@ -77,18 +60,6 @@ export const updateNameInputField = (name) => {
     }
 };
 
-// export const updateLastNameInputField = (lastName) => {
-//     return {
-//         type: TEACHER_LASTNAME_TEXT_FIELD,
-//         lastName: lastName
-//     }
-// };
-//
-// export const updateCathedraInputField = (cathedra) => {
-//     return {
-//         type: TEACHER_CATHEDRA_TEXT_FIELD,
-//         cathedra: cathedra
-//     }
-// };
+
 
 export default teacherReducer;

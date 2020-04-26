@@ -1,19 +1,11 @@
 const ADD_FACULTY = "ADD-FACULTY";
 const FACULTY_UPDATE_TEXT_FIELD = "FACULTY-UPDATE-TEXT-FIELD";
+const SET_FACULTIES = "SET_FACULTIES";
 
 let initialState = {
-    allFaculties: [
-        {name: "Агрономический"},
-        {name: "Защиты растений"},
-        {name: "Ветеринарной медицины"},
-        {name: "Биотехнологический"},
-        {name: "Инженерно-технологический"},
-        {name: "Экономический факультет"},
-        {name: "Бухгалтерского учёта"},
-    ],
+    allFaculties: [ ],
     facultyInputTextField: "",
-
-}
+};
 
 export const facultyReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -32,6 +24,12 @@ export const facultyReducer = (state = initialState, action) => {
                 facultyInputTextField: action.inputText
             };
 
+        case SET_FACULTIES:
+            return{
+                ...state,
+                allFaculties: action.faculties
+            }
+
         default:
             return state;
     }
@@ -49,5 +47,12 @@ export const FacultyTextUpdateActionCreator = (text) => {
         inputText: text
     }
 };
+
+export const setFaculties = (faculties) =>{
+    return{
+        type: SET_FACULTIES,
+        faculties: faculties.data
+    }
+}
 
 export default facultyReducer;

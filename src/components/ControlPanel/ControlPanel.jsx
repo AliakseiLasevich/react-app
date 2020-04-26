@@ -2,7 +2,6 @@ import React from "react";
 import style from "./ControlPanel.module.css";
 import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager/FacultyManager";
-import AddTeacher from "./TeacherManager/AddTeacher/AddTeacher";
 import CathedraManager from "./CathedraManager/CathedraManager";
 import TeacherManager from "./TeacherManager/TeacherManager";
 
