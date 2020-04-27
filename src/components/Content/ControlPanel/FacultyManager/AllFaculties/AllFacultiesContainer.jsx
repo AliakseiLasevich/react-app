@@ -8,11 +8,11 @@ import Preloader from "../../../../Common/Preloader/Preloader";
 
 class AllFaculties extends React.Component {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
+        this.props.setIsFetching(true);
         axios.get("http://localhost:8080/rest/faculties")
             .then(response => {
                     this.props.setFaculties(response);
-                    this.props.toggleIsFetching(false);
+                    this.props.setIsFetching(false);
                 }
             );
     }
@@ -36,17 +36,10 @@ let mapStateToProps = (state) => {
     }
 };
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        setFaculties: (faculties) => {
-            dispatch(setFaculties(faculties))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(setIsFetching(isFetching))
-        }
-    }
-};
 
-const AllFacultiesContainer = connect(mapStateToProps, mapDispatchToProps)(AllFaculties);
+const AllFacultiesContainer = connect(mapStateToProps, {
+    setFaculties,
+    setIsFetching
+})(AllFaculties);
 
 export default AllFacultiesContainer;
