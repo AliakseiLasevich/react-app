@@ -3,8 +3,13 @@ const FACULTY_UPDATE_TEXT_FIELD = "FACULTY-UPDATE-TEXT-FIELD";
 const SET_FACULTIES = "SET_FACULTIES";
 
 let initialState = {
-    allFaculties: [ ],
+    allFaculties: [],
     facultyInputTextField: "",
+
+    //pagination
+    currentPage: 1,
+    totalCount: 0,
+    pageSize: 10
 };
 
 export const facultyReducer = (state = initialState, action) => {
@@ -25,7 +30,7 @@ export const facultyReducer = (state = initialState, action) => {
             };
 
         case SET_FACULTIES:
-            return{
+            return {
                 ...state,
                 allFaculties: action.faculties
             }
@@ -48,8 +53,8 @@ export const FacultyTextUpdateActionCreator = (text) => {
     }
 };
 
-export const setFaculties = (faculties) =>{
-    return{
+export const setFaculties = (faculties) => {
+    return {
         type: SET_FACULTIES,
         faculties: faculties.data
     }

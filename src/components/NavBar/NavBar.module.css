@@ -1,16 +1,19 @@
 .menu {
     background-color: darkcyan;
     grid-area: menu;
+    /*display: inline-block;*/
     display: flex;
+    height: 45px;
 
 }
 
 .menuItem {
+    margin: 1px;
     background-color: gainsboro;
     border: 1px black solid;
-    border-radius: 5px;
-    width: 160px;
-    height: 30px;
+    border-radius: 2px;
+    width: 140px;
+    height: 38px;
     font-weight: bold;
     text-align: center;
 }

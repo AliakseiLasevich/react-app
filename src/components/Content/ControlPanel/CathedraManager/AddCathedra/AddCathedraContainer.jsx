@@ -1,4 +1,4 @@
-import {AddCathedraActionCreator, CathedraTextUpdateActionCreator} from "../../../../redux/CathedraReducer";
+import {AddCathedraActionCreator, CathedraTextUpdateActionCreator} from "../../../../../redux/CathedraReducer";
 import AddCathedra from "./AddCathedra";
 import {connect} from "react-redux";
 

@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import AddTeacher from "./AddTeacher";
 import {
     addTeacherActionCreator, updateNameInputField
-} from "../../../../redux/TeacherReducer";
+} from "../../../../../redux/TeacherReducer";
 
 const mapStateToProps = (state) => {
     debugger
