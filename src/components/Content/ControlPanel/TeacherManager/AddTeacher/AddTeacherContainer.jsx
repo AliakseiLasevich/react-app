@@ -5,11 +5,9 @@ import {
 } from "../../../../../redux/TeacherReducer";
 
 const mapStateToProps = (state) => {
-    debugger
 
     return {
         nameInputField: state.teacherReducer.inputField.name,
-
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -19,7 +17,6 @@ const mapDispatchToProps = (dispatch) => {
         addTeacher: () => dispatch(addTeacherActionCreator())
     }
 };
-
 
 const AddTeacherContainer = connect(mapStateToProps, mapDispatchToProps)(AddTeacher);
 

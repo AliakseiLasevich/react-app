@@ -4,7 +4,9 @@ import style from "./TeachersPlan.module.css";
 const TeachersPlan = (props) => {
     return (
         <div>
-            <div className={style.TeachersPlan}>TeachersPlan</div>
+            <div className={style.TeachersPlan}>
+                <img src="https://i.imgur.com/wzJa3AA.jpg"/>
+            </div>
         </div>
     )
 }
