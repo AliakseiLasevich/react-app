@@ -3,12 +3,9 @@ import style from "./AllCathedras.module.css";
 import Cathedra from "../Cathedra/Cathedra";
 
 const AllCathedras = (props) => {
-
-    let cathedrassWithName = props.allCathedras.map(cathedra => <Cathedra name={cathedra.name}/>);
-
     return (
         <div className={style.AllCathedras}>
-            {cathedrassWithName}
+            {props.allCathedras}
         </div>
     )
 };

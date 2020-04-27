@@ -7,6 +7,7 @@ import Faculties from "./Faculties";
 import Preloader from "../../../../Common/Preloader/Preloader";
 
 class AllFaculties extends React.Component {
+
     componentDidMount() {
         this.props.setIsFetching(true);
         axios.get("http://localhost:8080/rest/faculties")

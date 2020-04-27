@@ -1,13 +1,11 @@
 const ADD_CATHEDRA = "ADD-CATHEDRA";
+const SET_CATHEDRAS = "SET_CATHEDRAS";
 const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
 
 let initialState = {
     cathedraInputTextField: "",
-    allCathedras: [
-        {name: "Агрохимии"},
-        {name: "Экономики"}
-
-    ]
+    allCathedras: [],
+    isFetching: true
 }
 
 const cathedraReducer = (state = initialState, action) => {
@@ -27,6 +25,12 @@ const cathedraReducer = (state = initialState, action) => {
                 cathedraInputTextField: action.inputText
             };
 
+        case SET_CATHEDRAS:
+            return {
+                ...state,
+                allCathedras: action.allCathedras
+            };
+
         default:
             return state;
     }
@@ -44,5 +48,12 @@ export const CathedraTextUpdateActionCreator = (text) => {
         inputText: text
     }
 };
+
+export const setCathedras = (allCathedras) => {
+    return{
+        type: SET_CATHEDRAS,
+        allCathedras: allCathedras
+    }
+}
 
 export default cathedraReducer;
