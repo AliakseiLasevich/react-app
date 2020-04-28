@@ -1,12 +1,25 @@
 .controlPanel {
     text-decoration: none;
+    padding-top: 10px;
 }
 
 .active {
-    color: red;
+    color: black;
     font-weight: bold;
-    text-decoration: none;
 }
-a {
-    text-decoration: none;
+
+.control_panel_item {
+    padding: 5px;
+    margin: 2px;
+    background-color: gainsboro;
+    border: 1px solid black;
 }
+
+.control_panel_item.active {
+    background-color: white;
+}
+
+.control_panel_item:hover {
+    background-color: white;
+}
+

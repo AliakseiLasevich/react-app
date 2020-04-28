@@ -5,6 +5,7 @@ import * as axios from "axios";
 import Faculty from "../Faculty/Faculty";
 import Faculties from "./Faculties";
 import Preloader from "../../../../Common/Preloader/Preloader";
+import {NavLink, Route, withRouter} from "react-router-dom";
 
 class AllFaculties extends React.Component {
 
@@ -19,10 +20,16 @@ class AllFaculties extends React.Component {
     }
 
     render() {
-        let facultiesWithName = this.props.allFaculties.map(faculty => <Faculty name={faculty.name}/>);
+
+        let facultiesWithName = this.props.allFaculties.map(faculty =>
+            <NavLink to={"/controlPanel/facultyManager/" + faculty.id}>
+                <Faculty name={faculty.name} id={faculty.id} facultyUrl={this.props.match.params.facultyUrl}/>
+            </NavLink>);
+
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
+
                 <Faculties facultiesWithName={facultiesWithName}/>
             </>
         )
@@ -38,9 +45,12 @@ let mapStateToProps = (state) => {
 };
 
 
-const AllFacultiesContainer = connect(mapStateToProps, {
-    setFaculties,
-    setIsFetching
-})(AllFaculties);
+let WithUrlDataContainerComponent = withRouter(AllFaculties);
+
+const AllFacultiesContainer = connect(mapStateToProps, {setFaculties, setIsFetching})(WithUrlDataContainerComponent);
 
 export default AllFacultiesContainer;
+
+
+
+

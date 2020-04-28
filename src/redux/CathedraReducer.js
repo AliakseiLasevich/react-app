@@ -1,6 +1,7 @@
 const ADD_CATHEDRA = "ADD-CATHEDRA";
 const SET_CATHEDRAS = "SET_CATHEDRAS";
 const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
+const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 let initialState = {
     cathedraInputTextField: "",
@@ -31,6 +32,12 @@ const cathedraReducer = (state = initialState, action) => {
                 allCathedras: action.allCathedras
             };
 
+        case TOGGLE_ISFETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            };
+
         default:
             return state;
     }
@@ -54,6 +61,13 @@ export const setCathedras = (allCathedras) => {
         type: SET_CATHEDRAS,
         allCathedras: allCathedras
     }
-}
+};
+
+export const setIsFetching = (isFetching) => {
+    return {
+        type: TOGGLE_ISFETCHING,
+        isFetching: isFetching
+    }
+};
 
 export default cathedraReducer;
