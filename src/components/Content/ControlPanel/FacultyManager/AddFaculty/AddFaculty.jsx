@@ -10,7 +10,7 @@ const AddFaculty = (props) => {
 
     return (
         <div className={style.addFaculty}>
-            <input type="text" onChange={onInputChange} value={props.facultyInputTextField}/>
+            <div><input type="text" onChange={onInputChange} value={props.facultyInputTextField}/></div>
             <div><input type="button" value="+факультет" onClick={props.addFaculty}/></div>
         </div>
 
