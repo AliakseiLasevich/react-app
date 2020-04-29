@@ -1,22 +1,15 @@
 import {connect} from "react-redux";
-import {setFaculties, setIsFetching} from "../../../../../redux/FacultyReducer";
+import {getFaculties} from "../../../../../redux/FacultyReducer";
 import React from "react";
-import * as axios from "axios";
 import Faculty from "../Faculty/Faculty";
 import Faculties from "./Faculties";
 import Preloader from "../../../../Common/Preloader/Preloader";
-import {NavLink, Route, withRouter} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 
 class AllFaculties extends React.Component {
 
     componentDidMount() {
-        this.props.setIsFetching(true);
-        axios.get("http://localhost:8080/rest/faculties")
-            .then(response => {
-                    this.props.setFaculties(response);
-                    this.props.setIsFetching(false);
-                }
-            );
+        this.props.getFaculties();
     }
 
     render() {
@@ -29,13 +22,11 @@ class AllFaculties extends React.Component {
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
-
                 <Faculties facultiesWithName={facultiesWithName}/>
             </>
         )
     }
 }
-
 
 let mapStateToProps = (state) => {
     return {
@@ -44,10 +35,9 @@ let mapStateToProps = (state) => {
     }
 };
 
-
 let WithUrlDataContainerComponent = withRouter(AllFaculties);
 
-const AllFacultiesContainer = connect(mapStateToProps, {setFaculties, setIsFetching})(WithUrlDataContainerComponent);
+const AllFacultiesContainer = connect(mapStateToProps, {getFaculties})(WithUrlDataContainerComponent);
 
 export default AllFacultiesContainer;
 

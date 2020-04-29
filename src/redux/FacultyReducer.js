@@ -1,3 +1,5 @@
+import * as axios from "axios";
+
 const ADD_FACULTY = "ADD-FACULTY";
 const FACULTY_UPDATE_TEXT_FIELD = "FACULTY-UPDATE-TEXT-FIELD";
 const SET_FACULTIES = "SET_FACULTIES";
@@ -68,6 +70,19 @@ export const setIsFetching = (isFetching) => {
         type: TOGGLE_ISFETCHING,
         isFetching: isFetching
     }
+};
+
+//          THUNK-CREATOR:
+export const getFaculties = (something) => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true));
+        axios.get("http://localhost:8080/rest/faculties")
+            .then(response => {
+                    dispatch(setFaculties(response));
+                    dispatch(setIsFetching(false));
+                }
+            );
+    };
 };
 
 export default facultyReducer;

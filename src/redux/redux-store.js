@@ -1,7 +1,8 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import cathedraReducer from "./CathedraReducer";
 import facultyReducer from "./FacultyReducer";
 import teacherReducer from "./TeacherReducer";
+import thunkMiddleware from "redux-thunk";
 
 let reducers = combineReducers({
     cathedraReducer: cathedraReducer,
@@ -9,6 +10,6 @@ let reducers = combineReducers({
     teacherReducer: teacherReducer
 });
 
-let store = createStore(reducers);
+let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;
