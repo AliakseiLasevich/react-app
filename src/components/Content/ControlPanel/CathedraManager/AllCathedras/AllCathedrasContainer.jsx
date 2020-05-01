@@ -1,26 +1,20 @@
 import {connect} from "react-redux";
 import AllCathedras from "./AllCathedras";
 import * as React from "react";
-import * as axios from "axios";
-import {setCathedras, setIsFetching} from "../../../../../redux/CathedraReducer";
+import {getCathedras} from "../../../../../redux/CathedraReducer";
 import Cathedra from "../Cathedra/Cathedra";
 import Preloader from "../../../../Common/Preloader/Preloader";
 
 
 class CathedrasContainer extends React.Component {
-    componentDidMount() {
-        this.props.setIsFetching(true);
-        axios.get("http://localhost:8080/rest/cathedras")
-            .then(response => {
-                    this.props.setCathedras(response.data);
-                    this.props.setIsFetching(false);
-                }
-            );
 
+    componentDidMount() {
+        this.props.getCathedras();
     }
 
     render() {
-        let cathedrasWithName = this.props.allCathedras.map(cathedra => <Cathedra name={cathedra.name} id={cathedra.id}/>);
+        let cathedrasWithName = this.props.allCathedras.map(cathedra => <Cathedra name={cathedra.name}
+                                                                                  id={cathedra.id}/>);
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
@@ -37,9 +31,7 @@ let mapStateToProps = (state) => {
     }
 };
 
-const AllCathedrasContainer = connect(mapStateToProps, {
-    setCathedras, setIsFetching
-})(CathedrasContainer);
+const AllCathedrasContainer = connect(mapStateToProps, {getCathedras})(CathedrasContainer);
 
 export default AllCathedrasContainer;
 

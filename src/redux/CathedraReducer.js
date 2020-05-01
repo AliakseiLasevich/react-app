@@ -1,3 +1,5 @@
+import {cathedraAPI} from "../api/api";
+
 const ADD_CATHEDRA = "ADD-CATHEDRA";
 const SET_CATHEDRAS = "SET_CATHEDRAS";
 const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
@@ -57,7 +59,7 @@ export const CathedraTextUpdateActionCreator = (text) => {
 };
 
 export const setCathedras = (allCathedras) => {
-    return{
+    return {
         type: SET_CATHEDRAS,
         allCathedras: allCathedras
     }
@@ -68,6 +70,17 @@ export const setIsFetching = (isFetching) => {
         type: TOGGLE_ISFETCHING,
         isFetching: isFetching
     }
+};
+
+export const getCathedras = (something) => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true));
+
+        cathedraAPI.getCathedras().then(response => {
+            dispatch(setCathedras(response.data));
+            dispatch(setIsFetching(false));
+        });
+    };
 };
 
 export default cathedraReducer;

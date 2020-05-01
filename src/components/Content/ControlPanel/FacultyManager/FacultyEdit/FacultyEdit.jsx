@@ -1,7 +1,7 @@
 import React from "react";
 
 const FacultyEdit = (props) => {
-debugger
+
     return (
         <div>
             <div>
