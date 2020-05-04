@@ -4,7 +4,7 @@ import preloader from "../../../assets/loader/loader.svg";
 let Preloader = (props) => {
     return (
         <div>
-            <img src={preloader}/>
+            <img src={preloader} alt="Loading..."/>
         </div>
     )
 };

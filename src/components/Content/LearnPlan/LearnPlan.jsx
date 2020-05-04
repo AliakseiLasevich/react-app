@@ -14,7 +14,7 @@ const LearnPlan = (props) => {
 
             </div>
             <div className={style.LearnPlan}>
-                <img src="https://i.imgur.com/MMF3IVo.jpg"/>
+                <img src="https://i.imgur.com/MMF3IVo.jpg" alt="learn plan"/>
             </div>
         </div>
     )

@@ -22,7 +22,7 @@ class CathedrasContainer extends React.Component {
             </>
         )
     }
-}
+};
 
 let mapStateToProps = (state) => {
     return {

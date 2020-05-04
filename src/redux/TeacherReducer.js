@@ -1,20 +1,20 @@
+import {teacherAPI} from "../api/api";
+import {setIsFetching} from "./CathedraReducer";
+
 const ADD_TEACHER = "ADD_TEACHER";
+const SET_TEACHERS = "SET_TEACHERS";
 const TEACHER_NAME_TEXT_FIELD = "TEACHER_NAME_TEXT_FIELD";
+const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 
 let initialState = {
-    allTeachers: [
-        {id: 1, name: "Иван", lastName: "Иванов", cathedra: "Экономики"},
-        {id: 2, name: "Пётр", lastName: "Петров", cathedra: "Растениеводства"},
-        {id: 3, name: "Мария", lastName: "Сидорова", cathedra: "Информатики"},
-
-
-    ],
+    allTeachers: [{"temp": "temp"}],
     inputField: {
         name: "",
         lastName: "",
         cathedra: ""
-    }
+    },
+    isFetching: true
 };
 
 export const teacherReducer = (state = initialState, action) => {
@@ -42,6 +42,18 @@ export const teacherReducer = (state = initialState, action) => {
                 }
             };
 
+        case TOGGLE_ISFETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            };
+
+        case SET_TEACHERS:
+            return {
+                ...state,
+                allTeachers: action.allTeachers
+            };
+
         default:
             return state;
     }
@@ -60,6 +72,23 @@ export const updateNameInputField = (name) => {
     }
 };
 
+export const setTeachers = (allTeachers) => {
+    return {
+        type: SET_TEACHERS,
+        allTeachers
+    }
+};
+
+// TODO setIsFetching() from another reducer?
+export const getTeachers = () => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true));
+        teacherAPI.getTeachers().then(response => {
+            dispatch(setTeachers(response.data));
+            dispatch(setIsFetching(false));
+        });
+    };
+};
 
 
 export default teacherReducer;

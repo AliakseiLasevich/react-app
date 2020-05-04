@@ -18,12 +18,12 @@ class AllFaculties extends React.Component {
                 <Faculty name={faculty.name} id={faculty.id} facultyUrl={this.props.match.params.facultyUrl}/>
             </NavLink>);
 
-        let facultyEdit = (props) => {
-            return <div>
-                <input value={props.name}/>
-                <input type="button" value="Save"/>
-            </div>;
-        };
+        // let facultyEdit = (props) => {
+        //     return <div>
+        //         <input value={props.name}/>
+        //         <input type="button" value="Save"/>
+        //     </div>;
+        // };
 
         return (
             <>
