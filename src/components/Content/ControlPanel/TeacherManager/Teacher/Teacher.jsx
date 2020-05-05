@@ -1,9 +1,13 @@
 import React from 'react';
+
 const Teacher = (props) => {
 
-    return(
+    return (
+
         <div>
-            {props.name}
+            {props.id}.
+            {props.name},
+            {props.cathedra}
         </div>
     )
 }

@@ -8,7 +8,12 @@ const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 
 let initialState = {
-    allTeachers: [{"temp": "temp"}],
+    allTeachers: [
+        {name: "",
+        id: 0,
+        cathedra: "a"}
+        ],
+
     inputField: {
         name: "",
         lastName: "",
@@ -80,7 +85,7 @@ export const setTeachers = (allTeachers) => {
 };
 
 // TODO setIsFetching() from another reducer?
-export const getTeachers = () => {
+export const loadTeachers = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
         teacherAPI.getTeachers().then(response => {

@@ -1,31 +1,31 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {getTeachers} from "../../../../../redux/TeacherReducer";
+import {loadTeachers} from "../../../../../redux/TeacherReducer";
 import Teacher from "../Teacher/Teacher";
 
+const HookTeacher = (props) => {
 
-class HookTeacher extends React.Component {
+    const [teachers, setTeachers] = useState(props.allTeachers);
 
+    //Load data from server
+    useEffect(() => {
+        props.loadTeachers();
+    }, []);
 
-    componentDidMount() {
-        this.props.getTeachers();
-        console.log(this.props.allTeachers)
-    }
+    //render if allTeachers change
+    useEffect(() => {
+        alert("props changed")
+        setTeachers(props.allTeachers);
+    }, [props.allTeachers]);
+    
+    let teachersComponents = teachers.map(teacher => <Teacher name={teacher.name} key={teacher.id} id={teacher.id}
+                                                              cathedra={teacher.cathedra.name}/>)
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-    }
-
-    render() {
-        let teacherz = this.props.allTeachers.map(teacher => <Teacher name={teacher.name}/>)
-        return (
-            <div>
-               {teacherz}
-
-            </div>
-        )
-    }
-
+    return (
+        <div>
+            {teachersComponents}
+        </div>
+    )
 };
 
 let mapStateToProps = (state) => {
@@ -34,6 +34,6 @@ let mapStateToProps = (state) => {
     }
 };
 
-const TeachersWithHooks = connect(mapStateToProps, {getTeachers})(HookTeacher);
+const TeachersWithHooks = connect(mapStateToProps, {loadTeachers})(HookTeacher);
 
 export default TeachersWithHooks;
