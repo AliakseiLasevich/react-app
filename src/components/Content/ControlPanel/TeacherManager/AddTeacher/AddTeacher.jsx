@@ -1,19 +1,28 @@
 import React from "react";
 import style from "./AddTeacher.module.css";
+import {Field, reduxForm} from "redux-form";
 
-const AddTeacher = (props) => {
+const AddTeacherForm = (props) => {
 
-    let updateNameInputField = (event) => {
-        let name = event.target.value;
-        debugger
-        props.updateNameInputField(name);
-    };
+debugger
+
+    // let updateNameInputField = (event) => {
+    //     let name = event.target.value;
+    //     props.updateNameInputField(name);
+    // };
 
 
-    return <div className={style.AddTeacher}>
-        <input type="text" onChange={updateNameInputField} placeholder="Имя" value={props.nameInputField}/>
-        <input type="button" value="Добавить преподавателя" onClick={props.addTeacher}/>
-    </div>
+    return <form onSubmit={props.handleSubmit}>
+        <div className={style.AddTeacher}>
+            <Field placeholder="Имя" component={"input"} name="name"/>
+            <Field placeholder="Кафедра" component={"input"} name="cathedra"/>
+            <button>Add teacher</button>
+
+
+        </div>
+    </form>
 }
+
+const AddTeacher = reduxForm({form: "teacherForm"})(AddTeacherForm);
 
 export default AddTeacher;

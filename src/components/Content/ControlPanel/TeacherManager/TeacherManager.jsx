@@ -1,14 +1,17 @@
 import style from "./TeacherManager.module.css"
 import React from "react";
 import AddTeacherContainer from "./AddTeacher/AddTeacherContainer";
-import TeachersWithHooks from "./AllTeachers/AllTeachersContainer";
+import AllTeachers from "./AllTeachers/AllTeachersContainer";
+
 
 const TeacherManager = (props) => {
-
+const onSubmit = (formData) => {
+    console.log(formData)
+    };
     return (
         <div className={style.teacherManager}>
-            <TeachersWithHooks/>
-            <AddTeacherContainer/>
+            <AllTeachers/>
+            <AddTeacherContainer onSubmit={onSubmit}/>
         </div>
     )
 }

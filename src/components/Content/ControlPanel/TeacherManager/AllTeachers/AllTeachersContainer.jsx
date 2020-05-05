@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {loadTeachers} from "../../../../../redux/TeacherReducer";
 import Teacher from "../Teacher/Teacher";
+import style from "./AllTeachers.module.css";
 
 const HookTeacher = (props) => {
 
@@ -12,17 +13,16 @@ const HookTeacher = (props) => {
         props.loadTeachers();
     }, []);
 
-    //render if allTeachers change
-    useEffect(() => {
-        alert("props changed")
-        setTeachers(props.allTeachers);
-    }, [props.allTeachers]);
-    
-    let teachersComponents = teachers.map(teacher => <Teacher name={teacher.name} key={teacher.id} id={teacher.id}
+    // //render if allTeachers change
+    // useEffect(() => {
+    //     setTeachers(props.allTeachers);
+    // }, [props.allTeachers]);
+
+    let teachersComponents = props.allTeachers.map(teacher => <Teacher name={teacher.name} key={teacher.id} id={teacher.id}
                                                               cathedra={teacher.cathedra.name}/>)
 
     return (
-        <div>
+        <div className={style.AllTeachers}>
             {teachersComponents}
         </div>
     )
@@ -34,6 +34,6 @@ let mapStateToProps = (state) => {
     }
 };
 
-const TeachersWithHooks = connect(mapStateToProps, {loadTeachers})(HookTeacher);
+const AllTeachers = connect(mapStateToProps, {loadTeachers})(HookTeacher);
 
-export default TeachersWithHooks;
+export default AllTeachers;
