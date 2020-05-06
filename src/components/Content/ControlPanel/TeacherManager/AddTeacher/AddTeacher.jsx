@@ -7,18 +7,25 @@ const AddTeacher = (props) => {
     const {register, handleSubmit, errors} = useForm();
 
     const onSubmit = (data) => {
-        debugger
         console.log(data);
     };
-    debugger
+
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.AddTeacher}>
             <div>
-                <input type="text" placeholder="Имя" name="name" ref={register({required: "Введите имя преподавателя"})}/>
+                <div>Введите имя преподавателя</div>
+                <input type="text" placeholder="Имя" name="name"
+                       ref={register({required: "Введите имя преподавателя"})}/>
+
                 {errors.name && <span className={style.errorMessage}>{errors.name.message}</span>}
             </div>
             <div>
-                <input type="select" name="cathedra" ref={register({required: "Выберите кафедру"})}/>
+                <div>Выберете кафедру</div>
+                <select name="cathedra" ref={register({required: "Выберите кафедру"})}>
+                    <option value=""></option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                </select>
                 {errors.cathedra && <span className={style.errorMessage}>{errors.cathedra.message}</span>}
             </div>
             <input type="submit"/>
