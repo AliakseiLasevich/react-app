@@ -1,28 +1,30 @@
 import React from "react";
 import style from "./AddTeacher.module.css";
-import {Field, reduxForm} from "redux-form";
+import {useForm} from "react-hook-form";
 
-const AddTeacherForm = (props) => {
+const AddTeacher = (props) => {
 
-debugger
+    const {register, handleSubmit, errors} = useForm();
 
-    // let updateNameInputField = (event) => {
-    //     let name = event.target.value;
-    //     props.updateNameInputField(name);
-    // };
-
-
-    return <form onSubmit={props.handleSubmit}>
+    const onSubmit = (data) => {
+        debugger
+        console.log(data);
+    };
+    debugger
+    return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.AddTeacher}>
-            <Field placeholder="Имя" component={"input"} name="name"/>
-            <Field placeholder="Кафедра" component={"input"} name="cathedra"/>
-            <button>Add teacher</button>
-
+            <div>
+                <input type="text" placeholder="Имя" name="name" ref={register({required: "Введите имя преподавателя"})}/>
+                {errors.name && <span className={style.errorMessage}>{errors.name.message}</span>}
+            </div>
+            <div>
+                <input type="select" name="cathedra" ref={register({required: "Выберите кафедру"})}/>
+                {errors.cathedra && <span className={style.errorMessage}>{errors.cathedra.message}</span>}
+            </div>
+            <input type="submit"/>
 
         </div>
     </form>
-}
-
-const AddTeacher = reduxForm({form: "teacherForm"})(AddTeacherForm);
+};
 
 export default AddTeacher;

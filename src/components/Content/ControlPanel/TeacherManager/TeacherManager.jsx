@@ -5,13 +5,15 @@ import AllTeachers from "./AllTeachers/AllTeachersContainer";
 
 
 const TeacherManager = (props) => {
+
 const onSubmit = (formData) => {
     console.log(formData)
     };
+
     return (
         <div className={style.teacherManager}>
             <AllTeachers/>
-            <AddTeacherContainer onSubmit={onSubmit}/>
+            <AddTeacherContainer/>
         </div>
     )
 }
