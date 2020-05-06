@@ -12,7 +12,7 @@ const FacultyManager = (props) => {
 
     const toggleEditMode = () => {
         setAddFacultyMode(!addFacultyMode)
-    }
+    };
 
     return (
         <div className={style.FacultyManager}>
@@ -31,6 +31,6 @@ const FacultyManager = (props) => {
 
         </div>
     )
-}
+};
 
 export default FacultyManager;
