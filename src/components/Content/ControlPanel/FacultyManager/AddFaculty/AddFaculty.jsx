@@ -13,7 +13,7 @@ const AddFaculty = (props) => {
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
 
-            <div className={style.AddTeacher}>
+            <div className={style.addFaculty}>
                 <div>
                     <div>Введите название факультета</div>
                     <input type="text" placeholder="Факультет" name="name"

@@ -12,5 +12,13 @@ a {
 }
 
 .AddFacultyContainer{
-    padding: 10px;
+    padding: 5px;
+    background-color: gainsboro;
+}
+
+.addFacultyButton {
+    width: 300px;
+    padding: 3px;
+    background-color: lightsteelblue;
+    margin-bottom: 5px;
 }

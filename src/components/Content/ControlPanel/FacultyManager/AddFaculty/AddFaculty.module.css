@@ -1,7 +1,12 @@
-.addFaculty{
-background-color: white;
-    display: inline;
+.addFaculty {
+    background-color: gainsboro;
+    width: 300px;
+    margin-bottom: 10px;
+    padding: 3px;
+
 }
+
 .errorMessage {
     color: red;
 }
+

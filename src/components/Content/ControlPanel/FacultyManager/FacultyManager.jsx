@@ -17,14 +17,11 @@ const FacultyManager = (props) => {
     return (
         <div className={style.FacultyManager}>
 
-            <div onClick={toggleEditMode}>
+            <div onClick={toggleEditMode} className={style.addFacultyButton}>
                 {!addFacultyMode && <span><img src={plus_green} alt="+"/>Добавить факультет</span>}
                 {addFacultyMode && <span><img src={minus_red} alt="-"/>Отмена</span>}
             </div>
-
-            <div className={style.AddFacultyContainer}>
                 {addFacultyMode && <AddFacultyContainer/>}
-            </div>
 
             <Route path="/controlPanel/facultyManager/:facultyUrl?"
                    render={() => <AllFacultiesContainer/>}/>
