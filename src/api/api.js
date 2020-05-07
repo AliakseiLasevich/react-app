@@ -21,7 +21,8 @@ export const facultyAPI = {
         })
     },
     putFaculty(faculty) {
-        return instance.put(`faculties/${faculty.id}`, faculty.name)
+        debugger
+        return instance.put(`faculties/${faculty.id}`, {name: faculty.name, active: faculty.active})
     }
 };
 

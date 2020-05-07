@@ -5,19 +5,30 @@ import {updateFaculty} from "../../../../../redux/FacultyReducer";
 
 const FacultyEdit = (props) => {
 
-    const [facultyTempName, setfacultyTempName] = useState(props.name);
+    const [facultyTempName, setFacultyTempName] = useState(props.name);
 
     const {register, handleSubmit, errors} = useForm();
     const dispatch = useDispatch();
 
     const onSubmit = ({name}) => {
-        let faculty = {name, id: props.id}
+        let faculty = {name, id: props.id, active: props.active};
         dispatch(updateFaculty(faculty));
+        props.setEditMode(false);
     };
 
     const changeInputValue = (event) => {
-        setfacultyTempName(event.target.value);
-    }
+        setFacultyTempName(event.target.value);
+    };
+
+    const toggleActiveStatus = () => {
+        let faculty = {
+            id: props.id,
+            name: props.name,
+            active: !props.active
+        };
+        dispatch(updateFaculty(faculty));
+        props.setEditMode(false);
+    };
 
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
@@ -26,10 +37,10 @@ const FacultyEdit = (props) => {
                 <input type="text" name="name" value={facultyTempName}
                        onChange={changeInputValue} ref={register({required: "Введите название факультета"})}/>
                 <div>  {errors.name && <span>{errors.name.message}</span>}</div>
-                <input type="hidden" name="id" value={props.id}/>
                 <div>
                     <input type="submit" value="Сохранить"/>
                     <input type="button" value="Отмена" onClick={() => props.setEditMode(false)}/>
+                    <input type="button" value="изменить статус" onClick={() => toggleActiveStatus()}/>
                 </div>
             </div>
         </form>
