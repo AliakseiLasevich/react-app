@@ -1,5 +1,6 @@
-.FacultyManager{
-padding: 20px;
+.FacultyManager {
+    padding: 20px;
+
 }
 
 .active {
@@ -7,11 +8,12 @@ padding: 20px;
     font-weight: bold;
     text-decoration: none;
 }
+
 a {
     text-decoration: none;
 }
 
-.AddFacultyContainer{
+.AddFacultyContainer {
     padding: 5px;
     background-color: gainsboro;
 }
@@ -21,4 +23,10 @@ a {
     padding: 3px;
     background-color: lightsteelblue;
     margin-bottom: 5px;
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

@@ -1,12 +1,11 @@
 import * as axios from "axios";
 
-// DAL LAYER
-
 const instance = axios.create({
     baseURL: "http://localhost:8080/rest/",
     headers: {
-        "Content-Type": "application/json"
-    }
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS'
+    },
 });
 
 export const facultyAPI = {
@@ -15,6 +14,14 @@ export const facultyAPI = {
     },
     getFacultyById(id) {
         return instance.get("faculties/" + id)
+    },
+    postFaculty(name) {
+        return instance.post("faculties/", {
+            name
+        })
+    },
+    putFaculty(faculty) {
+        return instance.put("faculties/", faculty)
     }
 };
 

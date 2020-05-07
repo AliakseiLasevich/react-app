@@ -1,17 +1,20 @@
-import React from "react";
-
+import React, {useState} from "react";
+import style from "./Faculty.module.css";
 import FacultyEdit from "../FacultyEdit/FacultyEdit";
 
 const Faculty = (props) => {
 
-    let fac = props.id === parseInt(props.facultyUrl) ? <FacultyEdit name={props.name}/>: (props.id+". "+props.name);
+    const [editMode, setEditMode] = useState(false);
+    const active = props.active? "+": "-";
 
     return (
-        <div>
-            <div>
-                {fac}
-            </div>
+        <div className={style.faculty} onDoubleClick={() => {
+            setEditMode(!editMode)
+        }}>
+            {!editMode && (<div><div>{props.id}. {props.name}. {active}</div></div>)}
+            {editMode && <FacultyEdit name={props.name} id={props.id} setEditMode={setEditMode}/>}
         </div>
+
     )
 };
 

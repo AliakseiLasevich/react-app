@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import {facultyAPI} from "../api/api";
 
 const ADD_FACULTY = "ADD-FACULTY";
 const SET_FACULTIES = "SET_FACULTIES";
@@ -10,7 +10,7 @@ let initialState = {
     //pagination
     currentPage: 1,
     totalCount: 0,
-    pageSize: 10,
+    pageSize: 20,
 
     isFetching: true
 };
@@ -19,11 +19,10 @@ export const facultyReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case  ADD_FACULTY:
-            let newFaculty = {name: state.facultyInputTextField};
+            let newFaculty = {name: action.name};
             return {
                 ...state,
                 allFaculties: [...state.allFaculties, newFaculty],
-                facultyInputTextField: ""
             };
 
         case SET_FACULTIES:
@@ -41,9 +40,10 @@ export const facultyReducer = (state = initialState, action) => {
     }
 };
 
-export const addFacultyActionCreator = () => {
+export const addFacultyActionCreator = (name) => {
     return {
-        type: ADD_FACULTY
+        type: ADD_FACULTY,
+        name: name
     }
 };
 
@@ -62,10 +62,10 @@ export const setIsFetching = (isFetching) => {
 };
 
 //          THUNK-CREATOR:
-export const getFaculties = (something) => {
+export const loadFaculties = (something) => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
-        axios.get("http://localhost:8080/rest/faculties")
+        facultyAPI.getFaculties()
             .then(response => {
                     dispatch(setFaculties(response));
                     dispatch(setIsFetching(false));
@@ -73,5 +73,29 @@ export const getFaculties = (something) => {
             );
     };
 };
+
+export const addFacultyToDatabase = (faculty) => {
+    return (dispatch) => {
+        facultyAPI.postFaculty(faculty)
+            .then(response =>{
+                console.log(response);
+                dispatch(loadFaculties());
+            }
+            )
+    };
+};
+
+export const updateFaculty = (faculty) => {
+    return (dispatch) => {
+        facultyAPI.putFaculty(faculty)
+            .then(response =>{
+                    console.log(response);
+                    dispatch(loadFaculties());
+                }
+            )
+    };
+};
+
+
 
 export default facultyReducer;

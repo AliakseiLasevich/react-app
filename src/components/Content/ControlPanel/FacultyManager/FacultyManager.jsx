@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import style from "./FacultyManager.module.css";
-import AllFacultiesContainer from "./AllFaculties/AllFacultiesContainer";
-import AddFacultyContainer from "./AddFaculty/AddFacultyContainer";
 import {Route} from "react-router-dom";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
+import AllFaculties from "./AllFaculties/AllFaculties";
+import AddFaculty from "./AddFaculty/AddFaculty";
 
 const FacultyManager = (props) => {
 
@@ -21,10 +21,10 @@ const FacultyManager = (props) => {
                 {!addFacultyMode && <span><img src={plus_green} alt="+"/>Добавить факультет</span>}
                 {addFacultyMode && <span><img src={minus_red} alt="-"/>Отмена</span>}
             </div>
-                {addFacultyMode && <AddFacultyContainer/>}
+                {addFacultyMode && <AddFaculty/>}
 
-            <Route path="/controlPanel/facultyManager/:facultyUrl?"
-                   render={() => <AllFacultiesContainer/>}/>
+            <Route path="/controlPanel/facultyManager/"
+                   render={() => <AllFaculties/>}/>
 
         </div>
     )

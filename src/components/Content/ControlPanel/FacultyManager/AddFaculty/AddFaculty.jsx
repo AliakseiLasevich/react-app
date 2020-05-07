@@ -1,15 +1,18 @@
 import React from "react";
 import style from "./AddFaculty.module.css";
 import {useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {addFacultyToDatabase} from "../../../../../redux/FacultyReducer";
 
 const AddFaculty = (props) => {
 
     const {register, handleSubmit, errors} = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
+    const dispatch = useDispatch();
 
+    const onSubmit = (data) => {
+        dispatch(addFacultyToDatabase(data.name));
+    };
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
 
@@ -18,12 +21,12 @@ const AddFaculty = (props) => {
                     <div>Введите название факультета</div>
                     <input type="text" placeholder="Факультет" name="name"
                            ref={register({required: "Введите название факультета"})}/>
-                    {errors.name && <span className={style.errorMessage}>{errors.name.message}</span>}
+                    <div>  {errors.name && <span className={style.errorMessage}>{errors.name.message}</span>}</div>
                 </div>
                 <input type="submit"/>
             </div>
         </form>
-            )
+    )
 };
 
 export default AddFaculty;
