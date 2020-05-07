@@ -21,7 +21,7 @@ export const facultyAPI = {
         })
     },
     putFaculty(faculty) {
-        return instance.put("faculties/", faculty)
+        return instance.put(`faculties/${faculty.id}`, faculty.name)
     }
 };
 
