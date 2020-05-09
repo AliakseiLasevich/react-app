@@ -3,21 +3,6 @@
 
 }
 
-.active {
-    color: red;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-a {
-    text-decoration: none;
-}
-
-.AddFacultyContainer {
-    padding: 5px;
-    background-color: gainsboro;
-}
-
 .addFacultyButton {
     width: 300px;
     padding: 3px;

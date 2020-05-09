@@ -1,4 +1,18 @@
-.Cathedra{
-
+.Cathedra {
+width: 600px;
+    background-color: white;
 }
 
+.cathedraName{
+    display: inline-block;
+    min-width: 400px;
+}
+
+.cathedraBlock:hover {
+    cursor: pointer;
+    background-color: gainsboro;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

@@ -4,7 +4,6 @@ const instance = axios.create({
     baseURL: "http://localhost:8080/rest/",
     headers: {
         'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS'
     },
 });
 
@@ -32,6 +31,13 @@ export const cathedraAPI = {
     },
     getCathedraById(id) {
         return instance.get("cathedras/" + id)
+    },
+    postCathedra(cathedra) {
+        debugger
+        return instance.post("cathedras/", cathedra);
+    },
+    putCathedra(cathedra) {
+        return instance.put("cathedras/", cathedra)
     }
 };
 

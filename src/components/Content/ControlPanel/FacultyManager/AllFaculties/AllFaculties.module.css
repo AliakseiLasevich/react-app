@@ -1,4 +1,6 @@
 .AllFaculties {
     background-color: white;
     display: inline-block;
+    width: 300px;
+    padding: 2px;
 }

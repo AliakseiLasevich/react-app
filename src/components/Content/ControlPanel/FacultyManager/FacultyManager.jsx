@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import style from "./FacultyManager.module.css";
-import {Route} from "react-router-dom";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
 import AllFaculties from "./AllFaculties/AllFaculties";
@@ -22,9 +21,7 @@ const FacultyManager = (props) => {
                 {addFacultyMode && <span><img src={minus_red} alt="-"/>Отмена</span>}
             </div>
                 {addFacultyMode && <AddFaculty/>}
-
-            <Route path="/controlPanel/facultyManager/"
-                   render={() => <AllFaculties/>}/>
+                <AllFaculties/>
 
         </div>
     )

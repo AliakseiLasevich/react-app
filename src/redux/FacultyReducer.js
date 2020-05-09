@@ -62,7 +62,7 @@ export const setIsFetching = (isFetching) => {
 };
 
 //          THUNK-CREATOR:
-export const loadFaculties = (something) => {
+export const getFaculties = (something) => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
         facultyAPI.getFaculties()
@@ -79,7 +79,7 @@ export const addFacultyToDatabase = (faculty) => {
         facultyAPI.postFaculty(faculty)
             .then(response =>{
                 console.log(response);
-                dispatch(loadFaculties());
+                dispatch(getFaculties());
             }
             )
     };
@@ -90,7 +90,7 @@ export const updateFaculty = (faculty) => {
         facultyAPI.putFaculty(faculty)
             .then(response =>{
                     console.log(response);
-                    dispatch(loadFaculties());
+                    dispatch(getFaculties());
                 }
             )
     };

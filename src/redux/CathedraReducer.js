@@ -1,15 +1,13 @@
-import {cathedraAPI} from "../api/api";
+import {cathedraAPI, facultyAPI} from "../api/api";
 
 const ADD_CATHEDRA = "ADD-CATHEDRA";
 const SET_CATHEDRAS = "SET_CATHEDRAS";
-const CATHEDRA_UPDATE_TEXT_FIELD = "CATHEDRA-UPDATE-TEXT-FIELD";
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 let initialState = {
-    cathedraInputTextField: "",
     allCathedras: [],
     isFetching: true
-}
+};
 
 const cathedraReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -20,12 +18,6 @@ const cathedraReducer = (state = initialState, action) => {
                 ...state,
                 allCathedras: [...state.allCathedras, newCathedra],
                 cathedraInputTextField: ""
-            };
-
-        case CATHEDRA_UPDATE_TEXT_FIELD:
-            return {
-                ...state,
-                cathedraInputTextField: action.inputText
             };
 
         case SET_CATHEDRAS:
@@ -51,13 +43,6 @@ export const AddCathedraActionCreator = () => {
     }
 };
 
-export const CathedraTextUpdateActionCreator = (text) => {
-    return {
-        type: CATHEDRA_UPDATE_TEXT_FIELD,
-        inputText: text
-    }
-};
-
 export const setCathedras = (allCathedras) => {
     return {
         type: SET_CATHEDRAS,
@@ -72,10 +57,9 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-export const getCathedras = (something) => {
+export const getCathedras = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
-
         cathedraAPI.getCathedras().then(response => {
             dispatch(setCathedras(response.data));
             dispatch(setIsFetching(false));
@@ -83,4 +67,21 @@ export const getCathedras = (something) => {
     };
 };
 
+export const postCathedra = (cathedra) => {
+    return (dispatch) => {
+        cathedraAPI.postCathedra(cathedra).then(response => {
+            console.log(response);
+            dispatch(getCathedras());
+        })
+    }
+};
+
+export const putCathedra = (cathedra) => {
+    return (dispatch) => {
+        cathedraAPI.putCathedra(cathedra).then(response => {
+            console.log(response);
+            dispatch(getCathedras());
+        })
+    }
+}
 export default cathedraReducer;

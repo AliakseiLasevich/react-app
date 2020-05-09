@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {loadFaculties} from "../../../../../redux/FacultyReducer";
+import {getFaculties} from "../../../../../redux/FacultyReducer";
 import React, {useEffect} from "react";
 import Faculty from "../Faculty/Faculty";
 import Preloader from "../../../../Common/Preloader/Preloader";
@@ -12,7 +12,7 @@ const AllFaculties = () => {
 
     //Load data from server
     useEffect(() => {
-        dispatch(loadFaculties());
+        dispatch(getFaculties());
     }, []);
 
     //add boolean "isFetching" from state

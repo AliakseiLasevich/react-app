@@ -20,7 +20,8 @@ const ControlPanel = (props) => {
                      to="/controlPanel/cabinetsAndBuildings">Кабинеты и здания</NavLink>
             <NavLink className={style.control_panel_item} activeClassName={style.active}
                      to="/controlPanel/specialities">Специальности</NavLink>
-            <NavLink className={style.control_panel_item} activeClassName={style.active} to="/controlPanel/students">Студенческие
+            <NavLink className={style.control_panel_item} activeClassName={style.active}
+                     to="/controlPanel/students">Студенческие
                 группы</NavLink>
 
 
