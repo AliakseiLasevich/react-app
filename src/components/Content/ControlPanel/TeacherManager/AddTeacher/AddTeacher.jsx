@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./AddTeacher.module.css";
 import {useForm} from "react-hook-form";
+import {useSelector} from "react-redux";
 
 const AddTeacher = (props) => {
 
@@ -10,6 +11,8 @@ const AddTeacher = (props) => {
         console.log(data);
     };
 
+    const cathedras = useSelector(state=> state.cathedraReducer.allCathedras)
+    console.log(cathedras);
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.AddTeacher}>
             <div>

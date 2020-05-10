@@ -33,7 +33,6 @@ export const cathedraAPI = {
         return instance.get("cathedras/" + id)
     },
     postCathedra(cathedra) {
-        debugger
         return instance.post("cathedras/", cathedra);
     },
     putCathedra(cathedra) {
@@ -44,6 +43,14 @@ export const cathedraAPI = {
 export const teacherAPI = {
     getTeachers() {
         return instance.get("teachers");
+    },
+    getTeacherById(id) {
+        return instance.get(`teachers/${id}`);
+    },
+    postTeacher(teacher) {
+        return instance.post("teachers", teacher)
+    },
+    putTeacher(teacher) {
+        return instance.put(`teachers/${teacher.id}`, teacher)
     }
 };
-
