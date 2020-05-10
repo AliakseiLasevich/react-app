@@ -1,13 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {putCathedra} from "../../../../../redux/CathedraReducer";
-import {getFaculties} from "../../../../../redux/FacultyReducer";
 import style from "./CathedraEdit.module.css";
 
 const CathedraEdit = (props) => {
-
-        const [cathedraTempName, setCathedraTempName] = useState(props.name);
 
         const {register, handleSubmit, errors} = useForm();
         const dispatch = useDispatch();
@@ -16,10 +13,6 @@ const CathedraEdit = (props) => {
             let cathedra = {name: data.name, id: props.id, active: props.active, facultyId: parseInt(data.facultyId)};
             dispatch(putCathedra(cathedra));
             props.setEditMode(false);
-        };
-
-        const changeInputValue = (event) => {
-            setCathedraTempName(event.target.value);
         };
 
         const toggleActiveStatus = () => {
@@ -39,13 +32,13 @@ const CathedraEdit = (props) => {
             }
         );
 
-
         return (<form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <div>{props.id}.
+                    <div>
+                        {props.id}.
 
-                        <input className={style.input} type="text" name="name" value={cathedraTempName}
-                               onChange={changeInputValue} ref={register({required: "Введите название кафедры"})}/>
+                        <input className={style.input} type="text" name="name" defaultValue={props.name}
+                                ref={register({required: "Введите название кафедры"})}/>
                         <div className={style.errorMessage}>  {errors.name && <span>{errors.name.message}</span>}</div>
 
                         <select name="facultyId" ref={register({required: "Выберете факультет"})}

@@ -1,9 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import style from "./AddCathedra.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {postCathedra} from "../../../../../redux/CathedraReducer";
-import {getFaculties} from "../../../../../redux/FacultyReducer";
 
 const AddCathedra = (props) => {
 
@@ -15,11 +14,6 @@ const AddCathedra = (props) => {
         let cathedra = {name: data.name, facultyId: parseInt(data.facultyId)}
         dispatch(postCathedra(cathedra));
     };
-
-    //Load data from server
-    useEffect(() => {
-        dispatch(getFaculties());
-    }, []);
 
     const faculties = useSelector(state=> state.facultyReducer.allFaculties);
 

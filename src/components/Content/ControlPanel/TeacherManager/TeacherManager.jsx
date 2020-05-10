@@ -7,8 +7,10 @@ const TeacherManager = (props) => {
 
     return (
         <div className={style.teacherManager}>
-            <AllTeachers/>
             <AddTeacherContainer/>
+
+            <AllTeachers/>
+
         </div>
     )
 }

@@ -22,14 +22,15 @@ const AllCathedras = (props) => {
 
     //add all faculties from state
     const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
-    const faculties = useSelector(state => state.facultyReducer.allFaculties)
+
 
     let cathedrasComponents = cathedras.map(cathedra => <Cathedra name={cathedra.name}
                                                                   active={cathedra.active}
                                                                   key={cathedra.id}
                                                                   id={cathedra.id}
                                                                   facultyId={cathedra.faculty.id}
-                                                                  facultyName={cathedra.faculty.name}/>)
+                                                                  facultyName={cathedra.faculty.name}
+                                                                  />)
 
     return (
         <div>
