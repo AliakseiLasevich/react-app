@@ -32,11 +32,6 @@ const CathedraEdit = (props) => {
         props.setEditMode(false);
     };
 
-    //Load data from server
-    useEffect(() => {
-        dispatch(getFaculties());
-    }, []);
-
     const faculties = useSelector(state => state.facultyReducer.allFaculties);
 
     const facultiesOptions = faculties.map(faculty => {

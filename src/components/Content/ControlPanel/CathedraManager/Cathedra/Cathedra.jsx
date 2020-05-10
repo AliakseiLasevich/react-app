@@ -16,7 +16,8 @@ const Cathedra = (props) => {
             setEditMode(!editMode)
         }}>
             <div className={style.cathedraBlock}>
-                {!editMode && <div><span className={style.cathedraName} >{props.id}. {props.name} </span> <span className={style.faculty}> {props.facultyName}</span>{active} </div>}
+                {!editMode && <div><span className={style.cathedraName}>{props.id}. {props.name} </span> <span
+                    className={style.faculty}> {props.facultyName}</span>{active} </div>}
 
                 {editMode && <CathedraEdit name={props.name}
                                            id={props.id}
