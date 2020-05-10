@@ -1,3 +1,16 @@
 .teacherManager {
+    padding: 20px;
+}
 
+.addTeacherButton {
+    width: 300px;
+    padding: 3px;
+    background-color: lightsteelblue;
+    margin-bottom: 5px;
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
