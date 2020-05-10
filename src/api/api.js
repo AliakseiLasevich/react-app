@@ -26,7 +26,7 @@ export const facultyAPI = {
 };
 
 export const cathedraAPI = {
-    getCathedras() {
+    getCathedrasWithFaculties() {
         return instance.get("cathedras");
     },
     getCathedraById(id) {
@@ -37,7 +37,7 @@ export const cathedraAPI = {
         return instance.post("cathedras/", cathedra);
     },
     putCathedra(cathedra) {
-        return instance.put("cathedras/", cathedra)
+        return instance.put(`cathedras/${cathedra.id}`, cathedra)
     }
 };
 

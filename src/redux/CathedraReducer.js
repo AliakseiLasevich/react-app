@@ -57,10 +57,10 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-export const getCathedras = () => {
+export const getCathedrasWithFaculties = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
-        cathedraAPI.getCathedras().then(response => {
+        cathedraAPI.getCathedrasWithFaculties().then(response => {
             dispatch(setCathedras(response.data));
             dispatch(setIsFetching(false));
         });
@@ -71,7 +71,7 @@ export const postCathedra = (cathedra) => {
     return (dispatch) => {
         cathedraAPI.postCathedra(cathedra).then(response => {
             console.log(response);
-            dispatch(getCathedras());
+            dispatch(getCathedrasWithFaculties());
         })
     }
 };
@@ -80,7 +80,7 @@ export const putCathedra = (cathedra) => {
     return (dispatch) => {
         cathedraAPI.putCathedra(cathedra).then(response => {
             console.log(response);
-            dispatch(getCathedras());
+            dispatch(getCathedrasWithFaculties());
         })
     }
 }

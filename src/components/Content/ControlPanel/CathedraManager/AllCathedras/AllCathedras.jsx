@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import style from "./AllCathedras.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {getCathedras} from "../../../../../redux/CathedraReducer";
+import {getCathedrasWithFaculties} from "../../../../../redux/CathedraReducer";
 import Cathedra from "../Cathedra/Cathedra";
 import Preloader from "../../../../Common/Preloader/Preloader";
 
@@ -12,7 +12,7 @@ const AllCathedras = (props) => {
 
     //Load data from server
     useEffect(() => {
-        dispatch(getCathedras());
+        dispatch(getCathedrasWithFaculties());
     }, []);
 
     //add boolean "isFetching" from state
@@ -21,9 +21,12 @@ const AllCathedras = (props) => {
     //add all faculties from state
     const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
 
-    let cathedrasComponents = cathedras.map(cathedra => <Cathedra name={cathedra.name} active={cathedra.active}
-                                                                  key={cathedra.id} id={cathedra.id}
-                                                                  facultyId={cathedra.faculty.id} facultyName={cathedra.faculty.name}/>)
+    let cathedrasComponents = cathedras.map(cathedra => <Cathedra name={cathedra.name}
+                                                                  active={cathedra.active}
+                                                                  key={cathedra.id}
+                                                                  id={cathedra.id}
+                                                                  facultyId={cathedra.faculty.id}
+                                                                  facultyName={cathedra.faculty.name}/>)
 
     return (
         <div>
