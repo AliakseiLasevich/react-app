@@ -13,8 +13,8 @@ const AllTeachers = (props) => {
 
     //Load data from server
     useEffect(() => {
-        dispatch(loadTeachers())
-        dispatch(getCathedrasWithFaculties())
+        dispatch(loadTeachers());
+        dispatch(getCathedrasWithFaculties());
     }, []);
 
     //Get teachers from reducer state

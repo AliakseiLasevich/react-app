@@ -17,7 +17,7 @@ const AddCathedra = (props) => {
 
     const faculties = useSelector(state=> state.facultyReducer.allFaculties);
 
-    const facultiesOptions = faculties.map(faculty => <option value={faculty.id}>{faculty.name}</option>);
+    const facultiesOptions = faculties.map(faculty => <option value={faculty.id} key={faculty.id}>{faculty.name}</option>);
 
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.AddCathedra}>

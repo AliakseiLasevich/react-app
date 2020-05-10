@@ -1,19 +1,22 @@
 import React from "react";
 import style from "./AddTeacher.module.css";
 import {useForm} from "react-hook-form";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {postTeacher} from "../../../../../redux/TeacherReducer";
 
 const AddTeacher = (props) => {
 
     const {register, handleSubmit, errors} = useForm();
+    const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        console.log(data);
+        let teacher = {name: data.name, cathedraId: data.cathedraId}
+        dispatch(postTeacher(teacher));
     };
 
     const cathedras = useSelector(state=> state.cathedraReducer.allCathedras)
 
-    const cathedrasOptions = cathedras.map(cathedra => <option value={cathedra.id}>{cathedra.name}</option>);
+    const cathedrasOptions = cathedras.map(cathedra => <option value={cathedra.id} key={cathedra.id}>{cathedra.name}</option>);
 
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.AddTeacher}>
@@ -25,7 +28,7 @@ const AddTeacher = (props) => {
             </div>
             <div>
                 <div>Выберете кафедру</div>
-                <select name="cathedra" ref={register({required: "Выберите кафедру"})} defaultValue={null}>
+                <select name="cathedraId" ref={register({required: "Выберите кафедру"})} defaultValue={null}>
                    {cathedrasOptions}
 
                 </select>

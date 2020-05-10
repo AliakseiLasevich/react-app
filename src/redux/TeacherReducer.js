@@ -3,7 +3,7 @@ import {setIsFetching} from "./CathedraReducer";
 
 const ADD_TEACHER = "ADD_TEACHER";
 const SET_TEACHERS = "SET_TEACHERS";
-const TEACHER_NAME_TEXT_FIELD = "TEACHER_NAME_TEXT_FIELD";
+
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 
@@ -14,11 +14,6 @@ let initialState = {
         cathedra: "a"}
         ],
 
-    inputField: {
-        name: "",
-        lastName: "",
-        cathedra: ""
-    },
     isFetching: true
 };
 
@@ -39,13 +34,6 @@ export const teacherReducer = (state = initialState, action) => {
                 inputField: {name: "", lastName: "", cathedra: ""}
             };
 
-        case TEACHER_NAME_TEXT_FIELD:
-            return {
-                ...state,
-                inputField: {
-                    name: action.name,
-                }
-            };
 
         case TOGGLE_ISFETCHING:
             return {
@@ -70,12 +58,6 @@ export const addTeacherActionCreator = () => {
     }
 };
 
-export const updateNameInputField = (name) => {
-    return {
-        type: TEACHER_NAME_TEXT_FIELD,
-        name: name
-    }
-};
 
 export const setTeachers = (allTeachers) => {
     return {
@@ -94,6 +76,13 @@ export const loadTeachers = () => {
         });
     };
 };
-
+export const postTeacher = (teacher) => {
+    return (dispatch) => {
+        teacherAPI.postTeacher(teacher).then(response => {
+            console.log(response);
+            dispatch(loadTeachers());
+        })
+    }
+};
 
 export default teacherReducer;
