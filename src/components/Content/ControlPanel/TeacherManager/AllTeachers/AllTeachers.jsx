@@ -8,6 +8,11 @@ import Preloader from "../../../../Common/Preloader/Preloader";
 
 const AllTeachers = (props) => {
 
+    //Get teachers from reducer state
+    const teachers = useSelector(state => state.teacherReducer.allTeachers);
+
+    const fetching = useSelector(state => state.teacherReducer.isFetching);
+
     //useDispatch hook
     const dispatch = useDispatch();
 
@@ -17,14 +22,13 @@ const AllTeachers = (props) => {
         dispatch(getCathedrasWithFaculties());
     }, []);
 
-    //Get teachers from reducer state
-    const teachers = useSelector(state => state.teacherReducer.allTeachers);
-
-    const fetching = useSelector(state => state.teacherReducer.isFetching);
-
     //Map teachers from state to react components
-    let teachersComponents = teachers.map(teacher => <Teacher name={teacher.name} key={teacher.id} id={teacher.id}
-                                                              cathedra={teacher.cathedra.name}/>)
+    let teachersComponents = teachers.map(teacher => <Teacher name={teacher.name}
+                                                              key={teacher.id}
+                                                              id={teacher.id}
+                                                              cathedra={teacher.cathedra.name}
+                                                              cathedraId={teacher.cathedra.id}
+                                                              active={teacher.active}/>)
 
     return (
         <div className={style.AllTeachers}>

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./AddTeacher.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {postTeacher} from "../../../../../redux/TeacherReducer";
+import {loadTeachers, postTeacher} from "../../../../../redux/TeacherReducer";
 
 const AddTeacher = (props) => {
 
@@ -10,6 +10,7 @@ const AddTeacher = (props) => {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
+
         let teacher = {name: data.name, cathedraId: data.cathedraId}
         dispatch(postTeacher(teacher));
     };

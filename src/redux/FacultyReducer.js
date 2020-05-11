@@ -1,6 +1,5 @@
 import {facultyAPI} from "../api/api";
 
-const ADD_FACULTY = "ADD-FACULTY";
 const SET_FACULTIES = "SET_FACULTIES";
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
@@ -18,13 +17,6 @@ let initialState = {
 export const facultyReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case  ADD_FACULTY:
-            let newFaculty = {name: action.name};
-            return {
-                ...state,
-                allFaculties: [...state.allFaculties, newFaculty],
-            };
-
         case SET_FACULTIES:
             return {
                 ...state,
@@ -37,13 +29,6 @@ export const facultyReducer = (state = initialState, action) => {
 
         default:
             return state;
-    }
-};
-
-export const addFacultyActionCreator = (name) => {
-    return {
-        type: ADD_FACULTY,
-        name: name
     }
 };
 

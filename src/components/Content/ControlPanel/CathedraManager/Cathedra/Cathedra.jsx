@@ -10,7 +10,6 @@ const Cathedra = (props) => {
 
     const [editMode, setEditMode] = useState(false);
 
-
     return (
         <div className={style.Cathedra} onDoubleClick={() => {
             setEditMode(!editMode)

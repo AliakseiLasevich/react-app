@@ -1,6 +1,5 @@
 import {cathedraAPI, facultyAPI} from "../api/api";
 
-const ADD_CATHEDRA = "ADD-CATHEDRA";
 const SET_CATHEDRAS = "SET_CATHEDRAS";
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
@@ -11,14 +10,6 @@ let initialState = {
 
 const cathedraReducer = (state = initialState, action) => {
     switch (action.type) {
-
-        case ADD_CATHEDRA:
-            let newCathedra = {name: state.cathedraInputTextField};
-            return {
-                ...state,
-                allCathedras: [...state.allCathedras, newCathedra],
-                cathedraInputTextField: ""
-            };
 
         case SET_CATHEDRAS:
             return {
@@ -34,12 +25,6 @@ const cathedraReducer = (state = initialState, action) => {
 
         default:
             return state;
-    }
-};
-
-export const AddCathedraActionCreator = () => {
-    return {
-        type: ADD_CATHEDRA
     }
 };
 
