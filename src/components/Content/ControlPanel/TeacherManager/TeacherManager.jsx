@@ -1,7 +1,7 @@
 import style from "./TeacherManager.module.css"
 import React, {useState} from "react";
-import AllTeachers from "./AllTeachers/AllTeachers";
-import AddTeacher from "./AddTeacher/AddTeacher";
+import AllTeachers from "./AllTeachers";
+import AddTeacher from "./AddTeacher";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
 

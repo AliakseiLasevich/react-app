@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import style from "./Cathedra.module.css";
-import activeGreen from "../../../../../assets/img/active.png";
-import inactive from "../../../../../assets/img/inactive.png";
-import CathedraEdit from "../CathedraEdit/CathedraEdit";
+import activeGreen from "../../../../assets/img/active.png";
+import inactive from "../../../../assets/img/inactive.png";
+import CathedraEdit from "./CathedraEdit";
 
 const Cathedra = (props) => {
 

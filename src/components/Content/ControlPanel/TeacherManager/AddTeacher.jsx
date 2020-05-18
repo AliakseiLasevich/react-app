@@ -2,7 +2,7 @@ import React from "react";
 import style from "./AddTeacher.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {loadTeachers, postTeacher} from "../../../../../redux/TeacherReducer";
+import {loadTeachers, postTeacher} from "../../../../redux/TeacherReducer";
 
 const AddTeacher = (props) => {
 

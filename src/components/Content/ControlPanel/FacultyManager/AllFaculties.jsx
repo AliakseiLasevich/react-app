@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {getFaculties} from "../../../../../redux/FacultyReducer";
+import {getFaculties} from "../../../../redux/FacultyReducer";
 import React, {useEffect} from "react";
-import Faculty from "../Faculty/Faculty";
-import Preloader from "../../../../Common/Preloader/Preloader";
+import Faculty from "./Faculty";
+import Preloader from "../../../Common/Preloader/Preloader";
 import style from "./AllFaculties.module.css"
 
 const AllFaculties = () => {

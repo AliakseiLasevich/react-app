@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import style from "./CathedraManager.module.css";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
-import AddCathedra from "./AddCathedra/AddCathedra";
-import AllCathedras from "./AllCathedras/AllCathedras";
+import AddCathedra from "./AddCathedra";
+import AllCathedras from "./AllCathedras";
 
 const CathedraManager = (props) => {
 

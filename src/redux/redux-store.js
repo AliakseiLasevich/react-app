@@ -3,11 +3,13 @@ import cathedraReducer from "./CathedraReducer";
 import facultyReducer from "./FacultyReducer";
 import teacherReducer from "./TeacherReducer";
 import thunkMiddleware from "redux-thunk";
+import cabinetsBuildingsReducer from "./CabinetsBuildingsReducer";
 
 let reducers = combineReducers({
     cathedraReducer: cathedraReducer,
     facultyReducer: facultyReducer,
     teacherReducer: teacherReducer,
+    cabinetsBuildingsReducer: cabinetsBuildingsReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import style from "./Faculty.module.css";
-import FacultyEdit from "../FacultyEdit/FacultyEdit";
-import activeGreen from "../../../../../assets/img/active.png";
-import inactive from "../../../../../assets/img/inactive.png";
+import FacultyEdit from "./FacultyEdit";
+import activeGreen from "../../../../assets/img/active.png";
+import inactive from "../../../../assets/img/inactive.png";
 
 const Faculty = (props) => {
 

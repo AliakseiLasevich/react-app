@@ -2,7 +2,7 @@ import React from "react";
 import style from "./AddCathedra.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {postCathedra} from "../../../../../redux/CathedraReducer";
+import {postCathedra} from "../../../../redux/CathedraReducer";
 
 const AddCathedra = (props) => {
 

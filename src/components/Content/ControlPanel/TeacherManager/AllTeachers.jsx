@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import Teacher from "../Teacher/Teacher";
+import Teacher from "./Teacher";
 import style from "./AllTeachers.module.css";
-import {loadTeachers} from "../../../../../redux/TeacherReducer";
-import {getCathedrasWithFaculties} from "../../../../../redux/CathedraReducer";
-import Preloader from "../../../../Common/Preloader/Preloader";
+import {loadTeachers} from "../../../../redux/TeacherReducer";
+import {getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
+import Preloader from "../../../Common/Preloader/Preloader";
 
 const AllTeachers = (props) => {
 

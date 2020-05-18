@@ -4,6 +4,8 @@ import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager/FacultyManager";
 import CathedraManager from "./CathedraManager/CathedraManager";
 import TeacherManager from "./TeacherManager/TeacherManager";
+import StudentGroupManager from "./StudentGroupPanel/StudentGroupManager";
+import CabinetsBuildingsManagerContainer from "./CabinetsBuildingsManager/CabinetsBuildingsManagerContainer";
 
 const ControlPanel = (props) => {
     return (
@@ -33,6 +35,13 @@ const ControlPanel = (props) => {
 
             <Route path="/controlPanel/teacherManager"
                    render={() => <TeacherManager/>}/>
+
+            <Route path="/controlPanel/cabinetsAndBuildings"
+                   render={() => <CabinetsBuildingsManagerContainer/>}/>
+
+
+            <Route path="/controlPanel/students"
+                   render={() => <StudentGroupManager/>}/>
 
         </nav>
     )

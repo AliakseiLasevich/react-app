@@ -2,7 +2,7 @@ import React from "react";
 import style from "./AddFaculty.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {addFacultyToDatabase} from "../../../../../redux/FacultyReducer";
+import {addFacultyToDatabase} from "../../../../redux/FacultyReducer";
 
 const AddFaculty = (props) => {
 

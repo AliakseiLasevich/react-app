@@ -20,8 +20,8 @@ export const facultyAPI = {
         })
     },
     putFaculty(faculty) {
-        debugger
-        return instance.put(`faculties/${faculty.id}`, {name: faculty.name, active: faculty.active})
+        return instance.put(`faculties/${faculty.id}`,
+            {name: faculty.name, active: faculty.active})
     }
 };
 
@@ -52,5 +52,39 @@ export const teacherAPI = {
     },
     putTeacher(teacher) {
         return instance.put(`teachers/${teacher.id}`, teacher)
+    }
+};
+
+export const cabinetAPI = {
+    getCabinetById(id) {
+        return instance.get(`cabinets/${id}`);
+    },
+    getCabinetsByBuildingId(buildingId) {
+        return instance.get("cabinets", {
+            params: {
+                buildingId
+            }
+        })
+    },
+    postCabinet(cabinet) {
+        return instance.post("cabinets", cabinet)
+    },
+    putCabinet(cabinet) {
+        return instance.put(`cabinets/${cabinet.id}`, cabinet)
+    }
+};
+
+export const buildingAPI = {
+    getBuildings() {
+        return instance.get("buildings");
+    },
+    getBuildingById(id) {
+        return instance.get(`buildings/${id}`);
+    },
+    postBuilding(building) {
+        return instance.post("buildings", building);
+    },
+    putBuilding(building) {
+        return instance.put(`buildings/${building.id}`, building)
     }
 };

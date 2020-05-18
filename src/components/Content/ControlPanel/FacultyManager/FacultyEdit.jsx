@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {updateFaculty} from "../../../../../redux/FacultyReducer";
+import {updateFaculty} from "../../../../redux/FacultyReducer";
 
 const FacultyEdit = (props) => {
 

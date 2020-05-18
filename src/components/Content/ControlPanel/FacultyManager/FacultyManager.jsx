@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import style from "./FacultyManager.module.css";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
-import AllFaculties from "./AllFaculties/AllFaculties";
-import AddFaculty from "./AddFaculty/AddFaculty";
+import AllFaculties from "./AllFaculties";
+import AddFaculty from "./AddFaculty";
 
 const FacultyManager = (props) => {
 

@@ -9,6 +9,6 @@ const Header = (props) => {
             <NavLink to={"/"}> <img src="https://www.ggau.by/images/ggau-logo-m.png" alt="Logo"/></NavLink>
         </div>
     </div>
-        }
+}
 
-        export default Header;
+export default Header;

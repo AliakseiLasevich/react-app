@@ -1,34 +1,35 @@
-import React, {useState} from "react";
+import React from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {putCathedra} from "../../../../../redux/CathedraReducer";
-import style from "./CathedraEdit.module.css";
+import style from "./TeacherEdit.module.css";
+import {putTeacher} from "../../../../redux/TeacherReducer";
 
-const CathedraEdit = (props) => {
+const TeacherEdit = (props) => {
 
         const {register, handleSubmit, errors} = useForm();
         const dispatch = useDispatch();
 
         const onSubmit = (data) => {
-            let cathedra = {name: data.name, id: props.id, active: props.active, facultyId: parseInt(data.facultyId)};
-            dispatch(putCathedra(cathedra));
+            let teacher = {name: data.name, id: props.id, active: props.active, cathedraId: parseInt(data.cathedraId)};
+            dispatch(putTeacher(teacher));
             props.setEditMode(false);
         };
 
         const toggleActiveStatus = () => {
-            let cathedra = {
+            let teacher = {
                 id: props.id,
                 name: props.name,
-                active: !props.active
+                active: !props.active,
+                cathedraId: props.cathedraId
             };
-            dispatch(putCathedra(cathedra));
+            dispatch(putTeacher(teacher));
             props.setEditMode(false);
         };
 
-        const faculties = useSelector(state => state.facultyReducer.allFaculties);
+        const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
 
-        const facultiesOptions = faculties.map(faculty => {
-                return <option value={faculty.id} key={faculty.id}> {faculty.name} </option>
+        const cathedraOptions = cathedras.map(cathedra => {
+                return <option value={cathedra.id} key={cathedra.id}> {cathedra.name} </option>
             }
         );
 
@@ -38,12 +39,12 @@ const CathedraEdit = (props) => {
                         {props.id}.
 
                         <input className={style.input} type="text" name="name" defaultValue={props.name}
-                                ref={register({required: "Введите название кафедры"})}/>
+                               ref={register({required: "Введите имя преподавателя"})}/>
                         <div className={style.errorMessage}>  {errors.name && <span>{errors.name.message}</span>}</div>
 
-                        <select name="facultyId" ref={register({required: "Выберете факультет"})}
-                                defaultValue={props.facultyId}>
-                            {facultiesOptions}
+                        <select name="cathedraId" ref={register({required: "Выберете кафедру"})}
+                                defaultValue={props.cathedraId}>
+                            {cathedraOptions}
                         </select>
 
                     </div>
@@ -59,4 +60,4 @@ const CathedraEdit = (props) => {
     }
 ;
 
-export default CathedraEdit;
+export default TeacherEdit;
