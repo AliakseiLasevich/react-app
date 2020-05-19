@@ -21,7 +21,6 @@ const AllCabinets = (props) => {
     useEffect(() => {
         props.selectedBuildingId !== null           // get cabinets if building is selected
         && dispatch(getCabinetsByBuildingId(props.selectedBuildingId));
-        console.log("111")
     }, [dispatch, props.selectedBuildingId]);
 
     const cabinetComponents = cabinets.map(cabinet => <Cabinet id={cabinet.id}

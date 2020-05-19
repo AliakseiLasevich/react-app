@@ -88,3 +88,19 @@ export const buildingAPI = {
         return instance.put(`buildings/${building.id}`, building)
     }
 };
+
+export const specialtyAPI = {
+    getSpecialties() {
+        return instance.get("specialties");
+    },
+    getSpecialtyById(id) {
+        return instance.get(`specialties/${id}`);
+    },
+    postSpecialty(specialty) {
+        return instance.post("specialties", specialty);
+    },
+    putSpecialty(specialty) {
+        return instance.put(`specialties/${specialty.id}`, specialty)
+    }
+
+};

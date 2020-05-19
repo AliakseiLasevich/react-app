@@ -8,9 +8,8 @@ const NavBar = () => {
 
             <NavLink className={style.menuItem} activeClassName={style.active} to="/scheduler">Планировщик</NavLink>
 
-            <NavLink className={style.menuItem} activeClassName={style.active} to="/learnPlan">Учебный план</NavLink>
-
-            <NavLink className={style.menuItem} activeClassName={style.active} to="/teachersPlan">Занятость преподавателей</NavLink>
+            <NavLink className={style.menuItem} activeClassName={style.active} to="/teachersPlan">Занятость
+                преподавателей</NavLink>
 
             <NavLink className={style.menuItem} activeClassName={style.active} to="/studentsPlan">Расписание
                 студентов</NavLink>

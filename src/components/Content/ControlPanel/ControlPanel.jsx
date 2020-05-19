@@ -6,6 +6,8 @@ import CathedraManager from "./CathedraManager/CathedraManager";
 import TeacherManager from "./TeacherManager/TeacherManager";
 import StudentGroupManager from "./StudentGroupPanel/StudentGroupManager";
 import CabinetsBuildingsManagerContainer from "./CabinetsBuildingsManager/CabinetsBuildingsManagerContainer";
+import LearnPlan from "./LearnPlan/LearnPlan";
+import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";
 
 const ControlPanel = (props) => {
     return (
@@ -26,6 +28,9 @@ const ControlPanel = (props) => {
                      to="/controlPanel/students">Студенческие
                 группы</NavLink>
 
+            <NavLink className={style.control_panel_item} activeClassName={style.active}
+                     to="/controlPanel/learnPlan">Учебный план</NavLink>
+
 
             <Route path="/controlPanel/facultyManager/"
                    render={() => <FacultyManager/>}/>
@@ -39,9 +44,14 @@ const ControlPanel = (props) => {
             <Route path="/controlPanel/cabinetsAndBuildings"
                    render={() => <CabinetsBuildingsManagerContainer/>}/>
 
+            <Route path="/controlPanel/specialities"
+                   render={() => <SpecialtyManager/>}/>
 
             <Route path="/controlPanel/students"
                    render={() => <StudentGroupManager/>}/>
+
+            <Route path="/controlPanel/learnPlan"
+                   render={() => <LearnPlan/>}/>
 
         </nav>
     )

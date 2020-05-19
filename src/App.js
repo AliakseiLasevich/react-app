@@ -7,7 +7,6 @@ import Footer from "./components/Footer/Footer";
 import {Route} from "react-router-dom";
 import ControlPanel from "./components/Content/ControlPanel/ControlPanel";
 import Scheduler from "./components/Content/Scheduler/Scheduler";
-import LearnPlan from "./components/Content/LearnPlan/LearnPlan";
 import StudentsPlan from "./components/Content/StudentsPlan/StudentsPlan";
 import TeachersPlan from "./components/Content/TeachersPlan/TeachersPlan";
 
@@ -20,7 +19,6 @@ function App(props) {
             <div className="content">
                 <Route path="/controlPanel" render={() => <ControlPanel/>}/>
                 <Route path="/scheduler" render={() => <Scheduler/>}/>
-                <Route path="/learnPlan" render={() => <LearnPlan/>}/>
                 <Route path="/studentsPlan" render={() => <StudentsPlan/>}/>
                 <Route path="/teachersPlan" render={() => <TeachersPlan/>}/>
             </div>
