@@ -80,11 +80,19 @@ export const getCabinetsByBuildingId = (buildingId) => {
     }
 };
 
+export const postCabinet = (cabinet) => {
+    return (dispatch) => {
+        cabinetAPI.postCabinet(cabinet)
+            .then(() => dispatch(getCabinetsByBuildingId(cabinet.buildingId)));
+    }
+}
+
 export const putCabinet = (cabinet) => {
     return (dispatch) => {
         cabinetAPI.putCabinet(cabinet)
             .then(() => dispatch(getCabinetsByBuildingId(cabinet.buildingId)));
     }
-}
+};
+
 
 export default cabinetsBuildingsReducer;

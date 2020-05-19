@@ -15,11 +15,13 @@ const CathedraManager = (props) => {
 
     return (
         <div className={style.CathedraManager}>
+
             <div onClick={toggleEditMode} className={style.addFacultyButton}>
                 {!addCathedraMode && <span><img src={plus_green} alt="+"/>Добавить Кафедру</span>}
                 {addCathedraMode && <span><img src={minus_red} alt="-"/>Отмена</span>}
             </div>
             {addCathedraMode && <AddCathedra/>}
+
             <AllCathedras/>
         </div>
     )

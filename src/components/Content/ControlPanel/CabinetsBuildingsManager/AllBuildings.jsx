@@ -10,7 +10,7 @@ const AllBuildings = (props) => {
 
     const buildingComponents = props.buildings
         .map(building =>
-            <div key={building.id} onClick={()=> setSelectedBuildingId(building.id)}>
+            <div key={building.id} onClick={() => setSelectedBuildingId(building.id)}>
                 <NavLink className={style.item} activeClassName={style.active}
                          to={`/controlPanel/cabinetsAndBuildings/` + building.id}>
                     <BuildingContainer id={building.id}
@@ -27,9 +27,9 @@ const AllBuildings = (props) => {
                 {buildingComponents}
             </div>
 
+
             <div>
-                <AllCabinets selectedBuildingId={selectedBuildingId}
-                             />
+                <AllCabinets selectedBuildingId={selectedBuildingId}/>
             </div>
 
         </div>
