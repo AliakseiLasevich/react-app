@@ -13,7 +13,6 @@ const AllBuildings = (props) => {
             <div key={building.id} onClick={()=> setSelectedBuildingId(building.id)}>
                 <NavLink className={style.item} activeClassName={style.active}
                          to={`/controlPanel/cabinetsAndBuildings/` + building.id}>
-
                     <BuildingContainer id={building.id}
                                        key={building.id}
                                        name={building.name}

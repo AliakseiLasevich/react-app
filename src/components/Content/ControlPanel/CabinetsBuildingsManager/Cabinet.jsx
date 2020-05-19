@@ -22,7 +22,11 @@ const Cabinet = (props) => {
             {editMode && <EditCabinet id={props.id}
                                       maxStudents={props.maxStudents}
                                       type={props.type}
-                                      number={props.number}/>}
+                                      number={props.number}
+                                      setEditMode={setEditMode}
+                                      buildingId={props.buildingId}
+                                      active={props.active}
+            />}
         </div>
     )
 };

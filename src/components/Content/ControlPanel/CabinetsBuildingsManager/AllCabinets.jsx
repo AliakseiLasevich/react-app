@@ -9,14 +9,18 @@ const AllCabinets = (props) => {
     const cabinets = useSelector(state => state.cabinetsBuildingsReducer.allCabinets);
 
     useEffect(() => {
-        props.selectedBuildingId !== null && dispatch(getCabinetsByBuildingId(props.selectedBuildingId));
+        props.selectedBuildingId !== null           // get cabinets if building is selected
+        && dispatch(getCabinetsByBuildingId(props.selectedBuildingId));
+        console.log("111")
     }, [dispatch, props.selectedBuildingId]);
 
     const cabinetComponents = cabinets.map(cabinet => <Cabinet id={cabinet.id}
                                                                key={cabinet.id}
                                                                number={cabinet.number}
                                                                maxStudents={cabinet.maxStudents}
-                                                               type={cabinet.type}/>
+                                                               type={cabinet.type}
+                                                               buildingId={props.selectedBuildingId}
+                                                               active={cabinet.active}/>
     );
 
     return (

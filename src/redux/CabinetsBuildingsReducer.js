@@ -60,6 +60,7 @@ export const setBuildings = (buildings) => {
     }
 };
 
+
 export const getBuildings = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
@@ -78,5 +79,12 @@ export const getCabinetsByBuildingId = (buildingId) => {
         dispatch(setIsFetching(false));
     }
 };
+
+export const putCabinet = (cabinet) => {
+    return (dispatch) => {
+        cabinetAPI.putCabinet(cabinet)
+            .then(() => dispatch(getCabinetsByBuildingId(cabinet.buildingId)));
+    }
+}
 
 export default cabinetsBuildingsReducer;
