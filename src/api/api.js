@@ -102,5 +102,19 @@ export const specialtyAPI = {
     putSpecialty(specialty) {
         return instance.put(`specialties/${specialty.id}`, specialty)
     }
+};
 
+export const studentGroupAPI = {
+    getStudentGroups() {
+        return instance.get("studentGroups");
+    },
+    getStudentGroupById(id) {
+        return instance.get(`studentGroups/${id}`);
+    },
+    postStudentGroup(studentGroup) {
+        return instance.post("studentGroups", studentGroup);
+    },
+    putStudentGroup(studentGroup) {
+        return instance.put(`studentGroups/${studentGroup.id}`, studentGroup)
+    }
 };

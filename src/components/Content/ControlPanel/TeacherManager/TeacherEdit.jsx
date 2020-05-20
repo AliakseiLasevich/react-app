@@ -33,7 +33,8 @@ const TeacherEdit = (props) => {
             }
         );
 
-        return (<form onSubmit={handleSubmit(onSubmit)}>
+        return (
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <div>
                         {props.id}.

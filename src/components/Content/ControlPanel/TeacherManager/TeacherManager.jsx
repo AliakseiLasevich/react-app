@@ -7,10 +7,10 @@ import minus_red from "../../../../assets/img/minus_red.png";
 
 const TeacherManager = (props) => {
 
-    const [addTeacherMode, setaddTeacherMode] = useState(false);
+    const [addTeacherMode, setAddTeacherMode] = useState(false);
 
     const toggleEditMode = () => {
-        setaddTeacherMode(!addTeacherMode)
+        setAddTeacherMode(!addTeacherMode)
     };
 
     return (

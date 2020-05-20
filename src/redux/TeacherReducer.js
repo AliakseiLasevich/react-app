@@ -45,13 +45,19 @@ export const setTeachers = (allTeachers) => {
     }
 };
 
-// TODO setIsFetching() from another reducer?
+export const setIsFetching = (isFetching) => {
+    return {
+        type: TOGGLE_ISFETCHING,
+        isFetching: isFetching
+    }
+};
+
 export const loadTeachers = () => {
     return (dispatch) => {
-        // dispatch(setIsFetching(true));
+        dispatch(setIsFetching(true));
         teacherAPI.getTeachers().then(response => {
             dispatch(setTeachers(response.data));
-            // dispatch(setIsFetching(false));
+            dispatch(setIsFetching(false));
         });
     };
 };

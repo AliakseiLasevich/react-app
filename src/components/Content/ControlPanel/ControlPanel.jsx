@@ -4,7 +4,7 @@ import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager/FacultyManager";
 import CathedraManager from "./CathedraManager/CathedraManager";
 import TeacherManager from "./TeacherManager/TeacherManager";
-import StudentGroupManager from "./StudentGroupPanel/StudentGroupManager";
+import StudentGroupManager from "./StudentGroupManager/StudentGroupManager";
 import CabinetsBuildingsManagerContainer from "./CabinetsBuildingsManager/CabinetsBuildingsManagerContainer";
 import LearnPlan from "./LearnPlan/LearnPlan";
 import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";

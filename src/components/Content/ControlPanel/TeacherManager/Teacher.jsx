@@ -5,6 +5,7 @@ import style from "./Teacher.module.css";
 import TeacherEdit from "./TeacherEdit";
 
 const Teacher = (props) => {
+
     const active = props.active ? <img src={activeGreen} alt="active"/> : <img src={inactive} alt="inactive"/>;
 
     const [editMode, setEditMode] = useState(false);

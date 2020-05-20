@@ -46,7 +46,6 @@ export const getSpecialties = () => {
         dispatch(setIsFetching(true));
         specialtyAPI.getSpecialties()
             .then(response => {
-                    console.log(response);
                     dispatch(setSpecialties(response));
                     dispatch(setIsFetching(false));
                 }

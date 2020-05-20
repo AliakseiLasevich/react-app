@@ -15,7 +15,7 @@ const EditSpecialty = (props) => {
                 name: data.name,
                 id: props.id,
                 code: data.code,
-                active: props.active,
+                active: data.active,
                 facultyId: +data.facultyId
             };
 
@@ -54,6 +54,9 @@ const EditSpecialty = (props) => {
                                 defaultValue={props.facultyId}>
                             {facultiesOptions}
                         </select>
+
+                        Активный:
+                        <input type="checkbox" name="active" defaultChecked={props.active} ref={register}/>
 
                     </div>
 
