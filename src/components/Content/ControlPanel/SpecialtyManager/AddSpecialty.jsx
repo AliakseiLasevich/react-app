@@ -10,7 +10,6 @@ const AddSpecialty = (props) => {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-
         let specialty = {
             name: data.name,
             facultyId: +data.facultyId,
@@ -47,7 +46,8 @@ const AddSpecialty = (props) => {
 
             <div>
                 <div>Выберете факультет</div>
-                <select name="facultyId" ref={register({required: "Выберите факультет"})} defaultValue={props.facultyId}>
+                <select name="facultyId" ref={register({required: "Выберите факультет"})}
+                        defaultValue={props.facultyId}>
                     {facultiesOptions}
                 </select>
                 {errors.facultyId && <span>{errors.facultyId.message}</span>}
