@@ -7,6 +7,7 @@ const LearnPlan = (props) => {
         <div>
             <hr/>
             <AddPlan/>
+            <hr/>
             <div>select plan</div>
             <hr/>
           <img src="https://i.imgur.com/MMF3IVo.jpg"/>

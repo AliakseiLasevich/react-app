@@ -1,0 +1,49 @@
+.wrapper {
+    display: inline-block;
+    position: relative;
+    font-size: small;
+}
+
+table {
+    border: solid black 1px;
+    border-collapse: collapse;
+    letter-spacing: 1px;
+}
+
+th {
+    padding: 2px;
+    background: gainsboro;
+    /*width: auto;*/
+    border: 1px solid rgb(190, 190, 190);
+    color: black;
+}
+
+td {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 2px 2px;
+    text-align: center;
+    width: auto;
+}
+
+.verticalHeader {
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
+    min-height: 10em;
+    width: 15px;
+}
+
+.inputField {
+    width: 14px;
+    font-size: small;
+}
+
+input {
+    font-size: 10px;
+    font-family: monospace;
+}
+
+.largeInputField{
+    font-size: x-small;
+    width: 100px;
+    /*word-break: break-word;*/
+}

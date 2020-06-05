@@ -75,18 +75,52 @@ export default class WeekPicker extends React.Component {
             hoverRangeEnd: hoverRange && hoverRange.to,
             selectedRangeStart: daysAreSelected && selectedDays[0],
             selectedRangeEnd: daysAreSelected && selectedDays[6],
+            sundays: { daysOfWeek: [0] },
+        };
 
+        const modifiersStyles = {
+            sundays: {
+                color: '#804e36',
+                backgroundColor: '#f0b999',
+            },
         };
 
         const WEEKDAYS_SHORT = {
             ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
         };
 
+        const MONTHS = {
+            ru: [
+                'Январь',
+                'Февраль',
+                'Март',
+                'Апрель',
+                'Май',
+                'Июнь',
+                'Июль',
+                'Август',
+                'Сентябрь',
+                'Октябрь',
+                'Ноябрь',
+                'Декабрь',
+            ],
+        };
+        const WEEKDAYS_LONG = {
+            ru: [
+                'Воскресенье',
+                'Понедельник',
+                'Вторник',
+                'Среда',
+                'Четверг',
+                'Пятница',
+                'Суббота',
+            ],
+        };
+
         return (
             <div className="SelectedWeekExample">
                 <DayPicker
                     selectedDays={selectedDays}
-                    showWeekNumbers
                     showOutsideDays
                     modifiers={modifiers}
                     onDayClick={this.handleDayChange}
@@ -96,6 +130,10 @@ export default class WeekPicker extends React.Component {
                     firstDayOfWeek={1}
                     locale={'ru'}
                     weekdaysShort={WEEKDAYS_SHORT['ru']}
+                    weekdaysLong={WEEKDAYS_LONG['ru']}
+                    months={MONTHS['ru']}
+                    numberOfMonths={2}
+                    modifiersStyles={modifiersStyles}
                 />
                 {selectedDays.length === 7 && (
                     <div>
