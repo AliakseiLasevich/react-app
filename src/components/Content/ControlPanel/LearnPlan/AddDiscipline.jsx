@@ -1,34 +1,76 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useState} from "react";
 import {useFieldArray, useForm} from "react-hook-form";
 import WeekPicker from "./WeekPicker";
 import style from "./AddDiscipline.module.css";
 
 const AddDiscipline = (props) => {
 
-
+    // react-hook-form on submit button
     const onSubmit = (data) => {
+       alert("submit")
         console.log(data)
-        // dispatch(postSpecialty(discipline))
     };
 
-
-    const uuidv4 = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    };
-
-
+    // react-hook-form hook for multiple input fields
     const {register, control, handleSubmit, errors} = useForm();
 
+    // react-hook-form hook for multiple input fields to one array
     const {fields, append, remove} = useFieldArray({
         control,
         name: "discipline"
     });
 
+    //show/hide weeks selector
+    const [addWeekMode, setAddWeekMode] = useState(false);
+
+
+    const datesCount = {count: 0};
+
+    function datesReducer(state, action) {
+        switch (action.type) {
+            case 'increment':
+                return {count: state.count + 1};
+            case 'decrement':
+                return {count: state.count - 1};
+            default:
+                throw new Error();
+        }
+    }
+
+    const [state, datesDispatch] = useReducer(datesReducer, datesCount);
+
+
+    const dateFields = () => {
+        for (let i = 0; i < state.count; i++) {
+            console.log(state.count)
+        }
+    };
+
+    let createInputs = count => {
+        let arr = []
+        for (let i = 0; i < count; i++) {
+            arr.push(<div>ALOE</div>)
+        }
+        return(<div>
+            {arr.map(input=>input)}
+        </div>)
+    }
+
 
     return <form onSubmit={handleSubmit(onSubmit)} className={style.wrapper}>
+        {/*{createInputs(state.count)}*/}
+        Count: {state.count}
+        <button onClick={() => {
+            datesDispatch({type: 'decrement'});
+            dateFields();
+        }}>-
+        </button>
+
+        <button onClick={() => {
+            datesDispatch({type: 'increment'});
+            dateFields();
+        }}>+
+        </button>
 
 
         <table>
@@ -47,9 +89,13 @@ const AddDiscipline = (props) => {
                 <th><span className={style.verticalHeader}>Вс</span></th>
                 <th><span className={style.verticalHeader}>Кол-во зачётных ед.</span></th>
                 <th><span className={style.verticalHeader}>Потоки</span></th>
-                <th>
-                    <button>+week</button>
-                </th>
+                <th><span className={style.verticalHeader}>Экзамен</span></th>
+                <th><span className={style.verticalHeader}>Зачёт</span></th>
+                <th><span className={style.verticalHeader}>Курс. проект</span></th>
+                <th><span className={style.verticalHeader}>Курс. работа</span></th>
+
+                {/*<th><span className={style.verticalHeader}>{weeks}</span></th>*/}
+
             </tr>
             </thead>
 
@@ -58,11 +104,13 @@ const AddDiscipline = (props) => {
             {fields.map((item, index) => (
                 <tr key={item.id}>
                     <td><textarea name="text" className={style.largeInputField} name={`discipline[${index}].discipline`}
-                                  ref={register}/></td>
+                                  ref={register()}/></td>
+                    <td><input type="text" className={style.inputField} name={`discipline[${index}].summary`}
+                               ref={register()}/></td>
                     <td><input type="text" className={style.inputField} name={`discipline[${index}].hoursSummary`}
-                               ref={register}/></td>
+                               ref={register()}/></td>
                     <td><input type="text" className={style.inputField} name={`discipline[${index}].hoursCabinet`}
-                               ref={register}/></td>
+                               ref={register()}/></td>
                     <td><input type="text" className={style.inputField} name={`discipline[${index}].hoursLecture`}
                                ref={register()}/></td>
                     <td><input type="text" className={style.inputField} name={`discipline[${index}].hoursLaboratory`}
@@ -83,31 +131,37 @@ const AddDiscipline = (props) => {
                                ref={register()}/></td>
                     <td><input type="text" className={style.inputField} name={`discipline[${index}].exam`}
                                ref={register()}/></td>
+                    <td><input type="text" className={style.inputField} name={`discipline[${index}].test`}
+                               ref={register()}/></td>
+                    <td><input type="text" className={style.inputField} name={`discipline[${index}].courseProject`}
+                               ref={register()}/></td>
+                    <td><input type="text" className={style.inputField} name={`discipline[${index}].courseWork`}
+                               ref={register()}/></td>
 
-                    <button onClick={() => remove(index)}>Delete</button>
+                    <td>
+                        <button onClick={() => remove(index)}>Delete</button>
+                    </td>
+
                 </tr>
+
             ))}
-
-
-            <button type="button" onClick={() => append({})}>
-                +++
-            </button>
-
-            <tr>
-                <button type={"submit"}>submit</button>
-            </tr>
-
 
             </tbody>
         </table>
 
-        <div>
 
+        <button type="button" onClick={() => append({})}>
+            +++
+        </button>
 
-            <WeekPicker/>
+        <button onClick={() => console.log("add date")}>Add date</button>
 
+        <button type={"submit"}>submit</button>
 
-        </div>
+        <button onClick={() => setAddWeekMode(!addWeekMode)}>+week</button>
+
+        {addWeekMode && <WeekPicker prprp={"MANUAL PROPS"}/>}
+
     </form>
 
 };

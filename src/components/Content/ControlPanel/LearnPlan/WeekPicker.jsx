@@ -132,7 +132,7 @@ export default class WeekPicker extends React.Component {
                     weekdaysShort={WEEKDAYS_SHORT['ru']}
                     weekdaysLong={WEEKDAYS_LONG['ru']}
                     months={MONTHS['ru']}
-                    numberOfMonths={2}
+                    numberOfMonths={4}
                     modifiersStyles={modifiersStyles}
                 />
                 {selectedDays.length === 7 && (

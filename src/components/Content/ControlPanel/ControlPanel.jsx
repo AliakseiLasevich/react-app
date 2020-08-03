@@ -1,5 +1,4 @@
 import React from "react";
-import style from "./ControlPanel.module.css";
 import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager/FacultyManager";
 import CathedraManager from "./CathedraManager/CathedraManager";
@@ -11,26 +10,55 @@ import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";
 
 const ControlPanel = (props) => {
     return (
-        <nav className={style.controlPanel}>
+        <>
+            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+                <div className="container-fluid justify-content-end">
+                    <ul className="navbar-nav">
 
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/facultyManager">Факультеты</NavLink>
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/facultyManager">Факультеты
+                            </NavLink>
+                        </li>
 
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/cathedraManager">Кафедры</NavLink>
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/teacherManager">Преподаватели</NavLink>
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/cabinetsAndBuildings">Кабинеты и здания</NavLink>
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/specialities">Специальности</NavLink>
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/students">Студенческие
-                группы</NavLink>
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/cathedraManager">Кафедры
+                            </NavLink>
+                        </li>
 
-            <NavLink className={style.control_panel_item} activeClassName={style.active}
-                     to="/controlPanel/learnPlan">Учебный план</NavLink>
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/teacherManager">Преподаватели
+                            </NavLink>
+                        </li>
 
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/cabinetsAndBuildings">Кабинеты и здания
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/specialities">Специальности
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/students">Студенческие группы
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/learnPlan">Учебный план
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
             <Route path="/controlPanel/facultyManager/"
                    render={() => <FacultyManager/>}/>
@@ -52,8 +80,9 @@ const ControlPanel = (props) => {
 
             <Route path="/controlPanel/learnPlan"
                    render={() => <LearnPlan/>}/>
+        </>
 
-        </nav>
+
     )
 }
 
