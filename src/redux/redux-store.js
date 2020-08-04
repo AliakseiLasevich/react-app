@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore, compose} from "redux";
 import cathedraReducer from "./CathedraReducer";
 import facultyReducer from "./FacultyReducer";
 import teacherReducer from "./TeacherReducer";
@@ -16,7 +16,9 @@ let reducers = combineReducers({
     studentGroupReducer: studentGroupReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
+window.store = store;
 
 export default store;
 

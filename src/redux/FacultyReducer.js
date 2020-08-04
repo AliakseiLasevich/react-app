@@ -63,7 +63,6 @@ export const addFacultyToDatabase = (faculty) => {
     return (dispatch) => {
         facultyAPI.postFaculty(faculty)
             .then(response =>{
-                console.log(response);
                 dispatch(getFaculties());
             }
             )
@@ -74,7 +73,6 @@ export const updateFaculty = (faculty) => {
     return (dispatch) => {
         facultyAPI.putFaculty(faculty)
             .then(response =>{
-                    console.log(response);
                     dispatch(getFaculties());
                 }
             )

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Specialty from "./Specialty";
-import Preloader from "../../../Common/Preloader/Preloader";
+import Preloader from "../../../Common/Preloader";
 import {getSpecialties} from "../../../../redux/SpecialtyReducer";
 
 const AllSpecialties = (props) => {

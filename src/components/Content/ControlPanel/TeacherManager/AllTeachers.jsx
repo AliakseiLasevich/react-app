@@ -4,7 +4,7 @@ import Teacher from "./Teacher";
 import style from "./AllTeachers.module.css";
 import {loadTeachers} from "../../../../redux/TeacherReducer";
 import {getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
-import Preloader from "../../../Common/Preloader/Preloader";
+import Preloader from "../../../Common/Preloader";
 
 const AllTeachers = (props) => {
 

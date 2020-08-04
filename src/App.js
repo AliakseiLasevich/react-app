@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Header from "./components/Header/Header";
 import {Route} from "react-router-dom";
 import ControlPanel from "./components/Content/ControlPanel/ControlPanel";
@@ -10,16 +9,14 @@ import TeachersPlan from "./components/Content/TeachersPlan/TeachersPlan";
 function App(props) {
 
     return (
-        <div className="container-fluid">
-            <Header/>
-            <div className="content">
+        <div style={{height: "100vh", backgroundColor: "grey"}}>
+            <div className="container-fluid p-2">
+                <Header/>
                 <Route path="/controlPanel" render={() => <ControlPanel/>}/>
                 <Route path="/scheduler" render={() => <Scheduler/>}/>
                 <Route path="/studentsPlan" render={() => <StudentsPlan/>}/>
                 <Route path="/teachersPlan" render={() => <TeachersPlan/>}/>
             </div>
-            {/*<Footer/>*/}
-
         </div>
     );
 }

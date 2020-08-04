@@ -3,7 +3,7 @@ import style from "./AllCathedras.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
 import Cathedra from "./Cathedra";
-import Preloader from "../../../Common/Preloader/Preloader";
+import Preloader from "../../../Common/Preloader";
 import {getFaculties} from "../../../../redux/FacultyReducer";
 
 const AllCathedras = (props) => {

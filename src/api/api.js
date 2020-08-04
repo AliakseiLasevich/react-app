@@ -11,8 +11,8 @@ export const facultyAPI = {
     getFaculties() {
         return instance.get("faculties");
     },
-    getFacultyById(id) {
-        return instance.get("faculties/" + id)
+    getFacultyById(publicId) {
+        return instance.get("faculties/" + publicId)
     },
     postFaculty(name) {
         return instance.post("faculties/", {

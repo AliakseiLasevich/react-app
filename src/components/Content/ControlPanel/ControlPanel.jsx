@@ -11,7 +11,7 @@ import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";
 const ControlPanel = (props) => {
     return (
         <>
-            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-md navbar-dark bg-dark pt-0 pb-2 rounded-bottom">
                 <div className="container-fluid justify-content-end">
                     <ul className="navbar-nav">
 
