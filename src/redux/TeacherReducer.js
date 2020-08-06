@@ -52,7 +52,7 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-export const loadTeachers = () => {
+export const requestAllTeachers = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
         teacherAPI.getTeachers().then(response => {
@@ -61,22 +61,31 @@ export const loadTeachers = () => {
         });
     };
 };
-export const postTeacher = (teacher) => {
+export const createTeacher = (teacher) => {
     return (dispatch) => {
         teacherAPI.postTeacher(teacher).then(response => {
-            console.log(response);
-            dispatch(loadTeachers());
+            dispatch(requestAllTeachers());
         })
     }
 };
 
-export const putTeacher = (teacher) => {
+export const updateTeacher = (teacher, teacherId) => {
+    debugger
     return (dispatch) => {
-        teacherAPI.putTeacher(teacher).then(response => {
-            console.log(response);
-            dispatch(loadTeachers());
+        teacherAPI.putTeacher(teacher, teacherId)
+            .then(response => {
+                dispatch(requestAllTeachers());
+            })
+    }
+};
+
+export const deleteTeacher = (teacher) => {
+    return (dispatch) => {
+        teacherAPI.deleteTeacher(teacher).then(response => {
+            dispatch(requestAllTeachers());
         })
     }
-}
+};
+
 
 export default teacherReducer;

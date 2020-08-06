@@ -54,8 +54,11 @@ export const teacherAPI = {
     postTeacher(teacher) {
         return instance.post("teachers", teacher)
     },
-    putTeacher(teacher) {
-        return instance.put(`teachers/${teacher.id}`, teacher)
+    putTeacher(teacher, teacherId) {
+        return instance.put(`teachers/${teacherId}`, teacher)
+    },
+    deleteTeacher(teacherId) {
+        return instance.delete(`teachers/${teacherId}`)
     }
 };
 

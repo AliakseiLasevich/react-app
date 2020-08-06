@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import style from "../TeacherManager/Teacher.module.css";
 import EditStudentGroup from "./EditStudentGroup";
 import activeGreen from "../../../../assets/img/active.png";
 import inactive from "../../../../assets/img/inactive.png";
@@ -12,7 +11,7 @@ const StudentGroup = (props) => {
 
     return (
 
-        <div className={style.teacher} onDoubleClick={() => {
+        <div onDoubleClick={() => {
             setEditMode(!editMode)
         }}>
 
