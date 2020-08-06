@@ -1,5 +1,4 @@
 import React from "react";
-import style from "../CathedraManager/AddCathedra.module.css";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {postCabinet} from "../../../../redux/CabinetsBuildingsReducer";
@@ -28,13 +27,13 @@ const AddCabinet = (props) => {
                     <div>Номер кабинета:
                         <input type="text" placeholder="Номер кабинета" name="number"
                                ref={register({required: "Номер кабинета"})}/></div>
-                    <div>  {errors.number && <span className={style.errorMessage}>{errors.number.message}</span>}</div>
+                    <div>  {errors.number && <span>{errors.number.message}</span>}</div>
 
                     <div>Количество мест:
                         <input type="text" placeholder="Количество мест" name="maxStudents"
                                ref={register({required: "Введите количество мест"})}/></div>
                     <div>  {errors.maxStudents &&
-                    <span className={style.errorMessage}>{errors.maxStudents.message}</span>}</div>
+                    <span>{errors.maxStudents.message}</span>}</div>
 
                     <div>
                         <input type="radio" name="type" required={true} value="l" ref={register}/>Лекционный

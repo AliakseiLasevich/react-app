@@ -8,33 +8,33 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 
 const DeleteConfirmation = (props) => {
 
-    const handleClickOpen = () => {
-        props.setOpen(true);
+    const handleDelete = () => {
+        props.setIdToDelete(props.publicId);
+        props.setOpen(false);
     };
 
     const handleClose = () => {
-        props.setOpen(!props.open);
+        props.setOpen(false);
     };
 
     return (
         <div>
             <Dialog
-                open={props.open}
+                open={true}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description">
                 <DialogTitle id="alert-dialog-title">{"Удалить"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description" className="text-danger font-weight-bolder">
-                        {`Вы уверены что хотите удалить ${props.faculty.name}? Данную операцию нелья будет отменить.`}
-
+                        {`Вы уверены что хотите удалить ${props.name}? Данную операцию нелья будет отменить.`}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary" autoFocus>
                         Отмена
                     </Button>
-                    <Button onClick={() => alert("Удилили")} color="primary">
+                    <Button onClick={handleDelete} color="primary">
                         Удалить
                     </Button>
                 </DialogActions>

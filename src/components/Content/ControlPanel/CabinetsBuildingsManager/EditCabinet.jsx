@@ -1,7 +1,6 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import style from "../CathedraManager/CathedraEdit.module.css";
 import {putCabinet} from "../../../../redux/CabinetsBuildingsReducer";
 
 const EditCabinet = (props) => {
@@ -29,12 +28,12 @@ const EditCabinet = (props) => {
             Кабинет №:
             <input type="text" name="number" defaultValue={props.number}
                    ref={register({required: "Введите номер кабинета"})}/>
-            <div className={style.errorMessage}>  {errors.number && <span>{errors.number.message}</span>}</div>
+            <div>  {errors.number && <span>{errors.number.message}</span>}</div>
 
             Вместимость:
             <input type="text" name="maxStudents" defaultValue={props.maxStudents}
                    ref={register({required: "Введите количество мест"})}/>
-            <div className={style.errorMessage}>  {errors.maxStudents &&
+            <div>  {errors.maxStudents &&
             <span>{errors.maxStudents.message}</span>}</div>
 
             <div>Тип кабинета:

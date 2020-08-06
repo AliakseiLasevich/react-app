@@ -46,8 +46,8 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-//          THUNK-CREATOR:
-export const getFaculties = (something) => {
+
+export const getFaculties = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
         facultyAPI.getFaculties()
@@ -59,26 +59,35 @@ export const getFaculties = (something) => {
     };
 };
 
-export const addFacultyToDatabase = (faculty) => {
+export const createFaculty = (faculty) => {
     return (dispatch) => {
         facultyAPI.postFaculty(faculty)
-            .then(response =>{
-                dispatch(getFaculties());
-            }
-            )
-    };
-};
-
-export const updateFaculty = (faculty) => {
-    return (dispatch) => {
-        facultyAPI.putFaculty(faculty)
-            .then(response =>{
+            .then(response => {
                     dispatch(getFaculties());
                 }
             )
     };
 };
 
+export const updateFaculty = (faculty, facultyId) => {
+    return (dispatch) => {
+        facultyAPI.putFaculty(faculty, facultyId)
+            .then(response => {
+                    dispatch(getFaculties());
+                }
+            )
+    };
+};
+
+export const deleteFaculty = (facultyId) => {
+    return (dispatch) => {
+        facultyAPI.deleteFaculty(facultyId)
+            .then(response => {
+                    dispatch(getFaculties());
+                }
+            )
+    };
+};
 
 
 export default facultyReducer;

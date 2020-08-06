@@ -14,14 +14,15 @@ export const facultyAPI = {
     getFacultyById(publicId) {
         return instance.get("faculties/" + publicId)
     },
-    postFaculty(name) {
-        return instance.post("faculties/", {
-            name
-        })
+    postFaculty(faculty) {
+        return instance.post("faculties", faculty)
     },
-    putFaculty(faculty) {
-        return instance.put(`faculties/${faculty.id}`,
-            {name: faculty.name, active: faculty.active})
+    putFaculty(faculty, facultyId) {
+        return instance.put(`faculties/${facultyId}`,
+            faculty)
+    },
+    deleteFaculty(facultyId) {
+        return instance.delete(`faculties/${facultyId}`)
     }
 };
 
@@ -32,11 +33,14 @@ export const cathedraAPI = {
     getCathedraById(id) {
         return instance.get("cathedras/" + id)
     },
-    postCathedra(cathedra) {
-        return instance.post("cathedras/", cathedra);
+    postCathedra(cathedra, facultyId) {
+        return instance.post(`cathedras/faculties/${facultyId}`, cathedra);
     },
-    putCathedra(cathedra) {
-        return instance.put(`cathedras/${cathedra.id}`, cathedra)
+    putCathedra(cathedra, cathedraId) {
+        return instance.put(`cathedras/${cathedraId}`, cathedra);
+    },
+    deleteCathedra(cathedraId) {
+        return instance.delete(`cathedras/${cathedraId}`)
     }
 };
 

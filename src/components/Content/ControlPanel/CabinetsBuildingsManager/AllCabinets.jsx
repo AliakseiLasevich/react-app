@@ -3,7 +3,6 @@ import Cabinet from "./Cabinet";
 import {useDispatch, useSelector} from "react-redux";
 import {getCabinetsByBuildingId} from "../../../../redux/CabinetsBuildingsReducer";
 import AddCabinet from "./AddCabinet";
-import style from "../CathedraManager/CathedraManager.module.css";
 import plus_green from "../../../../assets/img/plus_green.png";
 import minus_red from "../../../../assets/img/minus_red.png";
 
@@ -36,7 +35,7 @@ const AllCabinets = (props) => {
         <div>
             {/*show ADD CABINET button if building is selected */}
             {props.selectedBuildingId !== null &&
-            <div onClick={toggleAddMode} className={style.addCabinetButton}>
+            <div onClick={toggleAddMode}>
                 {!addCabinetMode && <span><img src={plus_green} alt="+"/>Добавить Кабинет</span>}
                 {addCabinetMode && <span><img src={minus_red} alt="-"/>Отмена</span>}
             </div>

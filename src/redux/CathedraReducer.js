@@ -52,20 +52,28 @@ export const getCathedrasWithFaculties = () => {
     };
 };
 
-export const postCathedra = (cathedra) => {
+export const createCathedra = (cathedra, facultyId) => {
+    debugger
     return (dispatch) => {
-        cathedraAPI.postCathedra(cathedra).then(response => {
+        cathedraAPI.postCathedra(cathedra, facultyId).then(response => {
             console.log(response);
             dispatch(getCathedrasWithFaculties());
         })
     }
 };
 
-export const putCathedra = (cathedra) => {
+export const updateCathedra = (cathedra, cathedraId) => {
     return (dispatch) => {
-        cathedraAPI.putCathedra(cathedra).then(response => {
-            console.log(response);
+        cathedraAPI.putCathedra(cathedra, cathedraId).then(response => {
             dispatch(getCathedrasWithFaculties());
+        })
+    }
+};
+
+export const deleteCathedra = (cathedraId)=>{
+    return dispatch => {
+        cathedraAPI.deleteCathedra(cathedraId).then(response =>{
+            dispatch(getCathedrasWithFaculties())
         })
     }
 }
