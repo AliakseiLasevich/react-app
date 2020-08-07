@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
 import {useDispatch, useSelector} from "react-redux";
-import {createTeacher, updateTeacher} from "../../../../redux/TeacherReducer";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import {getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
+import {useForm} from "react-hook-form";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import {createTeacher, updateTeacher} from "../../../../redux/TeacherReducer";
 
 const TeacherForm = (props) => {
+    const {register, handleSubmit, errors} = useForm();
     const dispatch = useDispatch();
 
-    const [name, setName] = useState(props.teacher.name || "");
     const [cathedraId, setCathedraId] = useState(props.teacher?.cathedra?.publicId || {});
 
     const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
@@ -28,18 +24,9 @@ const TeacherForm = (props) => {
         props.setEditMode(false);
     };
 
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const handleCathedraChange = (event) => {
-        setCathedraId(event.target.value)
-    };
-console.log(props)
-
-    const handleSubmit = () => {
+    const onSumbit = ({cathedraId, name}) => {
         let teacher = {
-            name: name,
+            name,
             cathedraId
         };
         if (props.teacher.publicId) {
@@ -52,40 +39,30 @@ console.log(props)
     };
 
     return (
-        <Dialog open={props.editMode} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle
-                id="form-dialog-title">{props.teacher.name ? "Редактирование" : "Добавить преподавателя"}</DialogTitle>
+        <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogContent>
-                <TextField autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Имя преподавателя"
-                           type="text"
-                           fullWidth
-                           onChange={handleNameChange}
-                           defaultValue={props.teacher.name}/>
+                <form onSubmit={handleSubmit(onSumbit)}>
 
-                <InputLabel htmlFor="cathedra">Кафедра</InputLabel>
-                <Select native
-                        value={props.teacher?.cathedra?.publicId}
-                        onChange={handleCathedraChange}
-                        inputProps={{
-                            name: 'Кафедра',
-                            id: 'cathedra',
-                        }}
-                        error={!cathedraId}>
-                    <option aria-label="None" value=""/>
-                    {cathedras.map(cathedra => <option value={cathedra.publicId}>{cathedra.name}</option>)}
-                </Select>
+                    <label htmlFor="name">Имя преподавателя</label>
+                    <input type="text" name="name" defaultValue={props.teacher.name || ""}
+                           ref={register({required: "Введите имя преподавателя"})} className="d-block"/>
+                    <div className="text-danger">  {errors.name && errors.name.message} </div>
+
+                    <label htmlFor="cathedra">Кафедра</label>
+                    <select className="form-control" name="cathedraId" ref={register({required: "Выберите кафедру"})}
+                            value={cathedraId} onChange={e => setCathedraId(e.target.value)}>
+                        <option></option>
+                        {cathedras.map(cathedra => <option value={cathedra.publicId}>{cathedra.name}</option>)}
+                    </select>
+                    <div className="text-danger">  {errors.cathedraId && errors.cathedraId.message} </div>
+
+                    <DialogActions>
+                        <button className="btn" onClick={handleClose}>Отмена</button>
+                        <button className="btn" onClick={handleSubmit}>Сохранить</button>
+                    </DialogActions>
+
+                </form>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Отмена
-                </Button>
-                <Button onClick={handleSubmit} color="primary">
-                    Сохранить
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 };

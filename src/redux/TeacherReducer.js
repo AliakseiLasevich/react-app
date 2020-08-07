@@ -70,7 +70,6 @@ export const createTeacher = (teacher) => {
 };
 
 export const updateTeacher = (teacher, teacherId) => {
-    debugger
     return (dispatch) => {
         teacherAPI.putTeacher(teacher, teacherId)
             .then(response => {
