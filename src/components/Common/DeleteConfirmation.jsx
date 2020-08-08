@@ -27,7 +27,7 @@ const DeleteConfirmation = (props) => {
                 <DialogTitle id="alert-dialog-title">{"Удалить"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description" className="text-danger font-weight-bolder">
-                        {`Вы уверены что хотите удалить ${props.name}? Данную операцию нелья будет отменить.`}
+                        {`Вы уверены что хотите удалить ${props.message}? Данную операцию нелья будет отменить.`}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

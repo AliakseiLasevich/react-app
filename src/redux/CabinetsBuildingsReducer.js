@@ -5,7 +5,6 @@ const SET_BUILDINGS = "SET_BUILDINGS";
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
 
 let initialState = {
-
     allBuildings: [],
     allCabinets: [],
     isFetching: true
@@ -61,13 +60,15 @@ export const setBuildings = (buildings) => {
 };
 
 
-export const getBuildings = () => {
+export const requestBuildingsWithCabinets = () => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
         buildingAPI.getBuildings()
-            .then(response =>
-                dispatch(setBuildings(response.data)));
-        dispatch(setIsFetching(false));
+            .then(response => {
+                dispatch(setBuildings(response.data));
+                dispatch(setIsFetching(false));
+            });
+
     }
 };
 
@@ -91,6 +92,15 @@ export const putCabinet = (cabinet) => {
     return (dispatch) => {
         cabinetAPI.putCabinet(cabinet)
             .then(() => dispatch(getCabinetsByBuildingId(cabinet.buildingId)));
+    }
+};
+
+export const deleteCabinet = (cabinetId) => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true));
+        cabinetAPI.deleteCabinet(cabinetId)
+            .then(() => dispatch(requestBuildingsWithCabinets));
+        dispatch(setIsFetching(false));
     }
 };
 

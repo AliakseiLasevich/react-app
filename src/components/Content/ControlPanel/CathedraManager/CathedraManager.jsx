@@ -106,7 +106,7 @@ const CathedraManager = (props) => {
 
                 {deleteMode &&
                 <DeleteConfirmation setOpen={setDeleteMode}
-                                    name={cathedraToDelete.name}
+                                    message={cathedraToDelete.name}
                                     publicId={cathedraToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>

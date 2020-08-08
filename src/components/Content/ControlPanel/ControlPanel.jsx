@@ -4,9 +4,9 @@ import FacultyManager from "./FacultyManager/FacultyManager";
 import CathedraManager from "./CathedraManager/CathedraManager";
 import TeacherManager from "./TeacherManager/TeacherManager";
 import StudentGroupManager from "./StudentGroupManager/StudentGroupManager";
-import CabinetsBuildingsManagerContainer from "./CabinetsBuildingsManager/CabinetsBuildingsManagerContainer";
 import LearnPlan from "./LearnPlan/LearnPlan";
 import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";
+import CabinetsBuildingsManager from "./CabinetsBuildingsManager/CabinetsBuildingsManager";
 
 const ControlPanel = (props) => {
     return (
@@ -35,7 +35,7 @@ const ControlPanel = (props) => {
 
                         <li className="nav-item align-self-center">
                             <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
-                                     to="/controlPanel/cabinetsAndBuildings">Кабинеты и здания
+                                     to="/controlPanel/cabinets">Кабинеты
                             </NavLink>
                         </li>
 
@@ -69,8 +69,8 @@ const ControlPanel = (props) => {
             <Route path="/controlPanel/teacherManager"
                    render={() => <TeacherManager/>}/>
 
-            <Route path="/controlPanel/cabinetsAndBuildings"
-                   render={() => <CabinetsBuildingsManagerContainer/>}/>
+            <Route path="/controlPanel/cabinets"
+                   render={() => <CabinetsBuildingsManager/>}/>
 
             <Route path="/controlPanel/specialities"
                    render={() => <SpecialtyManager/>}/>

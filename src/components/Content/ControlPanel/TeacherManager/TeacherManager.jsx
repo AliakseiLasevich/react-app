@@ -106,7 +106,7 @@ const TeacherManager = (props) => {
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    name={teacherToDelete.name}
+                                    message={teacherToDelete.name}
                                     publicId={teacherToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
