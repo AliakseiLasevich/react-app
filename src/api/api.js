@@ -33,8 +33,8 @@ export const cathedraAPI = {
     getCathedraById(id) {
         return instance.get("cathedras/" + id)
     },
-    postCathedra(cathedra, facultyId) {
-        return instance.post(`cathedras/faculties/${facultyId}`, cathedra);
+    postCathedra(cathedra) {
+        return instance.post(`cathedras/faculties/${cathedra.facultyId}`, cathedra);
     },
     putCathedra(cathedra, cathedraId) {
         return instance.put(`cathedras/${cathedraId}`, cathedra);
@@ -63,21 +63,14 @@ export const teacherAPI = {
 };
 
 export const cabinetAPI = {
-    getCabinetById(id) {
-        return instance.get(`cabinets/${id}`);
-    },
-    getCabinetsByBuildingId(buildingId) {
-        return instance.get("cabinets", {
-            params: {
-                buildingId
-            }
-        })
-    },
     postCabinet(cabinet) {
-        return instance.post("cabinets", cabinet)
+        return instance.post(`cabinets`, cabinet)
     },
-    putCabinet(cabinet) {
-        return instance.put(`cabinets/${cabinet.id}`, cabinet)
+    putCabinet(cabinet, publicId) {
+        return instance.put(`cabinets/${publicId}`, cabinet)
+    },
+    deleteCabinet(cabinetId) {
+        return instance.delete(`cabinets/${cabinetId}`)
     }
 };
 
@@ -91,8 +84,11 @@ export const buildingAPI = {
     postBuilding(building) {
         return instance.post("buildings", building);
     },
-    putBuilding(building) {
-        return instance.put(`buildings/${building.id}`, building)
+    putBuilding(building, buildingId) {
+        return instance.put(`buildings/${buildingId}`, building)
+    },
+    deleteBuilding(buildingId) {
+        return instance.delete(`buildings/${buildingId}`)
     }
 };
 

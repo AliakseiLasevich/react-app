@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import MaterialTable from "material-table";
-import tableIcons from "../../../Common/TableIcons";
+import tableIcons from "../../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import {useDispatch, useSelector} from "react-redux";
-import DeleteConfirmation from "../../../Common/DeleteConfirmation";
-import Preloader from "../../../Common/Preloader";
-import {deleteCathedra, getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
-import CathedraForm from "./CathedraForm";
+import DeleteConfirmation from "../../Common/DeleteConfirmation";
+import Preloader from "../../Common/Preloader";
+import TeacherForm from "./TeacherForm";
+import {deleteTeacher, requestAllTeachers} from "../../../redux/TeacherReducer";
 
-const CathedraManager = (props) => {
+const TeacherManager = (props) => {
 
     const [editMode, setEditMode] = useState(false);
-    const [cathedraToEdit, setCathedraToEdit] = useState({});
-    const [deleteMode, setDeleteMode] = useState(false);
-    const [cathedraToDelete, setCathedraToDelete] = useState(null);
+    const [teacherToEdit, setTeacherToEdit] = useState({});
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [teacherToDelete, setTeacherToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.cathedraReducer.isFetching);
-    const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
+    const isFetching = useSelector(state => state.teacherReducer.isFetching);
+    const teachers = useSelector(state => state.teacherReducer.allTeachers);
 
     useEffect(() => {
-        dispatch(getCathedrasWithFaculties());
+        dispatch(requestAllTeachers());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteCathedra(idToDelete))
+            dispatch(deleteTeacher(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -38,7 +38,7 @@ const CathedraManager = (props) => {
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setEditMode(true)}>Добавить
-                    кафедру
+                    Преподавателя
                 </button>
             </div>
 
@@ -47,30 +47,29 @@ const CathedraManager = (props) => {
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Кафедры"
+                        title="Преподаватели"
                         columns={[
                             {
-                                title: 'Название кафедры',
+                                title: 'Имя преподавателя',
                                 field: 'name',
                                 render: rowData => <NavLink
-                                    to={`/cathedras/${rowData.publicId}`}>{rowData.name}</NavLink>,
-                                customSort: (a, b) => a.name.localeCompare(b.name)
+                                    to={`/teachers/${rowData.publicId}`}>{rowData.name}</NavLink>
                             },
                             {
-                                title: 'Факультет',
-                                field: 'faculty',
+                                title: 'Кафедра',
+                                field: 'cathedra',
                                 render: rowData => <NavLink
-                                    to={`/faculties/${rowData.faculty.publicId}`}>{rowData.faculty.name}</NavLink>,
-                                customSort: (a, b) => a.faculty.name.localeCompare(b.faculty.name)
+                                    to={`/cathedras/${rowData.cathedra.publicId}`}>{rowData.cathedra.name} </NavLink>,
+                                customSort: (a, b) => a.cathedra.name.localeCompare(b.cathedra.name)
                             },
                         ]}
-                        data={cathedras}
+                        data={teachers}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать',
                                 onClick: (event, rowData) => {
-                                    setCathedraToEdit(rowData);
+                                    setTeacherToEdit(rowData);
                                     setEditMode(true)
                                 }
                             },
@@ -78,8 +77,8 @@ const CathedraManager = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setCathedraToDelete(rowData);
-                                    setDeleteMode(true)
+                                    setTeacherToDelete(rowData);
+                                    setDeleteModalOpen(true)
                                 }
                             }
                         ]}
@@ -87,7 +86,7 @@ const CathedraManager = (props) => {
                             actionsColumnIndex: -1,
                             padding: "dense",
                             pageSize: 15,
-                            pageSizeOptions: [5, 10, 15, 25],
+                            pageSizeOptions: [5, 10, 15],
                             headerStyle: {
                                 backgroundColor: '#ebebeb',
                                 color: 'black',
@@ -100,20 +99,21 @@ const CathedraManager = (props) => {
                 </div>
 
                 {editMode &&
-                <CathedraForm setEditMode={setEditMode}
-                              cathedra={cathedraToEdit}
-                              setCathedraToEdit={setCathedraToEdit}/>}
+                <TeacherForm editMode={editMode}
+                             setEditMode={setEditMode}
+                             teacher={teacherToEdit}
+                             setTeacherToEdit={setTeacherToEdit}/>}
 
-                {deleteMode &&
-                <DeleteConfirmation setOpen={setDeleteMode}
-                                    message={cathedraToDelete.name}
-                                    publicId={cathedraToDelete.publicId}
+                {deleteModalOpen &&
+                <DeleteConfirmation setOpen={setDeleteModalOpen}
+                                    message={teacherToDelete.name}
+                                    publicId={teacherToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}
         </div>
     )
-};
+}
 
-export default CathedraManager;
+export default TeacherManager;

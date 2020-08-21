@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Dialog from "@material-ui/core/Dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {getCathedrasWithFaculties} from "../../../../redux/CathedraReducer";
+import {getCathedrasWithFaculties} from "../../../redux/CathedraReducer";
 import {useForm} from "react-hook-form";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {createTeacher, updateTeacher} from "../../../../redux/TeacherReducer";
+import {createTeacher, updateTeacher} from "../../../redux/TeacherReducer";
 
 const TeacherForm = (props) => {
     const {register, handleSubmit, errors} = useForm();

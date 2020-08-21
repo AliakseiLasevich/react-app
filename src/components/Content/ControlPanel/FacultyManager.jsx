@@ -4,11 +4,11 @@ import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteFaculty, getFaculties} from "../../../../redux/FacultyReducer";
+import {deleteFaculty, getFaculties} from "../../../redux/FacultyReducer";
 import FacultyForm from "./FacultyForm";
-import DeleteConfirmation from "../../../Common/DeleteConfirmation";
-import Preloader from "../../../Common/Preloader";
-import tableIcons from "../../../Common/TableIcons";
+import DeleteConfirmation from "../../Common/DeleteConfirmation";
+import Preloader from "../../Common/Preloader";
+import tableIcons from "../../Common/TableIcons";
 
 const FacultyManager = (props) => {
 

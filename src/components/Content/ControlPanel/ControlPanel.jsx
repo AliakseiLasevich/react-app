@@ -1,12 +1,13 @@
 import React from "react";
 import {NavLink, Route} from "react-router-dom"
-import FacultyManager from "./FacultyManager/FacultyManager";
-import CathedraManager from "./CathedraManager/CathedraManager";
-import TeacherManager from "./TeacherManager/TeacherManager";
+import FacultyManager from "./FacultyManager";
+import CathedraManager from "./CathedraManager";
+import TeacherManager from "./TeacherManager";
 import StudentGroupManager from "./StudentGroupManager/StudentGroupManager";
 import LearnPlan from "./LearnPlan/LearnPlan";
 import SpecialtyManager from "./SpecialtyManager/SpecialtyManager";
-import CabinetsBuildingsManager from "./CabinetsBuildingsManager/CabinetsBuildingsManager";
+import CabinetsManager from "./CabinetsManager";
+import BuildingsManager from "./BuildingsManager";
 
 const ControlPanel = (props) => {
     return (
@@ -30,6 +31,12 @@ const ControlPanel = (props) => {
                         <li className="nav-item align-self-center">
                             <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
                                      to="/controlPanel/teacherManager">Преподаватели
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/buildings">Здания
                             </NavLink>
                         </li>
 
@@ -69,8 +76,11 @@ const ControlPanel = (props) => {
             <Route path="/controlPanel/teacherManager"
                    render={() => <TeacherManager/>}/>
 
+            <Route path="/controlPanel/buildings"
+                   render={() => <BuildingsManager/>}/>
+
             <Route path="/controlPanel/cabinets"
-                   render={() => <CabinetsBuildingsManager/>}/>
+                   render={() => <CabinetsManager/>}/>
 
             <Route path="/controlPanel/specialities"
                    render={() => <SpecialtyManager/>}/>

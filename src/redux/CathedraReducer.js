@@ -52,11 +52,9 @@ export const getCathedrasWithFaculties = () => {
     };
 };
 
-export const createCathedra = (cathedra, facultyId) => {
-    debugger
+export const createCathedra = (cathedra) => {
     return (dispatch) => {
-        cathedraAPI.postCathedra(cathedra, facultyId).then(response => {
-            console.log(response);
+        cathedraAPI.postCathedra(cathedra).then(response => {
             dispatch(getCathedrasWithFaculties());
         })
     }

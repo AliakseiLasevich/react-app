@@ -3,17 +3,20 @@ import cathedraReducer from "./CathedraReducer";
 import facultyReducer from "./FacultyReducer";
 import teacherReducer from "./TeacherReducer";
 import thunkMiddleware from "redux-thunk";
-import cabinetsBuildingsReducer from "./CabinetsBuildingsReducer";
+import cabinetsReducer from "./CabinetsReducer";
 import specialtyReducer from "./SpecialtyReducer";
 import studentGroupReducer from "./StudentGroupsReducer";
+import buildingsReducer from "./BuildingsReducer";
 
 let reducers = combineReducers({
     cathedraReducer: cathedraReducer,
     facultyReducer: facultyReducer,
     teacherReducer: teacherReducer,
-    cabinetsBuildingsReducer: cabinetsBuildingsReducer,
+    buildingsReducer: buildingsReducer,
+    cabinetsReducer: cabinetsReducer,
     specialtyReducer: specialtyReducer,
-    studentGroupReducer: studentGroupReducer
+    studentGroupReducer: studentGroupReducer,
+
 });
 
 const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;

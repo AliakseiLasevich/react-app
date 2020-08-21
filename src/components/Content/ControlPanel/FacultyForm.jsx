@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import {useDispatch} from "react-redux";
-import {createFaculty, updateFaculty} from "../../../../redux/FacultyReducer";
+import {createFaculty, updateFaculty} from "../../../redux/FacultyReducer";
 
 const FacultyForm = (props) => {
     const dispatch = useDispatch();

@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import MaterialTable from "material-table";
-import tableIcons from "../../../Common/TableIcons";
+import tableIcons from "../../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteConfirmation from "../../../Common/DeleteConfirmation";
-import Preloader from "../../../Common/Preloader";
+import DeleteConfirmation from "../../Common/DeleteConfirmation";
+import Preloader from "../../Common/Preloader";
 import CabinetsForm from "./CabinetsForm";
-import BuildingsForm from "./BuildingsForm";
-import {deleteCabinet, requestBuildingsWithCabinets} from "../../../../redux/CabinetsBuildingsReducer";
+import {deleteCabinet} from "../../../redux/CabinetsReducer";
+import {requestBuildings} from "../../../redux/BuildingsReducer";
 
 
-const CabinetsBuildingsManager = (props) => {
-    const [buildingEditMode, setBuildingEditMode] = useState(false);
+const CabinetsManager = (props) => {
     const [cabinetEditMode, setCabinetEditMode] = useState(false);
     const [cabinetToEdit, setCabinetToEdit] = useState({});
-    const [buildingToEdit, setBuildingToEdit] = useState({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [cabinetToDelete, setCabinetToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.cabinetsBuildingsReducer.isFetching);
-    const buildings = useSelector(state => state.cabinetsBuildingsReducer.allBuildings);
+    const isFetching = useSelector(state => state.cabinetsReducer.isFetching);
+    const buildings = useSelector(state => state.buildingsReducer.allBuildings);
 
     const cabinets = buildings.flatMap(building => {
         return building.cabinets.map(cabinet => cabinet = {
@@ -34,7 +32,7 @@ const CabinetsBuildingsManager = (props) => {
     });
 
     useEffect(() => {
-        dispatch(requestBuildingsWithCabinets());
+        dispatch(requestBuildings());
     }, [dispatch]);
 
 
@@ -48,9 +46,7 @@ const CabinetsBuildingsManager = (props) => {
         <div className="container-fluid">
 
             <div className="row justify-content-center mt-1 ">
-                <button className="btn btn-sm btn-light mx-1" onClick={() => setBuildingEditMode(true)}>
-                    Добавить Здание
-                </button>
+
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setCabinetEditMode(true)}>
                     Добавить Кабинет
                 </button>
@@ -69,26 +65,32 @@ const CabinetsBuildingsManager = (props) => {
                                 field: 'building',
                                 render: rowData => <NavLink
                                     to={`/buildings/${rowData.buildingId}`}>{rowData.buildingName}</NavLink>,
-                                customSort: (a, b) => a.buildingName.localeCompare(b.buildingName)
+                                customSort: (a, b) => a.buildingName.localeCompare(b.buildingName),
+                                searchable: true,
+                                customFilterAndSearch: (filter, rowData) => rowData.buildingName.toUpperCase().includes(filter.toUpperCase())
                             },
                             {
                                 title: 'Номер кабинета',
                                 field: 'cabinet',
                                 render: rowData => <NavLink
                                     to={`/cabinets/${rowData.publicId}`}>{rowData.number} </NavLink>,
-                                customSort: (a, b) => a.number - b.number
+                                customSort: (a, b) => a.number - b.number,
+                                searchable: true,
+                                customFilterAndSearch: (filter, rowData) => rowData.number.toString().includes(filter)
                             },
                             {
                                 title: 'Вместимость',
                                 field: 'capacity',
                                 render: rowData => rowData.maxStudents,
-                                customSort: (a, b) => a.maxStudents - b.maxStudents
+                                customSort: (a, b) => a.maxStudents - b.maxStudents,
+                                searchable: true
                             },
                             {
                                 title: 'Тип',
                                 field: 'type',
                                 render: rowData => rowData.type,
-                                customSort: (a, b) => a.type.localeCompare(b.type)
+                                customSort: (a, b) => a.type.localeCompare(b.type),
+                                searchable: true
                             },
                         ]}
                         data={cabinets}
@@ -132,11 +134,6 @@ const CabinetsBuildingsManager = (props) => {
                               cabinet={cabinetToEdit}
                               setCabinetToEdit={setCabinetToEdit}/>}
 
-                {buildingEditMode &&
-                <BuildingsForm editMode={buildingEditMode}
-                               setEditMode={setBuildingEditMode}
-                               building={buildingToEdit}
-                               setBuildingToEdit={setBuildingToEdit}/>}
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
@@ -150,4 +147,4 @@ const CabinetsBuildingsManager = (props) => {
     )
 };
 
-export default CabinetsBuildingsManager;
+export default CabinetsManager;
