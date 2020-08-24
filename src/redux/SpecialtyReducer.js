@@ -1,7 +1,7 @@
 import {specialtyAPI} from "../api/api";
 
 const SET_SPECIALTIES = "SET_SPECIALTIES";
-const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 let initialState = {
     allSpecialties: [],
@@ -17,7 +17,7 @@ export const specialtyReducer = (state = initialState, action) => {
                 allSpecialties: action.allSpecialties
             };
 
-        case TOGGLE_ISFETCHING:
+        case TOGGLE_IS_FETCHING:
             return {
                 ...state, isFetching: action.isFetching
             };
@@ -36,41 +36,41 @@ export const setSpecialties = (specialties) => {
 
 export const setIsFetching = (isFetching) => {
     return {
-        type: TOGGLE_ISFETCHING,
+        type: TOGGLE_IS_FETCHING,
         isFetching: isFetching
     }
 };
 
-export const getSpecialties = () => {
-    return (dispatch) => {
+export const requestSpecialties = () => {
+    return async (dispatch) => {
         dispatch(setIsFetching(true));
-        specialtyAPI.getSpecialties()
-            .then(response => {
-                    dispatch(setSpecialties(response));
-                    dispatch(setIsFetching(false));
-                }
-            );
+        const response = await specialtyAPI.getSpecialties();
+        dispatch(setSpecialties(response));
+        dispatch(setIsFetching(false));
     };
 };
 
-export const postSpecialty = (specialty) => {
-    return (dispatch) => {
-        specialtyAPI.postSpecialty(specialty)
-            .then(response => {
-                    dispatch(getSpecialties());
-                }
-            )
+export const createSpecialty = (specialty) => {
+    return async (dispatch) => {
+        await specialtyAPI.postSpecialty(specialty)
+        dispatch(requestSpecialties());
     };
 };
 
-export const putSpecialty = (specialty) => {
-    return (dispatch) => {
-        specialtyAPI.putSpecialty(specialty)
-            .then(response => {
-                    dispatch(getSpecialties());
-                }
-            )
+export const updateSpecialty = (specialty, publicId) => {
+    return async (dispatch) => {
+        await specialtyAPI.putSpecialty(specialty, publicId);
+        dispatch(requestSpecialties());
     };
 };
+
+export const deleteSpecialty = (publicId) => {
+    return async (dispatch) => {
+        await specialtyAPI.deleteSpecialty(publicId);
+        dispatch(requestSpecialties());
+    };
+};
+
+
 
 export default specialtyReducer;

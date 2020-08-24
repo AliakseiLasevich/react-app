@@ -46,46 +46,33 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-
-export const getFaculties = () => {
-    return (dispatch) => {
+export const requestFaculties = () => {
+    return async (dispatch) => {
         dispatch(setIsFetching(true));
-        facultyAPI.getFaculties()
-            .then(response => {
-                    dispatch(setFaculties(response));
-                    dispatch(setIsFetching(false));
-                }
-            );
+        const response = await facultyAPI.getFaculties()
+        dispatch(setFaculties(response));
+        dispatch(setIsFetching(false));
     };
 };
 
 export const createFaculty = (faculty) => {
-    return (dispatch) => {
-        facultyAPI.postFaculty(faculty)
-            .then(response => {
-                    dispatch(getFaculties());
-                }
-            )
+    return async (dispatch) => {
+        await facultyAPI.postFaculty(faculty);
+        dispatch(requestFaculties());
     };
 };
 
 export const updateFaculty = (faculty, facultyId) => {
-    return (dispatch) => {
-        facultyAPI.putFaculty(faculty, facultyId)
-            .then(response => {
-                    dispatch(getFaculties());
-                }
-            )
+    return async (dispatch) => {
+        await facultyAPI.putFaculty(faculty, facultyId)
+        dispatch(requestFaculties());
     };
 };
 
 export const deleteFaculty = (facultyId) => {
-    return (dispatch) => {
-        facultyAPI.deleteFaculty(facultyId)
-            .then(response => {
-                    dispatch(getFaculties());
-                }
-            )
+    return async (dispatch) => {
+        await facultyAPI.deleteFaculty(facultyId)
+        dispatch(requestFaculties());
     };
 };
 

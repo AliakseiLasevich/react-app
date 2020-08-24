@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Dialog from "@material-ui/core/Dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {createCabinet, updateCabinet} from "../../../redux/CabinetsReducer";
+import {createCabinet, deleteCabinet, updateCabinet} from "../../../redux/CabinetsReducer";
+import {requestBuildings} from "../../../redux/BuildingsReducer";
 
 const CabinetsForm = (props) => {
     const {register, handleSubmit, errors} = useForm();
@@ -13,6 +14,9 @@ const CabinetsForm = (props) => {
     const [cabinetType, setCabinetType] = useState(props.cabinet?.type || {});
     const buildings = useSelector(state => state.buildingsReducer.allBuildings);
 
+    useEffect(() => {
+      dispatch(requestBuildings())
+    }, [dispatch]);
 
     const handleClose = () => {
         props.setCabinetToEdit({});

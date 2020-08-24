@@ -63,6 +63,9 @@ export const teacherAPI = {
 };
 
 export const cabinetAPI = {
+    getCabinets() {
+        return instance.get(`cabinets`)
+    },
     postCabinet(cabinet) {
         return instance.post(`cabinets`, cabinet)
     },
@@ -102,8 +105,11 @@ export const specialtyAPI = {
     postSpecialty(specialty) {
         return instance.post("specialties", specialty);
     },
-    putSpecialty(specialty) {
-        return instance.put(`specialties/${specialty.id}`, specialty)
+    putSpecialty(specialty, publicId) {
+        return instance.put(`specialties/${publicId}`, specialty)
+    },
+    deleteSpecialty(publicId) {
+        return instance.delete(`specialties/${publicId}`)
     }
 };
 

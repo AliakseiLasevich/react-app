@@ -102,7 +102,7 @@ const BuildingsManager = (props) => {
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`Здание ${buildingToDelete.name}`}
+                                    message={`Здание ${buildingToDelete.name}. Кабинеты здания также будут удалены.`}
                                     publicId={buildingToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
