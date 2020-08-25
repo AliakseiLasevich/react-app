@@ -18,8 +18,6 @@ const SpecialtyManager = (props) => {
     const [specialtyToDelete, setSpecialtyToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
-    console.log(specialtyToDelete)
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.specialtyReducer.isFetching);
     const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
@@ -57,7 +55,8 @@ const SpecialtyManager = (props) => {
                                 field: 'code',
                                 render: rowData => <NavLink to={`/faculties/${rowData.faculty.publicId}`}>{rowData.faculty.name}</NavLink>,
                                 customSort: (a, b) => a.faculty.name.localeCompare(b.faculty.name),
-                                searchable: true
+                                searchable: true,
+                                customFilterAndSearch: (filter, rowData) => rowData.faculty.name.toUpperCase().includes(filter.toUpperCase())
                             },
                             {
                                 title: 'Специальность',

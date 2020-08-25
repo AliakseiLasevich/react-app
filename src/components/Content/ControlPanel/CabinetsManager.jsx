@@ -9,7 +9,6 @@ import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
 import CabinetsForm from "./CabinetsForm";
 import {deleteCabinet, requestCabinets} from "../../../redux/CabinetsReducer";
-import {requestBuildings} from "../../../redux/BuildingsReducer";
 
 
 const CabinetsManager = (props) => {

@@ -12,14 +12,18 @@ table {
 
 th {
     padding: 2px;
-    background: gainsboro;
+    background: silver;
     /*width: auto;*/
-    border: 1px solid rgb(190, 190, 190);
+    border: 1px solid black;
     color: black;
+    font-weight: 700;
+    font-family: Lato, serif;
 }
-
+.textArea {
+    resize: none;
+}
 td {
-    border: 1px solid rgb(190, 190, 190);
+    border: 1px solid silver;
     padding: 2px 2px;
     text-align: center;
     width: auto;
@@ -30,10 +34,12 @@ td {
     transform: rotate(-180deg);
     min-height: 10em;
     width: 15px;
+    font-weight: 500;
+    font-size: 10pt;
 }
 
 .inputField {
-    width: 14px;
+    width: 30px;
     font-size: small;
 }
 
@@ -44,6 +50,6 @@ input {
 
 .largeInputField{
     font-size: x-small;
-    width: 100px;
+    /*width: 1200px;*/
     /*word-break: break-word;*/
 }

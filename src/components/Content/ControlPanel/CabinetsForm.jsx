@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {createCabinet, deleteCabinet, updateCabinet} from "../../../redux/CabinetsReducer";
+import {createCabinet, updateCabinet} from "../../../redux/CabinetsReducer";
 import {requestBuildings} from "../../../redux/BuildingsReducer";
 
 const CabinetsForm = (props) => {

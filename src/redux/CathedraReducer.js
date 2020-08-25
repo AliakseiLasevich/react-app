@@ -1,4 +1,4 @@
-import {cathedraAPI, facultyAPI} from "../api/api";
+import {cathedraAPI} from "../api/api";
 
 const SET_CATHEDRAS = "SET_CATHEDRAS";
 const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";

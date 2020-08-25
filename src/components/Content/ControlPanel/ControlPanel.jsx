@@ -4,7 +4,7 @@ import FacultyManager from "./FacultyManager";
 import CathedraManager from "./CathedraManager";
 import TeacherManager from "./TeacherManager";
 import StudentGroupManager from "./StudentGroupManager";
-import LearnPlan from "./LearnPlan/LearnPlan";
+import LearnPlanManager from "./LearnPlanManager/LearnPlanManager";
 import SpecialtyManager from "./SpecialtyManager";
 import CabinetsManager from "./CabinetsManager";
 import BuildingsManager from "./BuildingsManager";
@@ -89,7 +89,7 @@ const ControlPanel = (props) => {
                    render={() => <StudentGroupManager/>}/>
 
             <Route path="/controlPanel/learnPlan"
-                   render={() => <LearnPlan/>}/>
+                   render={() => <LearnPlanManager/>}/>
         </>
 
 

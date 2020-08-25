@@ -30,11 +30,19 @@ function getWeekRange(date) {
 
 export default class WeekPicker extends React.Component {
 
-    state = {
-        hoverRange: undefined,
-        selectedDays: [],
-        locale: 'ru'
-    };
+    constructor(props) {
+        super(props);
+        // this.handleFromChange = this.handleFromChange.bind(this);
+        // this.handleToChange = this.handleToChange.bind(this);
+        this.state = {
+            from: undefined,
+            to: undefined,
+            hoverRange: undefined,
+            selectedDays: [],
+            locale: 'ru'
+        };
+    }
+
 
     handleDayChange = date => {
         this.setState({
@@ -132,7 +140,7 @@ export default class WeekPicker extends React.Component {
                     weekdaysShort={WEEKDAYS_SHORT['ru']}
                     weekdaysLong={WEEKDAYS_LONG['ru']}
                     months={MONTHS['ru']}
-                    numberOfMonths={4}
+                    numberOfMonths={3}
                     modifiersStyles={modifiersStyles}
                 />
                 {selectedDays.length === 7 && (

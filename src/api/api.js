@@ -125,5 +125,8 @@ export const studentGroupAPI = {
     },
     putStudentGroup(studentGroup) {
         return instance.put(`studentGroups/${studentGroup.id}`, studentGroup)
+    },
+    deleteStudentGroup(publicId) {
+        return instance.put(`studentGroups/${publicId}`)
     }
 };
