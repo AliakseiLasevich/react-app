@@ -8,6 +8,7 @@ import LearnPlanManager from "./LearnPlanManager/LearnPlanManager";
 import SpecialtyManager from "./SpecialtyManager";
 import CabinetsManager from "./CabinetsManager";
 import BuildingsManager from "./BuildingsManager";
+import DisciplinesManager from "./DisciplinesManager";
 
 const ControlPanel = (props) => {
     return (
@@ -54,7 +55,13 @@ const ControlPanel = (props) => {
 
                         <li className="nav-item align-self-center">
                             <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
-                                     to="/controlPanel/students">Студенческие группы
+                                     to="/controlPanel/students">Студенты
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item align-self-center">
+                            <NavLink className="btn bg-dark text-white" activeClassName="btn-warning"
+                                     to="/controlPanel/disciplines">Дисциплины
                             </NavLink>
                         </li>
 
@@ -90,6 +97,9 @@ const ControlPanel = (props) => {
 
             <Route path="/controlPanel/learnPlan"
                    render={() => <LearnPlanManager/>}/>
+
+            <Route path="/controlPanel/disciplines"
+                   render={() => <DisciplinesManager/>}/>
         </>
 
 

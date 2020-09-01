@@ -130,3 +130,24 @@ export const studentGroupAPI = {
         return instance.put(`studentGroups/${publicId}`)
     }
 };
+
+export const learnPlanAPI = {
+    postLearnPlan(learnPlan) {
+        return instance.post(`learn_plan`, learnPlan)
+    }
+};
+
+export const disciplinesAPI = {
+    getDisciplines() {
+        return instance.get(`disciplines`)
+    },
+    deleteDiscipline(disciplineId) {
+        return instance.delete(`disciplines/${disciplineId}`)
+    },
+    putDiscipline(discipline, disciplineId) {
+        return instance.put(`disciplines/${disciplineId}`, discipline)
+    },
+    postDiscipline(discipline) {
+        return instance.post("disciplines", discipline);
+    }
+};

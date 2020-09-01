@@ -5,11 +5,18 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DayPicker from "../../../Common/DayPicker";
 import moment from "moment";
+import {useDispatch, useSelector} from "react-redux";
+import {createLearnPlan} from "../../../../redux/LearnPlanReducer";
+import {requestFaculties} from "../../../../redux/FacultyReducer";
+import {requestSpecialties} from "../../../../redux/SpecialtyReducer";
+import {requestDisciplines} from "../../../../redux/DisciplinesReducer";
 
 const LearnPlanForm = (props) => {
 
+    const dispatch = useDispatch();
+
     const onSubmit = (data) => {
-        props.setEditMode(false);
+        dispatch(createLearnPlan(data));
     };
 
     const handleClose = () => {
@@ -18,8 +25,7 @@ const LearnPlanForm = (props) => {
 
     const {register, control, handleSubmit, errors} = useForm();
     const {fields, append, remove} = useFieldArray({
-        control,
-        name: "discipline",
+        control, name: "disciplinePlan",
     });
 
     const [from, setFrom] = useState();
@@ -41,21 +47,60 @@ const LearnPlanForm = (props) => {
         calculateWeeks(startDate)
     }, [startDate, endDate]);
 
+    const [facultyId, setFacultyId] = useState({});
+    const [specialtyId, setSpecialtyId] = useState({});
+    const [courseNumber, setCourseNumber] = useState("");
+    const faculties = useSelector(state => state.facultyReducer.allFaculties);
+    const specialities = useSelector(state => state.specialtyReducer.allSpecialties);
+    const disciplines = useSelector(state => state.disciplinesReducer.allDisciplines);
 
     useEffect(() => {
-        append([{}, {}, {}]);
-    }, [append]);
+        dispatch(requestFaculties());
+        dispatch(requestSpecialties());
+        dispatch(requestDisciplines());
+        append([{}]);
+    }, []);
 
-    const weeksHeader = useMemo(() => weeks.map(week => <th key={week}><span
-        className={style.verticalHeader}>{`${week.format("DD.MM.YY")} - ${moment(week).add(6, "days").format("DD.MM.YY")}`}</span>
-    </th>), [weeks]);
+    const weeksHeader = useMemo(() => weeks.map(week =>
+        <th key={`${week}_header`} colSpan={2}>
+            <span className={style.verticalHeader}>
+            {`${week.format("DD.MM.YY")} - ${moment(week).add(6, "days").format("DD.MM.YY")}`}
+            </span>
+        </th>
+    ), [weeks]);
 
+    const subHeader = useMemo(() => weeks.map(week => {
+            return (
+                <React.Fragment key={`${week}_subheader`}>
+                    <th className="text-center"> Л</th>
+                    <th className="text-center"> П</th>
+                </React.Fragment>
+            )
+        }
+    ), [weeks]);
 
-    //TODO прикрутить образующиеся инпуты к правильной дисциплине
-    const weeksInput = useMemo(() => weeks.map(week =>
-        <td>
-            <input type="text" className={style.inputField} name={`discipline[0].week${week}`} ref={register()}/>
-        </td>), [weeks]);
+    const weekInput = (index) => {
+        return (
+            weeks.map(week =>
+                <React.Fragment key={`${week}_input`}>
+                    <td className={style.borderRight}>
+                        <input type="text" className={style.inputField + ' ' + style.smallInputField}
+                               name={`disciplinePlan[${index}].lessons[${moment(week).format('YYYY-MM-DD')}].lecture`}
+                               ref={register()}/>
+                    </td>
+                    <td className={style.borderLeft}>
+                        <input type="text" className={style.inputField + ' ' + style.smallInputField}
+                               name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practice`}
+                               ref={register()}/>
+                    </td>
+                </React.Fragment>
+            )
+        )
+    };
+
+    const isNumberOrEmpty = (value) => {
+        return Number.isInteger(parseInt(value)) || value === "";
+    };
 
     return (
         <div>
@@ -66,11 +111,52 @@ const LearnPlanForm = (props) => {
                 <DialogContent style={{minHeight: "70vh"}}>
                     <div className="container-fluid justify-content-center text-center">
                         <div className="h3">
-                            График
+                            Учебный план
                         </div>
                         <div className="m-1">
                             <DayPicker setFrom={setFrom}
                                        setTo={setTo}/>
+                        </div>
+
+                        <div className="input-group justify-content-center">
+                            <div>
+                                <label htmlFor="facultyId">Факультет:</label>
+                                <select className="form-control" name="facultyId"
+                                        ref={register({required: "Выберите факультет"})}
+                                        value={facultyId} onChange={e => setFacultyId(e.target.value)}>
+                                    <option></option>
+                                    {faculties.map(faculty => <option key={faculty.publicId}
+                                                                      value={faculty.publicId}>{faculty.name}</option>)}
+                                </select>
+                                <div className="text-danger">  {errors.facultyId && errors.facultyId.message} </div>
+                            </div>
+                            <div>
+                                <label htmlFor="facultyId">Специализация:</label>
+                                <select className="form-control" name="specialtyId"
+                                        ref={register({required: "Выберите специализацию"})}
+                                        value={specialtyId} onChange={e => setSpecialtyId(e.target.value)}>
+                                    <option></option>
+                                    {specialities.map(specialty => <option key={specialty.publicId}
+                                                                           value={specialty.publicId}>{specialty.name}</option>)}
+                                </select>
+                                <div className="text-danger">  {errors.specialtyId && errors.specialtyId.message} </div>
+                            </div>
+                            <div>
+                                <label htmlFor="facultyId">Курс:</label>
+                                <input className="form-control" name="courseNumber"
+                                       ref={register({required: "Введите номер курса"})}
+                                       value={courseNumber} onChange={e => setCourseNumber(e.target.value)}>
+                                </input>
+                                <div
+                                    className="text-danger">  {errors.courseNumber && errors.courseNumber.message} </div>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <button type="button" className="btn btn-sm btn-secondary m-1" onClick={() => append({})}>
+                                Добавить дисциплину
+                            </button>
                         </div>
                     </div>
 
@@ -78,102 +164,112 @@ const LearnPlanForm = (props) => {
                         <table>
                             <thead>
                             <tr>
-                                <th><span>Дисциплина</span></th>
-                                <th><span className={style.verticalHeader}>Общее кол-во часов</span></th>
-                                <th><span className={style.verticalHeader}>Всего</span></th>
-                                <th><span className={style.verticalHeader}>Всего аудиторных</span></th>
-                                <th><span className={style.verticalHeader}>Лекции</span></th>
-                                <th><span className={style.verticalHeader}>Лабораторные</span></th>
-                                <th><span className={style.verticalHeader}>Практич.+Семинарные</span></th>
-                                <th><span className={style.verticalHeader}>Л</span></th>
-                                <th><span className={style.verticalHeader}>Лр</span></th>
-                                <th><span className={style.verticalHeader}>П</span></th>
-                                <th><span className={style.verticalHeader}>Вс</span></th>
-                                <th><span className={style.verticalHeader}>Кол-во зачётных ед.</span></th>
-                                <th><span className={style.verticalHeader}>Потоки</span></th>
-                                <th><span className={style.verticalHeader}>Экзамен</span></th>
-                                <th><span className={style.verticalHeader}>Зачёт</span></th>
-                                <th><span className={style.verticalHeader}>Курс. проект</span></th>
-                                <th><span className={style.verticalHeader}>Курс. работа</span></th>
+                                <th rowSpan={2} className="text-center">Дисциплина</th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Общее кол-во часов</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Всего</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Всего аудиторных</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Лекции</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Лабораторные</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Практич.+Семинарные</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Л</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Лр</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>КСР П</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Вс</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Кол-во зачётных ед.</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Потоки</span></th>
+
                                 {weeksHeader}
+
+                                <th rowSpan={2}><span className={style.verticalHeader}>Экзамен</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Зачёт</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Курс. проект</span></th>
+                                <th rowSpan={2}><span className={style.verticalHeader}>Курс. работа</span></th>
+                            </tr>
+                            <tr>
+                                {subHeader}
                             </tr>
                             </thead>
+
                             <tbody>
                             {fields.map((item, index) => (
                                 <tr key={item.id}>
-                                    <td><textarea className={style.textArea}
-                                                  type="text"
-                                                  name={`discipline[${index}].discipline`}
-                                                  ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].summary`}
-                                               ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursSummary`}
-                                               ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursCabinet`}
-                                               ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursLecture`}
-                                               ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursLaboratory`}
-                                               ref={register()}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursPracticalSeminary`} ref={register()}/>
+                                    <td>
+                                        <select className="form-control"
+                                                name={`disciplinePlan[${index}].disciplinePublicId`}
+                                                ref={register({required: "Выберите дисциплину"})}>
+                                            <option></option>
+                                            {disciplines.map(discipline => <option key={discipline.publicId}
+                                                                              value={discipline.publicId}>{discipline.name}</option>)}
+                                        </select>
                                     </td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursKSRL`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].summary`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursKSRLR`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursSummary`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursKSRP`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursCabinet`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].hoursKSRVS`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursLecture`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].testCount`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursLaboratory`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].flow`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursPracticalSeminary`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].exam`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursKSRL`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].test`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursKSRLR`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].courseProject`}
-                                               ref={register()}/></td>
+                                               name={`disciplinePlan[${index}].hoursKSRP`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`discipline[${index}].courseWork`}
+                                               name={`disciplinePlan[${index}].hoursKSRVS`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].testCount`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].flow`}
                                                ref={register()}/></td>
 
-                                    {weeksInput}
+                                    {weekInput(index)}
+
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].exam`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].test`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].courseProject`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+                                    <td><input type="text" className={style.inputField}
+                                               name={`disciplinePlan[${index}].courseWork`}
+                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
+
 
                                     <td>
-                                        <button onClick={() => remove(index)}>Delete</button>
+                                        <button className="mx-1" onClick={() => remove(index)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
-
-                        <button type="button" className="btn btn-sm btn-secondary m-1" onClick={() => append({})}>
-                            Добавить дисциплину
-                        </button>
-                        <button className="btn btn-secondary btn-sm">Сохранить</button>
+                        <div className="row justify-content-center">
+                            <button className="btn btn-sm btn-secondary m-1">Сохранить</button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>
         </div>
     )
-
 };
 
 export default LearnPlanForm;

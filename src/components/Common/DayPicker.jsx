@@ -8,7 +8,6 @@ import 'react-day-picker/lib/style.css';
 import {formatDate, parseDate} from 'react-day-picker/moment';
 
 
-
 export default class DayPicker extends React.Component {
 
     constructor(props) {
@@ -49,8 +48,8 @@ export default class DayPicker extends React.Component {
             <>
                 <DayPickerInput
                     value={from}
-                    placeholder="From"
-                    format="LL"
+                    placeholder="Начало"
+                    format="DD/MM/YY"
                     formatDate={formatDate}
                     parseDate={parseDate}
                     dayPickerProps={{
@@ -67,14 +66,13 @@ export default class DayPicker extends React.Component {
                         months: MONTHS['ru']
                     }}
                     onDayChange={this.handleFromChange}
-                />{' '}
-                —{' '}
+                />{' '} — {' '}
                 <span className="InputFromTo-to">
           <DayPickerInput className="d-inline"
                           ref={el => (this.to = el)}
                           value={to}
-                          placeholder="To"
-                          format="LL"
+                          placeholder="Конец"
+                          format="DD/MM/YY"
                           formatDate={formatDate}
                           parseDate={parseDate}
                           dayPickerProps={{
@@ -85,7 +83,10 @@ export default class DayPicker extends React.Component {
                               fromMonth: from,
                               numberOfMonths: 1,
                               firstDayOfWeek: 1,
-                              locale: "ru"
+                              locale: "ru",
+                              weekdaysShort: WEEKDAYS_SHORT['ru'],
+                              weekdaysLong: WEEKDAYS_LONG['ru'],
+                              months: MONTHS['ru'],
                           }}
                           onDayChange={this.handleToChange}
 

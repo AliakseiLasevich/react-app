@@ -1,55 +1,67 @@
 .wrapper {
-    display: inline-block;
-    position: relative;
     font-size: small;
 }
 
 table {
-    border: solid black 1px;
+    border: solid 1px darkgray;
     border-collapse: collapse;
-    letter-spacing: 1px;
 }
 
 th {
     padding: 2px;
-    background: silver;
-    /*width: auto;*/
-    border: 1px solid black;
+    background: whitesmoke;
+    border: 1px solid darkgray;
     color: black;
     font-weight: 700;
     font-family: Lato, serif;
+    text-align: center;
 }
+
 .textArea {
     resize: none;
+    border: 0;
+    text-align: center;
+    vertical-align: middle;
 }
+
 td {
     border: 1px solid silver;
-    padding: 2px 2px;
+    padding: 0;
     text-align: center;
-    width: auto;
+    vertical-align: center;
 }
 
 .verticalHeader {
     writing-mode: vertical-rl;
     transform: rotate(-180deg);
-    min-height: 10em;
-    width: 15px;
     font-weight: 500;
-    font-size: 10pt;
+    font-size: 12pt;
+    text-align: center;
 }
 
 .inputField {
     width: 30px;
-    font-size: small;
+    font-size: medium;
+    border: 0;
+}
+
+.smallInputField {
+    width: 17px;
 }
 
 input {
-    font-size: 10px;
-    font-family: monospace;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    font-size: 12px;
+    font-family: Lato, serif;
+    text-align: center;
 }
 
-.largeInputField{
-    font-size: x-small;
-    /*width: 1200px;*/
-    /*word-break: break-word;*/
+.borderRight {
+    border-right: 1px dashed lightgray;
+}
+
+.borderLeft {
+    border-left: 1px dashed lightgray;
 }

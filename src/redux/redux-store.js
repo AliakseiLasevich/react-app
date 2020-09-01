@@ -7,6 +7,8 @@ import cabinetsReducer from "./CabinetsReducer";
 import specialtyReducer from "./SpecialtyReducer";
 import studentGroupReducer from "./StudentGroupsReducer";
 import buildingsReducer from "./BuildingsReducer";
+import learnPlanReducer from "./LearnPlanReducer";
+import disciplinesReducer from "./DisciplinesReducer";
 
 let reducers = combineReducers({
     cathedraReducer: cathedraReducer,
@@ -16,6 +18,8 @@ let reducers = combineReducers({
     cabinetsReducer: cabinetsReducer,
     specialtyReducer: specialtyReducer,
     studentGroupReducer: studentGroupReducer,
+    learnPlanReducer: learnPlanReducer,
+    disciplinesReducer: disciplinesReducer
 
 });
 
