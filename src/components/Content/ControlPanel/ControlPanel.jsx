@@ -9,6 +9,7 @@ import SpecialtyManager from "./SpecialtyManager";
 import CabinetsManager from "./CabinetsManager";
 import BuildingsManager from "./BuildingsManager";
 import DisciplinesManager from "./DisciplinesManager";
+import LearnPlan from "./LearnPlanManager/LearnPlan";
 
 const ControlPanel = (props) => {
     return (
@@ -95,11 +96,14 @@ const ControlPanel = (props) => {
             <Route path="/controlPanel/students"
                    render={() => <StudentGroupManager/>}/>
 
-            <Route path="/controlPanel/learnPlan"
+            <Route path="/controlPanel/learnPlan" exact={true}
                    render={() => <LearnPlanManager/>}/>
 
             <Route path="/controlPanel/disciplines"
                    render={() => <DisciplinesManager/>}/>
+
+
+            <Route exact path="/controlPanel/learnPlan/:learnPlanId" component={LearnPlan}/>
         </>
 
 

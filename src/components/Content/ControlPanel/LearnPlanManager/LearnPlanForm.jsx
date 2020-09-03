@@ -16,6 +16,9 @@ const LearnPlanForm = (props) => {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
+        data.startDate = startDate.format("YYYY-MM-DD");
+        data.endDate = moment(endDate).add(6, 'days').format("YYYY-MM-DD");
+        debugger
         dispatch(createLearnPlan(data));
     };
 
@@ -60,43 +63,6 @@ const LearnPlanForm = (props) => {
         dispatch(requestDisciplines());
         append([{}]);
     }, []);
-
-    const weeksHeader = useMemo(() => weeks.map(week =>
-        <th key={`${week}_header`} colSpan={2}>
-            <span className={style.verticalHeader}>
-            {`${week.format("DD.MM.YY")} - ${moment(week).add(6, "days").format("DD.MM.YY")}`}
-            </span>
-        </th>
-    ), [weeks]);
-
-    const subHeader = useMemo(() => weeks.map(week => {
-            return (
-                <React.Fragment key={`${week}_subheader`}>
-                    <th className="text-center"> Л</th>
-                    <th className="text-center"> П</th>
-                </React.Fragment>
-            )
-        }
-    ), [weeks]);
-
-    const weekInput = (index) => {
-        return (
-            weeks.map(week =>
-                <React.Fragment key={`${week}_input`}>
-                    <td className={style.borderRight}>
-                        <input type="text" className={style.inputField + ' ' + style.smallInputField}
-                               name={`disciplinePlan[${index}].lessons[${moment(week).format('YYYY-MM-DD')}].lecture`}
-                               ref={register()}/>
-                    </td>
-                    <td className={style.borderLeft}>
-                        <input type="text" className={style.inputField + ' ' + style.smallInputField}
-                               name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practice`}
-                               ref={register()}/>
-                    </td>
-                </React.Fragment>
-            )
-        )
-    };
 
     const isNumberOrEmpty = (value) => {
         return Number.isInteger(parseInt(value)) || value === "";
@@ -164,29 +130,46 @@ const LearnPlanForm = (props) => {
                         <table>
                             <thead>
                             <tr>
-                                <th rowSpan={2} className="text-center">Дисциплина</th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Общее кол-во часов</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Всего</span></th>
+                                <th rowSpan={3} className="text-center">Дисциплина</th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Общее кол-во часов</span></th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Всего</span></th>
+                                <th rowSpan={1} colSpan={8} className="text-center">Количество часов</th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Кол-во зачётных ед.</span></th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Потоки</span></th>
+                                {weeks.map(week => {
+                                    return (
+                                        <th key={`${week}_header`} colSpan={2} rowSpan={2}>
+            <span className={style.verticalHeader}>
+            {`${week.format("DD.MM.YY")} - ${moment(week).add(6, "days").format("DD.MM.YY")}`}
+            </span></th>)
+                                })}
+                                <th rowSpan={3}><span className={style.verticalHeader}>Экзамен</span></th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Зачёт</span></th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Курс. проект</span></th>
+                                <th rowSpan={3}><span className={style.verticalHeader}>Курс. работа</span></th>
+                            </tr>
+
+                            <tr>
                                 <th rowSpan={2}><span className={style.verticalHeader}>Всего аудиторных</span></th>
                                 <th rowSpan={2}><span className={style.verticalHeader}>Лекции</span></th>
                                 <th rowSpan={2}><span className={style.verticalHeader}>Лабораторные</span></th>
                                 <th rowSpan={2}><span className={style.verticalHeader}>Практич.+Семинарные</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Л</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Лр</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>КСР П</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>КСР Вс</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Кол-во зачётных ед.</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Потоки</span></th>
-
-                                {weeksHeader}
-
-                                <th rowSpan={2}><span className={style.verticalHeader}>Экзамен</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Зачёт</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Курс. проект</span></th>
-                                <th rowSpan={2}><span className={style.verticalHeader}>Курс. работа</span></th>
+                                <th rowSpan={1} colSpan={4} className="text-center">КСР</th>
                             </tr>
+
                             <tr>
-                                {subHeader}
+                                <th rowSpan={1}><span className={style.verticalHeader}>Л</span></th>
+                                <th rowSpan={1}><span className={style.verticalHeader}>Лр</span></th>
+                                <th rowSpan={1}><span className={style.verticalHeader}>П</span></th>
+                                <th rowSpan={1}><span className={style.verticalHeader}>Вс</span></th>
+                                {weeks.map(week => {
+                                    return (
+                                        <React.Fragment key={`${week}_subheader`}>
+                                            <th className="text-center"> Л</th>
+                                            <th className="text-center"> П</th>
+                                        </React.Fragment>)
+                                })
+                                }
                             </tr>
                             </thead>
 
@@ -199,14 +182,14 @@ const LearnPlanForm = (props) => {
                                                 ref={register({required: "Выберите дисциплину"})}>
                                             <option></option>
                                             {disciplines.map(discipline => <option key={discipline.publicId}
-                                                                              value={discipline.publicId}>{discipline.name}</option>)}
+                                                                                   value={discipline.publicId}>{discipline.name}</option>)}
                                         </select>
                                     </td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].summary`}
+                                               name={`disciplinePlan[${index}].hoursSummary`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].hoursSummary`}
+                                               name={`disciplinePlan[${index}].summary`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
                                                name={`disciplinePlan[${index}].hoursCabinet`}
@@ -221,16 +204,16 @@ const LearnPlanForm = (props) => {
                                                name={`disciplinePlan[${index}].hoursPracticalSeminary`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].hoursKSRL`}
+                                               name={`disciplinePlan[${index}].hoursKSRLecture`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].hoursKSRLR`}
+                                               name={`disciplinePlan[${index}].hoursKSRLaboratory`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].hoursKSRP`}
+                                               name={`disciplinePlan[${index}].hoursKSRPractical`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].hoursKSRVS`}
+                                               name={`disciplinePlan[${index}].hoursKSRSummary`}
                                                ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
                                     <td><input type="text" className={style.inputField}
                                                name={`disciplinePlan[${index}].testCount`}
@@ -238,23 +221,37 @@ const LearnPlanForm = (props) => {
                                     <td><input type="text" className={style.inputField}
                                                name={`disciplinePlan[${index}].flow`}
                                                ref={register()}/></td>
-
-                                    {weekInput(index)}
-
-                                    <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].exam`}
-                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].test`}
-                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].courseProject`}
-                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
-                                    <td><input type="text" className={style.inputField}
-                                               name={`disciplinePlan[${index}].courseWork`}
-                                               ref={register({validate: value => isNumberOrEmpty(value)})}/></td>
-
-
+                                    {weeks.map(week => {
+                                        return (
+                                            <React.Fragment key={`${week}_input`}>
+                                                <td className={style.borderRight}>
+                                                    <input type="text"
+                                                           className={style.inputField + ' ' + style.smallInputField}
+                                                           name={`disciplinePlan[${index}].lessons[${moment(week).format('YYYY-MM-DD')}].lecture`}
+                                                           ref={register()}/>
+                                                </td>
+                                                <td className={style.borderLeft}>
+                                                    <input type="text"
+                                                           className={style.inputField + ' ' + style.smallInputField}
+                                                           name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practice`}
+                                                           ref={register()}/>
+                                                </td>
+                                            </React.Fragment>)
+                                    })}
+                                    <td>
+                                        <input type="checkbox" name={`disciplinePlan[${index}].exam`} ref={register}/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name={`disciplinePlan[${index}].test`} ref={register}/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name={`disciplinePlan[${index}].courseProject`}
+                                               ref={register}/>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name={`disciplinePlan[${index}].courseWork`}
+                                               ref={register}/>
+                                    </td>
                                     <td>
                                         <button className="mx-1" onClick={() => remove(index)}>Delete</button>
                                     </td>

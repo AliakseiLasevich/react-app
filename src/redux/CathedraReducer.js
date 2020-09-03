@@ -1,7 +1,7 @@
 import {cathedraAPI} from "../api/api";
 
 const SET_CATHEDRAS = "SET_CATHEDRAS";
-const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 let initialState = {
     allCathedras: [],
@@ -17,7 +17,7 @@ const cathedraReducer = (state = initialState, action) => {
                 allCathedras: action.allCathedras
             };
 
-        case TOGGLE_ISFETCHING:
+        case TOGGLE_IS_FETCHING:
             return {
                 ...state,
                 isFetching: action.isFetching
@@ -37,7 +37,7 @@ export const setCathedras = (allCathedras) => {
 
 export const setIsFetching = (isFetching) => {
     return {
-        type: TOGGLE_ISFETCHING,
+        type: TOGGLE_IS_FETCHING,
         isFetching: isFetching
     }
 };

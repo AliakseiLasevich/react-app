@@ -21,7 +21,6 @@ const CabinetsManager = (props) => {
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.cabinetsReducer.isFetching);
     const cabinets = useSelector(state => state.cabinetsReducer.allCabinets);
-console.log(cabinets)
 
     useEffect(() => {
         dispatch(requestCabinets());

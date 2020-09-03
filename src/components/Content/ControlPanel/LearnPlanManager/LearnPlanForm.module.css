@@ -65,3 +65,7 @@ input {
 .borderLeft {
     border-left: 1px dashed lightgray;
 }
+
+.tableCell{
+    background-color: whitesmoke;
+}

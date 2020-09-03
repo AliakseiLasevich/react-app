@@ -133,7 +133,16 @@ export const studentGroupAPI = {
 
 export const learnPlanAPI = {
     postLearnPlan(learnPlan) {
-        return instance.post(`learn_plan`, learnPlan)
+        return instance.post(`learn_plans`, learnPlan)
+    },
+    deleteLearnPlan(learnPlanId) {
+        return instance.delete(`learn_plans/${learnPlanId}`)
+    },
+    getAllLearnPlans() {
+        return instance.get(`learn_plans`)
+    },
+    getLearnPlanById(publicId) {
+        return instance.get(`learn_plans/${publicId}`)
     }
 };
 

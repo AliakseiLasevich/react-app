@@ -16,6 +16,7 @@ const disciplinesReducer = (state = initialState, action) => {
                 ...state,
                 allDisciplines: action.disciplines
             };
+
         case TOGGLE_IS_FETCHING:
             return {
                 ...state, isFetching: action.isFetching
