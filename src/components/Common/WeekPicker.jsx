@@ -43,8 +43,17 @@ export default class WeekPicker extends React.Component {
         };
     }
 
+    componentDidMount() {
+        const currentDate = moment();
+        this.props.setWeek(getWeekDays(getWeekRange(currentDate).from));
+        this.setState({
+            selectedDays: getWeekDays(getWeekRange(currentDate).from),
+        });
+    }
+
 
     handleDayChange = date => {
+        this.props.setWeek(getWeekDays(getWeekRange(date).from));
         this.setState({
             selectedDays: getWeekDays(getWeekRange(date).from),
         });
@@ -83,7 +92,7 @@ export default class WeekPicker extends React.Component {
             hoverRangeEnd: hoverRange && hoverRange.to,
             selectedRangeStart: daysAreSelected && selectedDays[0],
             selectedRangeEnd: daysAreSelected && selectedDays[6],
-            sundays: { daysOfWeek: [0] },
+            sundays: {daysOfWeek: [0]},
         };
 
         const modifiersStyles = {
@@ -140,13 +149,13 @@ export default class WeekPicker extends React.Component {
                     weekdaysShort={WEEKDAYS_SHORT['ru']}
                     weekdaysLong={WEEKDAYS_LONG['ru']}
                     months={MONTHS['ru']}
-                    numberOfMonths={3}
+                    numberOfMonths={1}
                     modifiersStyles={modifiersStyles}
                 />
                 {selectedDays.length === 7 && (
-                    <div>
-                        {moment(selectedDays[0]).format('LL')} –{' '}
-                        {moment(selectedDays[6]).format('LL')}
+                    <div className="text-center">
+                        {moment(selectedDays[0]).format('ll')} –{' '}
+                        {moment(selectedDays[6]).format('ll')}
                     </div>
                 )}
 
@@ -163,7 +172,7 @@ export default class WeekPicker extends React.Component {
               border: 1px solid transparent;
             }
             .SelectedWeekExample .DayPicker-Day--hoverRange {
-              background-color: #EFEFEF !important;
+              background-color: orange !important;
             }
 
             .SelectedWeekExample .DayPicker-Day--selectedRange {
@@ -172,22 +181,25 @@ export default class WeekPicker extends React.Component {
               border-bottom-color: #FFEB3B;
               border-left-color: #fff7ba;
               border-right-color: #fff7ba;
+             
             }
 
             .SelectedWeekExample .DayPicker-Day--selectedRangeStart {
               background-color: #FFEB3B !important;
               border-left: 1px solid #FFEB3B;
+              
             }
 
             .SelectedWeekExample .DayPicker-Day--selectedRangeEnd {
               background-color: #FFEB3B !important;
               border-right: 1px solid #FFEB3B;
+               
             }
 
             .SelectedWeekExample .DayPicker-Day--selectedRange:not(.DayPicker-Day--outside).DayPicker-Day--selected,
             .SelectedWeekExample .DayPicker-Day--hoverRange:not(.DayPicker-Day--outside).DayPicker-Day--selected {
               border-radius: 0 !important;
-              color: black !important;
+              color: #c71010 !important;
             }
             .SelectedWeekExample .DayPicker-Day--hoverRange:hover {
               border-radius: 0 !important;

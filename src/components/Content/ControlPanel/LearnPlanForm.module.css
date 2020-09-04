@@ -58,14 +58,18 @@ input {
     text-align: center;
 }
 
-.borderRight {
-    border-right: 1px dashed lightgray;
-}
-
-.borderLeft {
-    border-left: 1px dashed lightgray;
-}
-
 .tableCell{
     background-color: whitesmoke;
+}
+
+.cellLecture {
+    background-color: paleturquoise;
+}
+
+.cellPractice {
+    background-color: palevioletred;
+}
+
+.cellLaboratory {
+    background-color: palegreen;
 }

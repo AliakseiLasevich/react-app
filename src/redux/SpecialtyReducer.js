@@ -50,6 +50,17 @@ export const requestSpecialties = () => {
     };
 };
 
+export const requestSpecialtiesByFacultyId = (facultyId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await specialtyAPI.getSpecialtyByFacultyId(facultyId);
+        dispatch(setSpecialties(response));
+        dispatch(setIsFetching(false));
+    };
+};
+
+
+
 export const createSpecialty = (specialty) => {
     return async (dispatch) => {
         await specialtyAPI.postSpecialty(specialty)
@@ -69,6 +80,13 @@ export const deleteSpecialty = (publicId) => {
         await specialtyAPI.deleteSpecialty(publicId);
         dispatch(requestSpecialties());
     };
+};
+
+export const resetSpecialties = () => {
+    return {
+        type: SET_SPECIALTIES,
+        allSpecialties: []
+    }
 };
 
 

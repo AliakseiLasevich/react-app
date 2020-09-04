@@ -4,12 +4,12 @@ import FacultyManager from "./FacultyManager";
 import CathedraManager from "./CathedraManager";
 import TeacherManager from "./TeacherManager";
 import StudentGroupManager from "./StudentGroupManager";
-import LearnPlanManager from "./LearnPlanManager/LearnPlanManager";
+import LearnPlanManager from "./LearnPlanManager";
 import SpecialtyManager from "./SpecialtyManager";
 import CabinetsManager from "./CabinetsManager";
 import BuildingsManager from "./BuildingsManager";
 import DisciplinesManager from "./DisciplinesManager";
-import LearnPlan from "./LearnPlanManager/LearnPlan";
+import LearnPlan from "./LearnPlan";
 
 const ControlPanel = (props) => {
     return (

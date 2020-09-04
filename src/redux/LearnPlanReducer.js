@@ -138,8 +138,18 @@ export const createLearnPlan = (learnPlan) => {
 export const deleteLearnPlan = (learnPlanId) => {
     return async (dispatch) => {
         const response = await learnPlanAPI.deleteLearnPlan(learnPlanId);
-        console.log(response)
+        console.log(response);
     }
 };
+
+export const requestLearnPlansWithDateInclude = (date) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await learnPlanAPI.requestLearnPlansWithDateInclude(date);
+        dispatch(setAllLearnPlans(response.data));
+        dispatch(setIsFetching(false));
+    }
+};
+
 
 export default learnPlanReducer;

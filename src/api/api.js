@@ -110,6 +110,9 @@ export const specialtyAPI = {
     },
     deleteSpecialty(publicId) {
         return instance.delete(`specialties/${publicId}`)
+    },
+    getSpecialtyByFacultyId(facultyId) {
+        return instance.get(`specialties/faculties/${facultyId}`)
     }
 };
 
@@ -143,7 +146,16 @@ export const learnPlanAPI = {
     },
     getLearnPlanById(publicId) {
         return instance.get(`learn_plans/${publicId}`)
+    },
+    requestLearnPlansWithDateInclude(date) {
+        return instance.get(`learn_plans/`, {
+            params: {
+                date
+            }
+        })
     }
+
+
 };
 
 export const disciplinesAPI = {

@@ -3,13 +3,13 @@ import {useFieldArray, useForm} from "react-hook-form";
 import style from "./LearnPlanForm.module.css";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DayPicker from "../../../Common/DayPicker";
+import DayPicker from "../../Common/DayPicker";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {createLearnPlan} from "../../../../redux/LearnPlanReducer";
-import {requestFaculties} from "../../../../redux/FacultyReducer";
-import {requestSpecialties} from "../../../../redux/SpecialtyReducer";
-import {requestDisciplines} from "../../../../redux/DisciplinesReducer";
+import {createLearnPlan} from "../../../redux/LearnPlanReducer";
+import {requestFaculties} from "../../../redux/FacultyReducer";
+import {requestSpecialties, requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
+import {requestDisciplines} from "../../../redux/DisciplinesReducer";
 
 const LearnPlanForm = (props) => {
 
@@ -59,7 +59,6 @@ const LearnPlanForm = (props) => {
 
     useEffect(() => {
         dispatch(requestFaculties());
-        dispatch(requestSpecialties());
         dispatch(requestDisciplines());
         append([{}]);
     }, []);
@@ -67,6 +66,13 @@ const LearnPlanForm = (props) => {
     const isNumberOrEmpty = (value) => {
         return Number.isInteger(parseInt(value)) || value === "";
     };
+
+    useEffect(() => {
+        dispatch(requestSpecialtiesByFacultyId(facultyId));
+        return () => {
+            dispatch(resetSpecialties())
+        };
+    }, [dispatch, facultyId]);
 
     return (
         <div>
@@ -138,7 +144,7 @@ const LearnPlanForm = (props) => {
                                 <th rowSpan={3}><span className={style.verticalHeader}>Потоки</span></th>
                                 {weeks.map(week => {
                                     return (
-                                        <th key={`${week}_header`} colSpan={2} rowSpan={2}>
+                                        <th key={`${week}_header`} colSpan={3} rowSpan={2} className="text-center">
             <span className={style.verticalHeader}>
             {`${week.format("DD.MM.YY")} - ${moment(week).add(6, "days").format("DD.MM.YY")}`}
             </span></th>)
@@ -165,8 +171,9 @@ const LearnPlanForm = (props) => {
                                 {weeks.map(week => {
                                     return (
                                         <React.Fragment key={`${week}_subheader`}>
-                                            <th className="text-center"> Л</th>
-                                            <th className="text-center"> П</th>
+                                            <th className="text-center">Лк</th>
+                                            <th className="text-center">Пр</th>
+                                            <th className="text-center">Лб</th>
                                         </React.Fragment>)
                                 })
                                 }
@@ -224,16 +231,22 @@ const LearnPlanForm = (props) => {
                                     {weeks.map(week => {
                                         return (
                                             <React.Fragment key={`${week}_input`}>
-                                                <td className={style.borderRight}>
+                                                <td className={style.cellLecture}>
                                                     <input type="text"
                                                            className={style.inputField + ' ' + style.smallInputField}
                                                            name={`disciplinePlan[${index}].lessons[${moment(week).format('YYYY-MM-DD')}].lecture`}
                                                            ref={register()}/>
                                                 </td>
-                                                <td className={style.borderLeft}>
+                                                <td className={ style.cellPractice}>
                                                     <input type="text"
                                                            className={style.inputField + ' ' + style.smallInputField}
                                                            name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practice`}
+                                                           ref={register()}/>
+                                                </td>
+                                                <td className={style.cellLaboratory}>
+                                                    <input type="text"
+                                                           className={style.inputField + ' ' + style.smallInputField}
+                                                           name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.laboratory`}
                                                            ref={register()}/>
                                                 </td>
                                             </React.Fragment>)
