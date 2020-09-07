@@ -1,4 +1,4 @@
-import {studentGroupAPI} from "../api/api";
+import {studentCourseAPI, studentGroupAPI} from "../api/api";
 
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
@@ -73,5 +73,13 @@ export const deleteStudentGroup = (studentGroup) => {
         dispatch(requestStudentGroups());
     }
 };
+
+export const postStudentCourse = (studentCourse) => {
+    return async (dispatch) => {
+        await studentCourseAPI.postStudentCourse(studentCourse);
+        dispatch(requestStudentGroups());
+    }
+};
+
 
 export default studentGroupReducer;

@@ -7,11 +7,11 @@ import Delete from "@material-ui/icons/Delete";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
 import {useDispatch, useSelector} from "react-redux";
-import StudentGroupForm from "./StudentGroupForm";
-import {deleteStudentGroup, requestStudentGroups} from "../../../redux/StudentGroupsReducer";
+import StudentsForm from "./StudentsForm";
+import {deleteStudentGroup, requestStudentGroups} from "../../../redux/StudentsReducer";
 
 
-const StudentGroupManager = () => {
+const StudentsManager = () => {
 
     const [studentGroupEditMode, setStudentGroupEditMode] = useState(false);
     const [studentGroupToEdit, setStudentGroupToEdit] = useState({});
@@ -20,8 +20,8 @@ const StudentGroupManager = () => {
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.studentGroupReducer.isFetching);
-    const studentGroups = useSelector(state => state.studentGroupReducer.allStudentGroups);
+    const isFetching = useSelector(state => state.studentsReducer.isFetching);
+    const studentGroups = useSelector(state => state.studentsReducer.allStudentGroups);
 
     useEffect(() => {
         dispatch(requestStudentGroups());
@@ -39,7 +39,7 @@ const StudentGroupManager = () => {
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setStudentGroupEditMode(true)}>
-                    Добавить группу студентов
+                    Добавить курс студентов
                 </button>
             </div>
 
@@ -97,10 +97,11 @@ const StudentGroupManager = () => {
                 </div>
 
                 {studentGroupEditMode &&
-                <StudentGroupForm editMode={studentGroupEditMode}
-                                  setEditMode={setStudentGroupEditMode}
-                                  studentGroup={studentGroupToEdit}
-                                  setStudentGroupToEdit={setStudentGroupToEdit}/>}
+                <StudentsForm editMode={studentGroupEditMode}
+                              setEditMode={setStudentGroupEditMode}
+                              studentGroup={studentGroupToEdit}
+                              setStudentGroupToEdit={setStudentGroupToEdit}/>
+                }
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
@@ -114,4 +115,4 @@ const StudentGroupManager = () => {
     )
 };
 
-export default StudentGroupManager;
+export default StudentsManager;

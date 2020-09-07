@@ -8,7 +8,7 @@ table {
 }
 
 th {
-    padding: 2px;
+    padding: 1px;
     background: whitesmoke;
     border: 1px solid darkgray;
     color: black;
@@ -35,8 +35,9 @@ td {
     writing-mode: vertical-rl;
     transform: rotate(-180deg);
     font-weight: 500;
-    font-size: 12pt;
+    font-size: 11pt;
     text-align: center;
+    line-height: 1.1;
 }
 
 .inputField {
@@ -58,18 +59,18 @@ input {
     text-align: center;
 }
 
-.tableCell{
+.tableCell {
     background-color: whitesmoke;
 }
 
 .cellLecture {
-    background-color: paleturquoise;
+    background-color: lightgreen;
 }
 
 .cellPractice {
-    background-color: palevioletred;
+    background-color: lightblue;
 }
 
 .cellLaboratory {
-    background-color: palegreen;
+    background-color: lightcoral;
 }

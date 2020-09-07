@@ -152,13 +152,6 @@ export default class WeekPicker extends React.Component {
                     numberOfMonths={1}
                     modifiersStyles={modifiersStyles}
                 />
-                {selectedDays.length === 7 && (
-                    <div className="text-center">
-                        {moment(selectedDays[0]).format('ll')} –{' '}
-                        {moment(selectedDays[6]).format('ll')}
-                    </div>
-                )}
-
                 <Helmet>
                     <style>{`
             .SelectedWeekExample .DayPicker-Month {

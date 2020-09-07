@@ -3,7 +3,7 @@ import {NavLink, Route} from "react-router-dom"
 import FacultyManager from "./FacultyManager";
 import CathedraManager from "./CathedraManager";
 import TeacherManager from "./TeacherManager";
-import StudentGroupManager from "./StudentGroupManager";
+import StudentsManager from "./StudentsManager";
 import LearnPlanManager from "./LearnPlanManager";
 import SpecialtyManager from "./SpecialtyManager";
 import CabinetsManager from "./CabinetsManager";
@@ -94,7 +94,7 @@ const ControlPanel = (props) => {
                    render={() => <SpecialtyManager/>}/>
 
             <Route path="/controlPanel/students"
-                   render={() => <StudentGroupManager/>}/>
+                   render={() => <StudentsManager/>}/>
 
             <Route path="/controlPanel/learnPlan" exact={true}
                    render={() => <LearnPlanManager/>}/>

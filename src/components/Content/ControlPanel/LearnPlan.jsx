@@ -132,7 +132,7 @@ const LearnPlan = (props) => {
                                                 {week[1].lecture}
                                             </td>
                                             <td className={style.tableCell}>
-                                                {week[1].practice}
+                                                {week[1].practical}
                                             </td>
                                         </React.Fragment>
                                     )

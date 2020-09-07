@@ -54,7 +54,7 @@ let initialState = {
                         "2000-01-01": {
                             id: 0,
                             lecture: 0,
-                            practice: 0
+                            practical: 0
                         }
                     }
                 }

@@ -5,7 +5,7 @@ import teacherReducer from "./TeacherReducer";
 import thunkMiddleware from "redux-thunk";
 import cabinetsReducer from "./CabinetsReducer";
 import specialtyReducer from "./SpecialtyReducer";
-import studentGroupReducer from "./StudentGroupsReducer";
+import studentsReducer from "./StudentsReducer";
 import buildingsReducer from "./BuildingsReducer";
 import learnPlanReducer from "./LearnPlanReducer";
 import disciplinesReducer from "./DisciplinesReducer";
@@ -17,7 +17,7 @@ let reducers = combineReducers({
     buildingsReducer: buildingsReducer,
     cabinetsReducer: cabinetsReducer,
     specialtyReducer: specialtyReducer,
-    studentGroupReducer: studentGroupReducer,
+    studentsReducer: studentsReducer,
     learnPlanReducer: learnPlanReducer,
     disciplinesReducer: disciplinesReducer
 

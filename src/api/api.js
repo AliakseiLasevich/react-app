@@ -134,6 +134,12 @@ export const studentGroupAPI = {
     }
 };
 
+export const studentCourseAPI = {
+    postStudentCourse(studentCourse) {
+        return instance.post(`student_course/`, studentCourse)
+    }
+};
+
 export const learnPlanAPI = {
     postLearnPlan(learnPlan) {
         return instance.post(`learn_plans`, learnPlan)

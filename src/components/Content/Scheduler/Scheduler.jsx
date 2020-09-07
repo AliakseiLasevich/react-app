@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {requestFaculties} from "../../../redux/FacultyReducer";
 import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
 import {requestLearnPlansWithDateInclude} from "../../../redux/LearnPlanReducer";
+import LearnWeek from "./LearnWeek";
 
 
 const Scheduler = () => {
@@ -33,12 +34,18 @@ const Scheduler = () => {
         week && dispatch(requestLearnPlansWithDateInclude(moment(week[0]).format('YYYY-MM-DD')));
     }, [dispatch, week]);
 
+
+    const facultyHasLearnPlan = (facultyId) => {
+        return allLearnPlans.filter(learnPlan => learnPlan.faculty.publicId === facultyId).length;
+    };
     return (
         <div className="bg-light">
 
             <div className="bg-info p-2 text-center">
                 {faculties.map(faculty => <button key={faculty.publicId} type="button"
-                                                  className="btn btn-sm btn-light mx-1 disabled">{faculty.name}</button>)}
+                                                  className={facultyHasLearnPlan(faculty.publicId) ? "btn btn-sm btn-warning mx-1" : "btn btn-sm btn-info mx-1"}>
+                    {faculty.name}
+                </button>)}
 
             </div>
 
@@ -46,6 +53,7 @@ const Scheduler = () => {
                 <form className="col-8">
 
                     <div className="form-row justify-content-center">
+
                         <div className="form-group col-md-4">
                             <label htmlFor="facultyId">Факультет:</label>
                             <select className="form-control col" name="facultyId"
@@ -86,6 +94,11 @@ const Scheduler = () => {
                     <WeekPicker setWeek={setWeek}/>
                 </div>
             </div>
+
+            <LearnWeek week={week}
+                       specialtyId={specialtyId}
+                       courseNumber={courseNumber}/>
+
         </div>
     );
 };

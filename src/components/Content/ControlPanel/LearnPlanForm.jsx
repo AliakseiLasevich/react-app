@@ -8,7 +8,7 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {createLearnPlan} from "../../../redux/LearnPlanReducer";
 import {requestFaculties} from "../../../redux/FacultyReducer";
-import {requestSpecialties, requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
+import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
 import {requestDisciplines} from "../../../redux/DisciplinesReducer";
 
 const LearnPlanForm = (props) => {
@@ -18,7 +18,6 @@ const LearnPlanForm = (props) => {
     const onSubmit = (data) => {
         data.startDate = startDate.format("YYYY-MM-DD");
         data.endDate = moment(endDate).add(6, 'days').format("YYYY-MM-DD");
-        debugger
         dispatch(createLearnPlan(data));
     };
 
@@ -26,7 +25,12 @@ const LearnPlanForm = (props) => {
         props.setEditMode(false);
     };
 
-    const {register, control, handleSubmit, errors} = useForm();
+    const {register, control, handleSubmit, errors} = useForm({
+        defaultValues: {
+            disciplinePlan: [{}]
+        }
+    });
+
     const {fields, append, remove} = useFieldArray({
         control, name: "disciplinePlan",
     });
@@ -60,7 +64,6 @@ const LearnPlanForm = (props) => {
     useEffect(() => {
         dispatch(requestFaculties());
         dispatch(requestDisciplines());
-        append([{}]);
     }, []);
 
     const isNumberOrEmpty = (value) => {
@@ -80,6 +83,7 @@ const LearnPlanForm = (props) => {
                     onClose={handleClose}
                     aria-labelledby="form-dialog-title"
                     maxWidth={false}>
+
                 <DialogContent style={{minHeight: "70vh"}}>
                     <div className="container-fluid justify-content-center text-center">
                         <div className="h3">
@@ -171,9 +175,12 @@ const LearnPlanForm = (props) => {
                                 {weeks.map(week => {
                                     return (
                                         <React.Fragment key={`${week}_subheader`}>
-                                            <th className="text-center">Лк</th>
-                                            <th className="text-center">Пр</th>
-                                            <th className="text-center">Лб</th>
+                                            <th className="text-center"><span
+                                                className={style.verticalHeader}>Лекц.</span></th>
+                                            <th className="text-center"><span
+                                                className={style.verticalHeader}>Практ.</span></th>
+                                            <th className="text-center"><span
+                                                className={style.verticalHeader}>Лаб.</span></th>
                                         </React.Fragment>)
                                 })
                                 }
@@ -231,21 +238,21 @@ const LearnPlanForm = (props) => {
                                     {weeks.map(week => {
                                         return (
                                             <React.Fragment key={`${week}_input`}>
-                                                <td className={style.cellLecture}>
+                                                <td>
                                                     <input type="text"
-                                                           className={style.inputField + ' ' + style.smallInputField}
+                                                           className={style.inputField + ' ' + style.smallInputField + ' ' + style.cellLecture}
                                                            name={`disciplinePlan[${index}].lessons[${moment(week).format('YYYY-MM-DD')}].lecture`}
                                                            ref={register()}/>
                                                 </td>
-                                                <td className={ style.cellPractice}>
+                                                <td>
                                                     <input type="text"
-                                                           className={style.inputField + ' ' + style.smallInputField}
-                                                           name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practice`}
+                                                           className={style.inputField + ' ' + style.smallInputField + ' ' + style.cellPractice}
+                                                           name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.practical`}
                                                            ref={register()}/>
                                                 </td>
-                                                <td className={style.cellLaboratory}>
+                                                <td>
                                                     <input type="text"
-                                                           className={style.inputField + ' ' + style.smallInputField}
+                                                           className={style.inputField + ' ' + style.smallInputField + ' ' + style.cellLaboratory}
                                                            name={`disciplinePlan[${index}].lessons.${moment(week).format('YYYY-MM-DD')}.laboratory`}
                                                            ref={register()}/>
                                                 </td>

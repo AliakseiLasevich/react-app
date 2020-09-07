@@ -1,73 +1,66 @@
-import React, {useEffect, useState} from 'react';
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
-import {createSpecialty, requestSpecialties, updateSpecialty} from "../../../redux/SpecialtyReducer";
+import React, {useState} from 'react';
+import {HiArrowUp} from "react-icons/hi";
 
 const StudentGroupForm = (props) => {
-    const {register, handleSubmit, errors} = useForm();
-    const dispatch = useDispatch();
-    const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
-    const [specialty, setSpecialty] = useState(props.studentGroup?.specialtyId || {});
 
-    useEffect(() => {
-        dispatch(requestSpecialties())
+    const [aCount, setACount] = useState(0);
+    const [bCount, setBCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+    const [hasSubgroups, setHasSubgroups] = useState(true);
 
-    }, [dispatch]);
-
-    const handleClose = () => {
-        props.setStudentGroupToEdit({});
-        props.setEditMode(false);
-    };
-
-    const onSubmit = (specialty) => {
-
-        if (props.specialty.name) {
-            dispatch(updateSpecialty(specialty, props.specialty.publicId))
-        } else {
-            dispatch(createSpecialty(specialty))
-        }
-        props.setSpecialtyToEdit({});
-        props.setEditMode(false);
-    };
 
     return (
-        <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogContent>
-                <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="border p-1 m-1 justify-content-center">
+            <div>Группа <strong>{props.groupNumber + 1}</strong></div>
 
-                    <label htmlFor="specialtyId">Специальность</label>
-                    <select className="form-control" name="specialtyId" ref={register({required: "Выберите специальность"})}
-                            value={specialty} onChange={e => setSpecialty(e.target.value)}>
-                        <option></option>
-                        {specialties.map(specialty => <option key={specialty.publicId} value={specialty.publicId}>{specialty.name}</option>)}
-                    </select>
-                    <div className="text-danger">  {errors.specialtyId && errors.specialtyId.message} </div>
+            <div>Количество студентов:</div>
+
+            <div className="row justify-content-center">
 
 
-                    {/*<label htmlFor="name">Название специальности</label>*/}
-                    {/*<input type="text" name="name" defaultValue={props.specialty.name || ""}*/}
-                    {/*       ref={register({required: "Введите название специальности"})} className="d-block"/>*/}
-                    {/*<div className="text-danger">  {errors.name && errors.name.message} </div>*/}
+                <div className="col">
+                    <div className="form-row">
+                        <div className="form-group col">
+                            <label htmlFor="specialtyId"> Подгруппа <strong>A</strong></label>
+                            <input className="form-control"
+                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]subgroupA`}
+                                   value={aCount}
+                                   onChange={(e) => setACount(+e.target.value)}
+                                   disabled={!hasSubgroups}/>
+                        </div>
+                        <div className="form-group col">
+                            <label htmlFor="specialtyId">Подгруппа <strong>Б</strong></label>
+                            <input className="form-control"
+                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]subgroupB`}
+                                   value={bCount}
+                                   onChange={(e) => setBCount(+e.target.value)}
+                                   disabled={!hasSubgroups}/>
+                        </div>
+                    </div>
+                </div>
 
-                    {/*<label htmlFor="code">Код специальности</label>*/}
-                    {/*<input type="text" name="code" defaultValue={props.specialty.code || ""}*/}
-                    {/*       ref={register({required: "Введите код специальности"})} className="d-block"/>*/}
-                    {/*<div className="text-danger">  {errors.code && errors.code.message} </div>*/}
 
+                <div className="btn btn-success btn-sm m-1 col-1 text-center h-50 align-self-center" onClick={() => {
+                    setACount(0);
+                    setBCount(0);
+                    setTotalCount(0);
+                    setHasSubgroups(!hasSubgroups);
+                }}>
+                    {hasSubgroups ? "🡰" : "🡲"}
+                </div>
 
+                <div className="form-row col">
+                    <div className="form-group col">
+                        Всего: <input className="form-control"
+                                      ref={props.register()} value={+aCount + bCount || totalCount}
+                                      onChange={(e) => setTotalCount(e.target.value)}
+                                      name={`studentGroups[${props.groupNumber}]total`} disabled={hasSubgroups}/>
 
-
-                    <DialogActions>
-                        <button className="btn" onClick={handleClose}>Отмена</button>
-                        <button className="btn" onClick={handleSubmit}>Сохранить</button>
-                    </DialogActions>
-
-                </form>
-            </DialogContent>
-        </Dialog>
+                    </div>
+                </div>
+            </div>
+            <div className="mx-1 btn-warning btn btn-sm" onClick={() => props.remove(props.groupNumber)}>Удалить</div>
+        </div>
     );
 };
 
