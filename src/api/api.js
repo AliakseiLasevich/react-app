@@ -136,7 +136,10 @@ export const studentGroupAPI = {
 
 export const studentCourseAPI = {
     postStudentCourse(studentCourse) {
-        return instance.post(`student_course/`, studentCourse)
+        return instance.post(`student_courses`, studentCourse)
+    },
+    getAllStudentCourses(){
+        return instance.get(`student_courses`)
     }
 };
 

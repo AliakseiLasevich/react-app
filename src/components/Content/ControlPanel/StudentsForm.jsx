@@ -43,12 +43,6 @@ const StudentsForm = (props) => {
     );
 
     const onSubmit = (data) => {
-
-        data.studentGroups.forEach(group => {
-
-        });
-        console.log(data);
-
         dispatch(postStudentCourse(data));
     };
 
@@ -87,6 +81,7 @@ const StudentsForm = (props) => {
 
                     </div>
 
+                    <div className="alert-success p-1 text-center">Ниже введите количество студентов в подгруппах, либо во всей группе, если нет разделения</div>
 
                     <div className="my-1 text-center">
                         {fields.map((item, index) => (

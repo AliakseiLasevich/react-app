@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import MaterialTable from "material-table";
 import tableIcons from "../../Common/TableIcons";
 import {NavLink} from "react-router-dom";
@@ -8,7 +8,7 @@ import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import StudentsForm from "./StudentsForm";
-import {deleteStudentGroup, requestStudentGroups} from "../../../redux/StudentsReducer";
+import {deleteStudentGroup, requestStudentCourses, requestStudentGroups} from "../../../redux/StudentsReducer";
 
 
 const StudentsManager = () => {
@@ -21,10 +21,10 @@ const StudentsManager = () => {
 
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.studentsReducer.isFetching);
-    const studentGroups = useSelector(state => state.studentsReducer.allStudentGroups);
+    const studentCourses = useSelector(state => state.studentsReducer.allStudentCourses);
 
     useEffect(() => {
-        dispatch(requestStudentGroups());
+        dispatch(requestStudentCourses());
     }, [dispatch]);
 
 
@@ -33,6 +33,7 @@ const StudentsManager = () => {
             dispatch(deleteStudentGroup(idToDelete))
         }
     }, [dispatch, idToDelete]);
+
 
     return (
         <div className="container-fluid">
@@ -49,19 +50,45 @@ const StudentsManager = () => {
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Группы студентов"
+                        title="Курсы студентов"
                         columns={[
                             {
-                                title: 'Номер группы',
+                                title: 'Номер курса',
                                 field: 'code',
                                 render: rowData => <NavLink
-                                    to={`/faculties/${rowData.publicId}`}>{rowData.number}</NavLink>,
+                                    to={`/student_courses/${rowData.publicId}`}>{rowData.courseNumber}</NavLink>,
+                                customSort: (a, b) => a.number - b.number,
+                                searchable: true
+                            },
+                            {
+                                title: 'Специальность',
+                                field: 'code',
+                                render: rowData => <NavLink
+                                    to={`/specialties/${rowData.specialty.publicId}`}>{rowData.specialty.name}</NavLink>,
+                                customSort: (a, b) => a.number - b.number,
+                                searchable: true
+                            },
+                            {
+                                title: 'Кол-во групп',
+                                field: 'code',
+                                render: rowData => rowData.studentGroups.length,
+                                customSort: (a, b) => a.number - b.number,
+                                searchable: true
+                            },
+                            {
+                                title: 'Кол-во подгрупп',
+                                field: 'code',
+                                render: rowData => {
+                                    let count = 0;
+                                    rowData.studentGroups.forEach(group => count += group.studentSubgroups?.length);
+                                    return count;
+                                },
                                 customSort: (a, b) => a.number - b.number,
                                 searchable: true
                             },
 
                         ]}
-                        data={studentGroups}
+                        data={studentCourses}
                         actions={[
                             {
                                 icon: Edit,

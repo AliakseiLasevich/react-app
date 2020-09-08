@@ -17,13 +17,12 @@ const StudentGroupForm = (props) => {
 
             <div className="row justify-content-center">
 
-
                 <div className="col">
                     <div className="form-row">
                         <div className="form-group col">
                             <label htmlFor="specialtyId"> Подгруппа <strong>A</strong></label>
                             <input className="form-control"
-                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]subgroupA`}
+                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]studentsInSubgroupA`}
                                    value={aCount}
                                    onChange={(e) => setACount(+e.target.value)}
                                    disabled={!hasSubgroups}/>
@@ -31,7 +30,7 @@ const StudentGroupForm = (props) => {
                         <div className="form-group col">
                             <label htmlFor="specialtyId">Подгруппа <strong>Б</strong></label>
                             <input className="form-control"
-                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]subgroupB`}
+                                   ref={props.register()} name={`studentGroups[${props.groupNumber}]studentsInSubgroupB`}
                                    value={bCount}
                                    onChange={(e) => setBCount(+e.target.value)}
                                    disabled={!hasSubgroups}/>
@@ -51,10 +50,11 @@ const StudentGroupForm = (props) => {
 
                 <div className="form-row col">
                     <div className="form-group col">
-                        Всего: <input className="form-control"
+                        <label htmlFor="specialtyId"><strong>{hasSubgroups? "Всего в подгруппах:" : "Всего в группе"}</strong></label>
+                        <input className="form-control"
                                       ref={props.register()} value={+aCount + bCount || totalCount}
                                       onChange={(e) => setTotalCount(e.target.value)}
-                                      name={`studentGroups[${props.groupNumber}]total`} disabled={hasSubgroups}/>
+                                      name={`studentGroups[${props.groupNumber}]studentsInGroup`} disabled={hasSubgroups}/>
 
                     </div>
                 </div>

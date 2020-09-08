@@ -1,10 +1,12 @@
 import {studentCourseAPI, studentGroupAPI} from "../api/api";
 
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
+const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 
 let initialState = {
+    allStudentCourses: [],
     allStudentGroups: [],
     isFetching: true
 };
@@ -17,6 +19,12 @@ export const studentGroupReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: action.isFetching
+            };
+
+        case SET_STUDENT_COURSES:
+            return {
+                ...state,
+                allStudentCourses: action.allStudentCourses
             };
 
         case SET_STUDENT_GROUPS:
@@ -37,6 +45,13 @@ export const setStudentGroups = (allStudentGroups) => {
     }
 };
 
+export const setStudentCourses = (allStudentCourses) => {
+    return {
+        type: SET_STUDENT_COURSES,
+        allStudentCourses
+    }
+};
+
 export const setIsFetching = (isFetching) => {
     return {
         type: TOGGLE_IS_FETCHING,
@@ -49,6 +64,15 @@ export const requestStudentGroups = () => {
         dispatch(setIsFetching(true));
         const response = await studentGroupAPI.getStudentGroups();
         dispatch(setStudentGroups(response.data));
+        dispatch(setIsFetching(false));
+    };
+};
+
+export const requestStudentCourses = () => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await studentCourseAPI.getAllStudentCourses();
+        dispatch(setStudentCourses(response.data));
         dispatch(setIsFetching(false));
     };
 };
