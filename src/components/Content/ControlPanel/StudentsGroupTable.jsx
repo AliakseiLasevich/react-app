@@ -54,30 +54,12 @@ function Row(props) {
 export default function StudentsGroupTable(props) {
     const subgroups = props.studentGroup?.studentSubgroups;
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+        <TableBody>
+            {subgroups.map(subgroup => (
+                <Row subgroup={subgroup}/>
+            ))}
 
-                <TableHead>
-                    <TableRow>
-                        <TableCell/>
-                        <TableCell>Подгруппа</TableCell>
-                        <TableCell>Количество студентов</TableCell>
-                    </TableRow>
-                </TableHead>
+        </TableBody>
 
-                <TableBody>
-                    {subgroups.map(subgroup => (
-                        <Row subgroup={subgroup}/>
-                        // <>
-                        //     <TableCell/>
-                        //     <TableCell>{subgroup.name} </TableCell>
-                        //     <TableCell>{subgroup.studentsCount} </TableCell>
-                        // </>
-                    ))}
-
-                </TableBody>
-
-            </Table>
-        </TableContainer>
     );
 }

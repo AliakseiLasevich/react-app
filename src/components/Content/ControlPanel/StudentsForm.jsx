@@ -35,12 +35,7 @@ const StudentsForm = (props) => {
         }
     );
 
-    const {fields, append, remove} = useFieldArray(
-        {
-            control,
-            name: "studentGroups"
-        }
-    );
+
 
     const onSubmit = (data) => {
         dispatch(postStudentCourse(data));
@@ -81,23 +76,6 @@ const StudentsForm = (props) => {
 
                     </div>
 
-                    <div className="alert-success p-1 text-center">Ниже введите количество студентов в подгруппах, либо во всей группе, если нет разделения</div>
-
-                    <div className="my-1 text-center">
-                        {fields.map((item, index) => (
-                            <div key={item.id}>
-                                <StudentGroupForm register={register}
-                                                  groupNumber={index}
-                                                  remove={remove}
-                                                  watch={watch}
-                                                  errors={errors}/>
-
-                            </div>
-                        ))}
-
-                    </div>
-
-                    <div className="btn btn-sm btn-info m-1" onClick={() => append()}>Добавить группу</div>
 
                     <DialogActions>
                         <button className="btn" onClick={handleClose}>Отмена</button>

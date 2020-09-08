@@ -38,12 +38,30 @@ function Row(props) {
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            {course.studentGroups.map(studentGroup => (
-                                <>
-                                    Группа: {studentGroup.number + 1}
-                                    <StudentsGroupTable studentGroup={studentGroup}/>
-                                </>
-                            ))}
+
+                            <button className="btn btn-sm btn-success m-1">Добавить группу студентов</button>
+
+                            <TableContainer component={Paper}>
+                                <Table aria-label="collapsible table">
+
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell/>
+                                            <TableCell>Подгруппа</TableCell>
+                                            <TableCell>Количество студентов</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+
+
+                                    {course.studentGroups.map(studentGroup => (
+                                        <>
+                                            Группа: {studentGroup.number + 1}
+                                            <StudentsGroupTable studentGroup={studentGroup}/>
+                                        </>
+                                    ))}
+
+                                </Table>
+                            </TableContainer>
                         </Box>
                     </Collapse>
                 </TableCell>
