@@ -8,7 +8,7 @@ const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 let initialState = {
     allStudentCourses: [],
     allStudentGroups: [],
-    isFetching: true
+    isFetching: true,
 };
 
 export const studentGroupReducer = (state = initialState, action) => {
