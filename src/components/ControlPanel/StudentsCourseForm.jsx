@@ -4,8 +4,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {requestSpecialties} from "../../../redux/SpecialtyReducer";
-import {postStudentCourse} from "../../../redux/StudentsReducer";
+import {requestSpecialties} from "../../redux/SpecialtyReducer";
+import {postStudentCourse} from "../../redux/StudentsReducer";
 
 const StudentsCourseForm = (props) => {
 
@@ -25,7 +25,6 @@ const StudentsCourseForm = (props) => {
         props.setEditMode(false);
     };
 
-
     const {register, handleSubmit, errors} = useForm(
         {
             defaultValues: {
@@ -43,7 +42,7 @@ const StudentsCourseForm = (props) => {
             <DialogContent style={{minWidth: "70vh"}}>
                 <form onSubmit={handleSubmit(onSubmit)}>
 
-                    <div className="form-row">
+                    <div className="form-row m-3">
                         <div className="col">
                             <label htmlFor="specialtyId">Специальность:</label>
                             <select className="form-control col" name="specialtyId"

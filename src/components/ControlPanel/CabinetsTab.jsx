@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import MaterialTable from "material-table";
-import tableIcons from "../../Common/TableIcons";
+import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteConfirmation from "../../Common/DeleteConfirmation";
-import Preloader from "../../Common/Preloader";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
+import Preloader from "../Common/Preloader";
 import CabinetsForm from "./CabinetsForm";
-import {deleteCabinet, requestCabinets} from "../../../redux/CabinetsReducer";
+import {deleteCabinet, requestCabinets} from "../../redux/CabinetsReducer";
 
 
 const CabinetsTab = (props) => {

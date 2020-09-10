@@ -3,13 +3,13 @@ import {useFieldArray, useForm} from "react-hook-form";
 import style from "./LearnPlanForm.module.css";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DayPicker from "../../Common/DayPicker";
+import DayPicker from "../Common/DayPicker";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {createLearnPlan} from "../../../redux/LearnPlanReducer";
-import {requestFaculties} from "../../../redux/FacultyReducer";
-import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
-import {requestDisciplines} from "../../../redux/DisciplinesReducer";
+import {createLearnPlan} from "../../redux/LearnPlanReducer";
+import {requestFaculties} from "../../redux/FacultyReducer";
+import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../redux/SpecialtyReducer";
+import {requestDisciplines} from "../../redux/DisciplinesReducer";
 
 const LearnPlanForm = (props) => {
 
@@ -118,13 +118,18 @@ const LearnPlanForm = (props) => {
                                 <div className="text-danger">  {errors.specialtyId && errors.specialtyId.message} </div>
                             </div>
                             <div>
-                                <label htmlFor="facultyId">Курс:</label>
-                                <input className="form-control" name="courseNumber"
-                                       ref={register({required: "Введите номер курса"})}
-                                       value={courseNumber} onChange={e => setCourseNumber(e.target.value)}>
-                                </input>
-                                <div
-                                    className="text-danger">  {errors.courseNumber && errors.courseNumber.message} </div>
+                                <label htmlFor="courseNumber">Курс:</label>
+                                <select className="form-control col" name="courseNumber"
+                                        ref={register({required: "Выберите курс"})}
+                                        onChange={e => setCourseNumber(e.target.value)}>
+                                    <option></option>
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
+                                </select>
+                                <div className="text-danger mx-1">  {errors.courseNumber && errors.courseNumber.message} </div>
                             </div>
 
                         </div>

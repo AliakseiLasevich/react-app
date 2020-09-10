@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import DeleteConfirmation from "../../Common/DeleteConfirmation";
-import Preloader from "../../Common/Preloader";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
+import Preloader from "../Common/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import StudentsCourseForm from "./StudentsCourseForm";
-import {deleteStudentGroup, requestStudentCourses} from "../../../redux/StudentsReducer";
+import {deleteStudentGroup, requestStudentCourses} from "../../redux/StudentsReducer";
 import StudentsCoursesTable from "./StudentsCoursesTable";
 
 
@@ -41,7 +41,7 @@ const StudentsTab = () => {
             </div>
 
 
-            <div className="row justify-content-center p-2 m-auto" >
+            <div className="justify-content-center" >
 
                <StudentsCoursesTable/>
 

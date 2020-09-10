@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import WeekPicker from "../../Common/WeekPicker";
+import WeekPicker from "../Common/WeekPicker";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {requestFaculties} from "../../../redux/FacultyReducer";
-import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../../redux/SpecialtyReducer";
-import {requestLearnPlansWithDateInclude} from "../../../redux/LearnPlanReducer";
+import {requestFaculties} from "../../redux/FacultyReducer";
+import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../redux/SpecialtyReducer";
+import {requestLearnPlansWithDateInclude} from "../../redux/LearnPlanReducer";
 import LearnWeek from "./LearnWeek";
 
 

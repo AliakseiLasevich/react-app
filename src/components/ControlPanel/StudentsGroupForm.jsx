@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useForm} from "react-hook-form";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import {useDispatch} from "react-redux";
-import {createStudentGroup} from "../../../redux/StudentsReducer";
+import {createStudentGroup} from "../../redux/StudentsReducer";
 
 const StudentsGroupForm = (props) => {
 
@@ -15,7 +15,7 @@ const StudentsGroupForm = (props) => {
         dispatch(createStudentGroup(studentGroup));
     };
     const handleClose = () => {
-        props.setEditMode(false);
+        props.setNewGroupForm(false);
     };
 
     return (
@@ -26,7 +26,7 @@ const StudentsGroupForm = (props) => {
             <DialogContent>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="justify-content-center">
+                    <div className="justify-content-center m-3">
                         <label htmlFor="number">Номер группы</label>
                         <div>
                             <input name="number"

@@ -4,11 +4,11 @@ import MaterialTable from "material-table";
 
 import {NavLink} from "react-router-dom";
 import Delete from "@material-ui/icons/Delete";
-import tableIcons from "../../Common/TableIcons";
+import tableIcons from "../Common/TableIcons";
 import BuildingsForm from "./BuildingsForm";
-import DeleteConfirmation from "../../Common/DeleteConfirmation";
-import Preloader from "../../Common/Preloader";
-import {deleteBuilding, requestBuildings} from "../../../redux/BuildingsReducer";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
+import Preloader from "../Common/Preloader";
+import {deleteBuilding, requestBuildings} from "../../redux/BuildingsReducer";
 import Edit from "@material-ui/icons/Edit";
 
 

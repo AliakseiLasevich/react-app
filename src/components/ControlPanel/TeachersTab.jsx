@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import MaterialTable from "material-table";
+import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import {useDispatch, useSelector} from "react-redux";
-import DeleteConfirmation from "../../Common/DeleteConfirmation";
-import Preloader from "../../Common/Preloader";
-import tableIcons from "../../Common/TableIcons";
-import {deleteDiscipline, requestDisciplines} from "../../../redux/DisciplinesReducer";
-import DisciplineForm from "./DisciplineForm";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
+import Preloader from "../Common/Preloader";
+import TeacherForm from "./TeacherForm";
+import {deleteTeacher, requestAllTeachers} from "../../redux/TeacherReducer";
 
-const DisciplinesTab = (props) => {
+const TeachersTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
-    const [disciplineToEdit, setDisciplineToEdit] = useState({});
+    const [teacherToEdit, setTeacherToEdit] = useState({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [disciplineToDelete, setDisciplineToDelete] = useState(null);
+    const [teacherToDelete, setTeacherToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.disciplinesReducer.isFetching);
-    const disciplines = useSelector(state => state.disciplinesReducer.allDisciplines);
+    const isFetching = useSelector(state => state.teacherReducer.isFetching);
+    const teachers = useSelector(state => state.teacherReducer.allTeachers);
 
     useEffect(() => {
-        dispatch(requestDisciplines());
+        dispatch(requestAllTeachers());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteDiscipline(idToDelete))
+            dispatch(deleteTeacher(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -38,31 +38,38 @@ const DisciplinesTab = (props) => {
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setEditMode(true)}>Добавить
-                    дисциплину
+                    Преподавателя
                 </button>
             </div>
 
             <div className="row justify-content-center p-2 m-auto ">
-                <div className="col-md-8 col-xl-6">
+                <div className="col-md-8 col-xl-7">
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Дисциплины"
+                        title="Преподаватели"
                         columns={[
                             {
-                                title: 'Дисциплина',
+                                title: 'Имя преподавателя',
                                 field: 'name',
                                 render: rowData => <NavLink
-                                    to={`/disciplines/${rowData.publicId}`}>{rowData.name}</NavLink>
+                                    to={`/teachers/${rowData.publicId}`}>{rowData.name}</NavLink>
+                            },
+                            {
+                                title: 'Кафедра',
+                                field: 'cathedra',
+                                render: rowData => <NavLink
+                                    to={`/cathedras/${rowData.cathedra.publicId}`}>{rowData.cathedra.name} </NavLink>,
+                                customSort: (a, b) => a.cathedra.name.localeCompare(b.cathedra.name)
                             },
                         ]}
-                        data={disciplines}
+                        data={teachers}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать',
                                 onClick: (event, rowData) => {
-                                    setDisciplineToEdit(rowData);
+                                    setTeacherToEdit(rowData);
                                     setEditMode(true)
                                 }
                             },
@@ -70,7 +77,7 @@ const DisciplinesTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setDisciplineToDelete(rowData);
+                                    setTeacherToDelete(rowData);
                                     setDeleteModalOpen(true)
                                 }
                             }
@@ -78,7 +85,7 @@ const DisciplinesTab = (props) => {
                         options={{
                             actionsColumnIndex: -1,
                             padding: "dense",
-                            pageSize: 10,
+                            pageSize: 15,
                             pageSizeOptions: [5, 10, 15],
                             headerStyle: {
                                 backgroundColor: '#ebebeb',
@@ -92,19 +99,21 @@ const DisciplinesTab = (props) => {
                 </div>
 
                 {editMode &&
-                <DisciplineForm editMode={editMode} setEditMode={setEditMode} discipline={disciplineToEdit}
-                             setDisciplineToEdit={setDisciplineToEdit}/>}
+                <TeacherForm editMode={editMode}
+                             setEditMode={setEditMode}
+                             teacher={teacherToEdit}
+                             setTeacherToEdit={setTeacherToEdit}/>}
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={disciplineToDelete.name}
-                                    publicId={disciplineToDelete.publicId}
+                                    message={teacherToDelete.name}
+                                    publicId={teacherToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}
         </div>
     )
-};
+}
 
-export default DisciplinesTab;
+export default TeachersTab;

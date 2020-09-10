@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import {useDispatch} from "react-redux";
-import {createStudentSubgroup, updateStudentSubgroup} from "../../../redux/StudentsReducer";
+import {createStudentSubgroup, updateStudentSubgroup} from "../../redux/StudentsReducer";
 
 const StudentsSubgroupForm = (props) => {
     const {register, handleSubmit, errors} = useForm({});

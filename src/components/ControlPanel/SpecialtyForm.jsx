@@ -5,8 +5,8 @@ import {useForm} from "react-hook-form";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import {createSpecialty, updateSpecialty} from "../../../redux/SpecialtyReducer";
-import {requestFaculties} from "../../../redux/FacultyReducer";
+import {createSpecialty, updateSpecialty} from "../../redux/SpecialtyReducer";
+import {requestFaculties} from "../../redux/FacultyReducer";
 
 const SpecialtyForm = (props) => {
     const {register, handleSubmit, errors} = useForm();

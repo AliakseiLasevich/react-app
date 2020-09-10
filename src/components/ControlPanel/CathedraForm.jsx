@@ -3,8 +3,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import {useDispatch, useSelector} from "react-redux";
-import {createCathedra, updateCathedra} from "../../../redux/CathedraReducer";
-import {requestFaculties} from "../../../redux/FacultyReducer";
+import {createCathedra, updateCathedra} from "../../redux/CathedraReducer";
+import {requestFaculties} from "../../redux/FacultyReducer";
 import {useForm} from "react-hook-form";
 
 const CathedraForm = (props) => {

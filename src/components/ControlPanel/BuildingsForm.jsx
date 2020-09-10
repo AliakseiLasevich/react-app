@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {createBuilding, updateBuilding} from "../../../redux/BuildingsReducer";
+import {createBuilding, updateBuilding} from "../../redux/BuildingsReducer";
 
 const BuildingsForm = (props) => {
     const {register, handleSubmit, errors} = useForm();

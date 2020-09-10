@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
-import {requestAllLearnPlans} from "../../../redux/LearnPlanReducer";
-import tableIcons from "../../Common/TableIcons";
+import {requestAllLearnPlans} from "../../redux/LearnPlanReducer";
+import tableIcons from "../Common/TableIcons";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import MaterialTable from "material-table";
 
-import DeleteConfirmation from "../../Common/DeleteConfirmation";
-import Preloader from "../../Common/Preloader";
+import DeleteConfirmation from "../Common/DeleteConfirmation";
+import Preloader from "../Common/Preloader";
 import LearnPlanForm from "./LearnPlanForm";
 import {BsFillEyeFill} from "react-icons/bs";
 import moment from "moment";

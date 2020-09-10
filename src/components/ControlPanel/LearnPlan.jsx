@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {requestLearnPlanById} from "../../../redux/LearnPlanReducer";
+import {requestLearnPlanById} from "../../redux/LearnPlanReducer";
 import moment from "moment";
 import style from "./LearnPlanForm.module.css";
 
