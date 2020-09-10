@@ -11,17 +11,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import StudentsGroupTable from "./StudentsGroupTable";
+import StudentsGroupRow from "./StudentsGroupRow";
 import {useDispatch, useSelector} from "react-redux";
 import {requestStudentCourses} from "../../../redux/StudentsReducer";
-
+import StudentsGroupForm from "./StudentsGroupForm";
 
 function Row(props) {
     const {course} = props;
     const [open, setOpen] = React.useState(false);
+    const [editMode, setEditMode] = React.useState(false);
 
     return (
-        <React.Fragment>
+        <React.Fragment >
             <TableRow>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
@@ -33,45 +34,41 @@ function Row(props) {
                     {course.specialty.name}
                 </TableCell>
             </TableRow>
-
-            <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+            <TableRow >
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} align={"center"}   >
+                    <Collapse in={open} timeout="auto" unmountOnExit  >
                         <Box margin={1}>
-
-                            <button className="btn btn-sm btn-success m-1">Добавить группу студентов</button>
-
+                            <button className="btn btn-sm btn-success m-1" onClick={()=>setEditMode(!editMode)}>
+                                {editMode? "Отмена": "Добавить группу студентов"}
+                            </button>
                             <TableContainer component={Paper}>
-                                <Table aria-label="collapsible table">
-
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell/>
-                                            <TableCell>Подгруппа</TableCell>
-                                            <TableCell>Количество студентов</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-
-
-                                    {course.studentGroups.map(studentGroup => (
-                                        <>
-                                            Группа: {studentGroup.number + 1}
-                                            <StudentsGroupTable studentGroup={studentGroup}/>
-                                        </>
-                                    ))}
-
+                                <Table aria-label="collapsible table" >
+                                    <TableBody >
+                                        {course.studentGroups.map(studentGroup => (
+                                            <React.Fragment key={studentGroup.publicId}>
+                                                <StudentsGroupRow studentGroup={studentGroup}/>
+                                            </React.Fragment>
+                                        ))}
+                                    </TableBody>
                                 </Table>
                             </TableContainer>
                         </Box>
                     </Collapse>
+
+                    {editMode &&
+                    <StudentsGroupForm editMode={editMode}
+                                   setEditMode={setEditMode}
+                                       course={course}
+                                   // specialty={specialtyToEdit}
+                                   // setSpecialtyToEdit={setSpecialtyToEdit}
+                    />}
                 </TableCell>
             </TableRow>
         </React.Fragment>
     );
 }
 
-export default function StudentsTable() {
-
+export default function StudentsCoursesTable() {
     const dispatch = useDispatch();
     const allCourses = useSelector(state => state.studentsReducer.allStudentCourses);
 
@@ -80,14 +77,14 @@ export default function StudentsTable() {
     }, []);
 
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+        <TableContainer component={Paper} style={{maxWidth: "750px"}}  >
+            <Table aria-label="collapsible table" size="small" aria-label="a dense table" >
 
                 <TableHead>
-                    <TableRow>
-                        <TableCell/>
-                        <TableCell>Курс</TableCell>
-                        <TableCell align="right">Специализация</TableCell>
+                    <TableRow >
+                        <TableCell align="center" className="bg-warning"/>
+                        <TableCell align="center" className="bg-warning">Курс</TableCell>
+                        <TableCell align="center" className="bg-warning">Специализация</TableCell>
                     </TableRow>
                 </TableHead>
 

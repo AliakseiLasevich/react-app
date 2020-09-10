@@ -1,4 +1,4 @@
-import {studentCourseAPI, studentGroupAPI} from "../api/api";
+import {studentCourseAPI, studentGroupAPI, studentSubgroupAPI} from "../api/api";
 
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
 const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
@@ -77,9 +77,10 @@ export const requestStudentCourses = () => {
     };
 };
 
-export const postStudentGroup = (studentGroup) => {
+export const createStudentGroup = (studentGroup) => {
     return async (dispatch) => {
         await studentGroupAPI.postStudentGroup(studentGroup);
+        dispatch(requestStudentCourses());
         dispatch(requestStudentGroups());
     }
 };
@@ -105,5 +106,19 @@ export const postStudentCourse = (studentCourse) => {
     }
 };
 
+
+export const createStudentSubgroup = (subgroup) => {
+    return async (dispatch) => {
+        await studentSubgroupAPI.postStudentSubgroup(subgroup);
+        dispatch(requestStudentCourses());
+    }
+};
+
+export const updateStudentSubgroup = (subgroup, publicId) => {
+    return async (dispatch) => {
+        await studentSubgroupAPI.putStudentSubgroup(subgroup);
+        dispatch(requestStudentGroups());
+    }
+};
 
 export default studentGroupReducer;

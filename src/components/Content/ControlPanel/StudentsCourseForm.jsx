@@ -2,17 +2,16 @@ import React, {useEffect, useState} from 'react';
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-import {useFieldArray, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {requestSpecialties} from "../../../redux/SpecialtyReducer";
-import StudentGroupForm from "./StudentGroupForm";
 import {postStudentCourse} from "../../../redux/StudentsReducer";
 
-const StudentsForm = (props) => {
+const StudentsCourseForm = (props) => {
 
     const dispatch = useDispatch();
     const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
-    const [specialty, setSpecialty] = useState(props.studentGroup?.specialtyId || {});
+    const [specialty, setSpecialty] = useState(props.studentCourse?.specialtyId || {});
     const [courseNumber, setCourseNumber] = useState("");
 
 
@@ -27,15 +26,13 @@ const StudentsForm = (props) => {
     };
 
 
-    const {register, control, handleSubmit, reset, watch, errors} = useForm(
+    const {register, handleSubmit, errors} = useForm(
         {
             defaultValues: {
                 studentGroups: [{}]
             }
         }
     );
-
-
 
     const onSubmit = (data) => {
         dispatch(postStudentCourse(data));
@@ -76,7 +73,6 @@ const StudentsForm = (props) => {
 
                     </div>
 
-
                     <DialogActions>
                         <button className="btn" onClick={handleClose}>Отмена</button>
                         <button className="btn" onClick={handleSubmit}>Сохранить</button>
@@ -88,4 +84,4 @@ const StudentsForm = (props) => {
     );
 };
 
-export default StudentsForm;
+export default StudentsCourseForm;

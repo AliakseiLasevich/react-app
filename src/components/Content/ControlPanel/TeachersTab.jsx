@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import MaterialTable from "material-table";
+import tableIcons from "../../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteFaculty, requestFaculties} from "../../../redux/FacultyReducer";
-import FacultyForm from "./FacultyForm";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
-import tableIcons from "../../Common/TableIcons";
+import TeacherForm from "./TeacherForm";
+import {deleteTeacher, requestAllTeachers} from "../../../redux/TeacherReducer";
 
-const FacultyManager = (props) => {
+const TeachersTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
-    const [facultyToEdit, setFacultyToEdit] = useState({});
+    const [teacherToEdit, setTeacherToEdit] = useState({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [facultyToDelete, setFacultyToDelete] = useState(null);
+    const [teacherToDelete, setTeacherToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.facultyReducer.isFetching);
-    const faculties = useSelector(state => state.facultyReducer.allFaculties);
+    const isFetching = useSelector(state => state.teacherReducer.isFetching);
+    const teachers = useSelector(state => state.teacherReducer.allTeachers);
 
     useEffect(() => {
-        dispatch(requestFaculties());
+        dispatch(requestAllTeachers());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteFaculty(idToDelete))
+            dispatch(deleteTeacher(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -38,31 +38,38 @@ const FacultyManager = (props) => {
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setEditMode(true)}>Добавить
-                    факультет
+                    Преподавателя
                 </button>
             </div>
 
             <div className="row justify-content-center p-2 m-auto ">
-                <div className="col-md-8 col-xl-6">
+                <div className="col-md-8 col-xl-7">
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Факультеты"
+                        title="Преподаватели"
                         columns={[
                             {
-                                title: 'Название факультета',
+                                title: 'Имя преподавателя',
                                 field: 'name',
                                 render: rowData => <NavLink
-                                    to={`/faculties/${rowData.publicId}`}>{rowData.name}</NavLink>
+                                    to={`/teachers/${rowData.publicId}`}>{rowData.name}</NavLink>
+                            },
+                            {
+                                title: 'Кафедра',
+                                field: 'cathedra',
+                                render: rowData => <NavLink
+                                    to={`/cathedras/${rowData.cathedra.publicId}`}>{rowData.cathedra.name} </NavLink>,
+                                customSort: (a, b) => a.cathedra.name.localeCompare(b.cathedra.name)
                             },
                         ]}
-                        data={faculties}
+                        data={teachers}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать',
                                 onClick: (event, rowData) => {
-                                    setFacultyToEdit(rowData);
+                                    setTeacherToEdit(rowData);
                                     setEditMode(true)
                                 }
                             },
@@ -70,8 +77,7 @@ const FacultyManager = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setFacultyToDelete(rowData);
-
+                                    setTeacherToDelete(rowData);
                                     setDeleteModalOpen(true)
                                 }
                             }
@@ -79,7 +85,7 @@ const FacultyManager = (props) => {
                         options={{
                             actionsColumnIndex: -1,
                             padding: "dense",
-                            pageSize: 10,
+                            pageSize: 15,
                             pageSizeOptions: [5, 10, 15],
                             headerStyle: {
                                 backgroundColor: '#ebebeb',
@@ -93,19 +99,21 @@ const FacultyManager = (props) => {
                 </div>
 
                 {editMode &&
-                <FacultyForm editMode={editMode} setEditMode={setEditMode} faculty={facultyToEdit}
-                             setFacultyToEdit={setFacultyToEdit}/>}
+                <TeacherForm editMode={editMode}
+                             setEditMode={setEditMode}
+                             teacher={teacherToEdit}
+                             setTeacherToEdit={setTeacherToEdit}/>}
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={facultyToDelete.name}
-                                    publicId={facultyToDelete.publicId}
+                                    message={teacherToDelete.name}
+                                    publicId={teacherToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}
         </div>
     )
-};
+}
 
-export default FacultyManager;
+export default TeachersTab;

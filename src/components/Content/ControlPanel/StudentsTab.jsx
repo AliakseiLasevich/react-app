@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
 import {useDispatch, useSelector} from "react-redux";
-import StudentsForm from "./StudentsForm";
+import StudentsCourseForm from "./StudentsCourseForm";
 import {deleteStudentGroup, requestStudentCourses} from "../../../redux/StudentsReducer";
-import StudentsTable from "./StudentsTable";
+import StudentsCoursesTable from "./StudentsCoursesTable";
 
 
-const StudentsManager = () => {
+const StudentsTab = () => {
 
     const [studentGroupEditMode, setStudentGroupEditMode] = useState(false);
     const [studentGroupToEdit, setStudentGroupToEdit] = useState({});
@@ -32,7 +32,7 @@ const StudentsManager = () => {
 
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" >
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setStudentGroupEditMode(true)}>
@@ -41,14 +41,15 @@ const StudentsManager = () => {
             </div>
 
 
-            <div className="row justify-content-center p-2 m-auto ">
-               <StudentsTable/>
+            <div className="row justify-content-center p-2 m-auto" >
+
+               <StudentsCoursesTable/>
 
                 {studentGroupEditMode &&
-                <StudentsForm editMode={studentGroupEditMode}
-                              setEditMode={setStudentGroupEditMode}
-                              studentGroup={studentGroupToEdit}
-                              setStudentGroupToEdit={setStudentGroupToEdit}/>
+                <StudentsCourseForm editMode={studentGroupEditMode}
+                                    setEditMode={setStudentGroupEditMode}
+                                    studentGroup={studentGroupToEdit}
+                                    setStudentGroupToEdit={setStudentGroupToEdit}/>
                 }
 
                 {deleteModalOpen &&
@@ -63,4 +64,4 @@ const StudentsManager = () => {
     )
 };
 
-export default StudentsManager;
+export default StudentsTab;

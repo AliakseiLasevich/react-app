@@ -14,7 +14,7 @@ import {BsFillEyeFill} from "react-icons/bs";
 import moment from "moment";
 import {NavLink, Redirect} from "react-router-dom";
 
-const LearnPlanManager = (props) => {
+const LearnPlanTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [learnPlanToEdit, setLearnPlanToEdit] = useState({});
@@ -141,4 +141,4 @@ const LearnPlanManager = (props) => {
     )
 };
 
-export default LearnPlanManager;
+export default LearnPlanTab;

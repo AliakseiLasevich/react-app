@@ -1,14 +1,14 @@
 import React from "react";
 import {NavLink, Route} from "react-router-dom"
-import FacultyManager from "./FacultyManager";
-import CathedraManager from "./CathedraManager";
-import TeacherManager from "./TeacherManager";
-import StudentsManager from "./StudentsManager";
-import LearnPlanManager from "./LearnPlanManager";
-import SpecialtyManager from "./SpecialtyManager";
-import CabinetsManager from "./CabinetsManager";
-import BuildingsManager from "./BuildingsManager";
-import DisciplinesManager from "./DisciplinesManager";
+import FacultyTab from "./FacultyTab";
+import CathedrasTab from "./CathedrasTab";
+import TeachersTab from "./TeachersTab";
+import StudentsTab from "./StudentsTab";
+import LearnPlanTab from "./LearnPlanTab";
+import SpecialtyTab from "./SpecialtyTab";
+import CabinetsTab from "./CabinetsTab";
+import BuildingsTab from "./BuildingsTab";
+import DisciplinesTab from "./DisciplinesTab";
 import LearnPlan from "./LearnPlan";
 
 const ControlPanel = (props) => {
@@ -76,31 +76,31 @@ const ControlPanel = (props) => {
             </nav>
 
             <Route path="/controlPanel/facultyManager/"
-                   render={() => <FacultyManager/>}/>
+                   render={() => <FacultyTab/>}/>
 
             <Route path="/controlPanel/cathedraManager"
-                   render={() => <CathedraManager/>}/>
+                   render={() => <CathedrasTab/>}/>
 
             <Route path="/controlPanel/teacherManager"
-                   render={() => <TeacherManager/>}/>
+                   render={() => <TeachersTab/>}/>
 
             <Route path="/controlPanel/buildings"
-                   render={() => <BuildingsManager/>}/>
+                   render={() => <BuildingsTab/>}/>
 
             <Route path="/controlPanel/cabinets"
-                   render={() => <CabinetsManager/>}/>
+                   render={() => <CabinetsTab/>}/>
 
             <Route path="/controlPanel/specialities"
-                   render={() => <SpecialtyManager/>}/>
+                   render={() => <SpecialtyTab/>}/>
 
             <Route path="/controlPanel/students"
-                   render={() => <StudentsManager/>}/>
+                   render={() => <StudentsTab/>}/>
 
             <Route path="/controlPanel/learnPlan" exact={true}
-                   render={() => <LearnPlanManager/>}/>
+                   render={() => <LearnPlanTab/>}/>
 
             <Route path="/controlPanel/disciplines"
-                   render={() => <DisciplinesManager/>}/>
+                   render={() => <DisciplinesTab/>}/>
 
 
             <Route exact path="/controlPanel/learnPlan/:learnPlanId" component={LearnPlan}/>

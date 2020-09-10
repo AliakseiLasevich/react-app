@@ -12,7 +12,7 @@ import {deleteBuilding, requestBuildings} from "../../../redux/BuildingsReducer"
 import Edit from "@material-ui/icons/Edit";
 
 
-const BuildingsManager = (props) => {
+const BuildingsTab = (props) => {
     const [buildingEditMode, setBuildingEditMode] = useState(false);
     const [buildingToEdit, setBuildingToEdit] = useState({});
     const [buildingToDelete, setBuildingToDelete] = useState({});
@@ -112,4 +112,4 @@ const BuildingsManager = (props) => {
     )
 };
 
-export default BuildingsManager;
+export default BuildingsTab;

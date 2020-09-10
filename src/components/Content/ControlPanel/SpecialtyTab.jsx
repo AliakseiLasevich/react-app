@@ -7,29 +7,29 @@ import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
-import CabinetsForm from "./CabinetsForm";
-import {deleteCabinet, requestCabinets} from "../../../redux/CabinetsReducer";
+import {deleteSpecialty, requestSpecialties} from "../../../redux/SpecialtyReducer";
+import SpecialtyForm from "./SpecialtyForm";
 
 
-const CabinetsManager = (props) => {
-    const [cabinetEditMode, setCabinetEditMode] = useState(false);
-    const [cabinetToEdit, setCabinetToEdit] = useState({});
+const SpecialtyTab = (props) => {
+    const [specialtyEditMode, setSpecialtyEditMode] = useState(false);
+    const [specialtyToEdit, setSpecialtyToEdit] = useState({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [cabinetToDelete, setCabinetToDelete] = useState(null);
+    const [specialtyToDelete, setSpecialtyToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.cabinetsReducer.isFetching);
-    const cabinets = useSelector(state => state.cabinetsReducer.allCabinets);
+    const isFetching = useSelector(state => state.specialtyReducer.isFetching);
+    const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
 
     useEffect(() => {
-        dispatch(requestCabinets());
+        dispatch(requestSpecialties());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteCabinet(idToDelete))
+            dispatch(deleteSpecialty(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -37,9 +37,8 @@ const CabinetsManager = (props) => {
         <div className="container-fluid">
 
             <div className="row justify-content-center mt-1 ">
-
-                <button className="btn btn-sm btn-light mx-1" onClick={() => setCabinetEditMode(true)}>
-                    Добавить Кабинет
+                <button className="btn btn-sm btn-light mx-1" onClick={() => setSpecialtyEditMode(true)}>
+                    Добавить Специальность
                 </button>
             </div>
 
@@ -49,56 +48,49 @@ const CabinetsManager = (props) => {
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Кабинеты"
+                        title="Специальности"
                         columns={[
                             {
-                                title: 'Здание',
-                                field: 'building',
-                                render: rowData => <NavLink
-                                    to={`/buildings/${rowData.buildingId}`}>{rowData.buildingName}</NavLink>,
-                                customSort: (a, b) => a.buildingName.localeCompare(b.buildingName),
+                                title: 'Факультет',
+                                field: 'code',
+                                render: rowData => <NavLink to={`/faculties/${rowData.faculty.publicId}`}>{rowData.faculty.name}</NavLink>,
+                                customSort: (a, b) => a.faculty.name.localeCompare(b.faculty.name),
                                 searchable: true,
-                                customFilterAndSearch: (filter, rowData) => rowData.buildingName.toUpperCase().includes(filter.toUpperCase())
+                                customFilterAndSearch: (filter, rowData) => rowData.faculty.name.toUpperCase().includes(filter.toUpperCase())
                             },
                             {
-                                title: 'Номер кабинета',
-                                field: 'cabinet',
+                                title: 'Специальность',
+                                field: 'specialty',
                                 render: rowData => <NavLink
-                                    to={`/cabinets/${rowData.publicId}`}>{rowData.number} </NavLink>,
-                                customSort: (a, b) => a.number - b.number,
+                                    to={`/specialties/${rowData.publicId}`}>{rowData.name}</NavLink>,
+                                customSort: (a, b) => a.name.localeCompare(b.name),
                                 searchable: true,
-                                customFilterAndSearch: (filter, rowData) => rowData.number.toString().includes(filter)
+                                customFilterAndSearch: (filter, rowData) => rowData.name.toUpperCase().includes(filter.toUpperCase())
                             },
                             {
-                                title: 'Вместимость',
-                                field: 'capacity',
-                                render: rowData => rowData.maxStudents,
-                                customSort: (a, b) => a.maxStudents - b.maxStudents,
+                                title: 'Код',
+                                field: 'code',
+                                render: rowData => rowData.code,
+                                customSort: (a, b) => a.code.localeCompare(b.code),
                                 searchable: true
                             },
-                            {
-                                title: 'Тип',
-                                field: 'type',
-                                render: rowData => rowData.type,
-                                customSort: (a, b) => a.type.localeCompare(b.type),
-                                searchable: true
-                            },
+
                         ]}
-                        data={cabinets}
+                        data={specialties}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать кабинет',
                                 onClick: (event, rowData) => {
-                                    setCabinetToEdit(rowData);
-                                    setCabinetEditMode(true)
+                                    setSpecialtyToEdit(rowData);
+                                    setSpecialtyEditMode(true)
                                 }
                             },
                             {
                                 icon: Delete,
                                 tooltip: 'Удалить кабинет',
                                 onClick: (event, rowData) => {
-                                    setCabinetToDelete(rowData);
+                                    setSpecialtyToDelete(rowData);
                                     setDeleteModalOpen(true)
                                 }
                             }
@@ -119,17 +111,16 @@ const CabinetsManager = (props) => {
                     />
                 </div>
 
-                {cabinetEditMode &&
-                <CabinetsForm editMode={cabinetEditMode}
-                              setEditMode={setCabinetEditMode}
-                              cabinet={cabinetToEdit}
-                              setCabinetToEdit={setCabinetToEdit}/>}
-
+                {specialtyEditMode &&
+                <SpecialtyForm editMode={specialtyEditMode}
+                               setEditMode={setSpecialtyEditMode}
+                               specialty={specialtyToEdit}
+                               setSpecialtyToEdit={setSpecialtyToEdit}/>}
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`Кабинет №${cabinetToDelete.number}`}
-                                    publicId={cabinetToDelete.publicId}
+                                    message={`специальность ${specialtyToDelete.name}, код: ${specialtyToDelete.code}`}
+                                    publicId={specialtyToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
@@ -138,4 +129,4 @@ const CabinetsManager = (props) => {
     )
 };
 
-export default CabinetsManager;
+export default SpecialtyTab;

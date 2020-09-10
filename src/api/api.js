@@ -134,6 +134,25 @@ export const studentGroupAPI = {
     }
 };
 
+export const studentSubgroupAPI = {
+    getStudentSubgroups() {
+        return instance.get("studentSubgroups");
+    },
+    getStudentSubgroupById(id) {
+        return instance.get(`studentSubgroups/${id}`);
+    },
+    postStudentSubgroup(subgroup) {
+        return instance.post("studentSubgroups", subgroup);
+    },
+    putStudentSubgroup(subgroup) {
+        return instance.put(`studentSubgroups/${subgroup.id}`, subgroup)
+    },
+    deleteStudentSubgroup(publicId) {
+        return instance.put(`studentSubgroups/${publicId}`)
+    }
+};
+
+
 export const studentCourseAPI = {
     postStudentCourse(studentCourse) {
         return instance.post(`student_courses`, studentCourse)

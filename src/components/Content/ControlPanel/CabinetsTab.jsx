@@ -7,29 +7,29 @@ import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
-import {deleteSpecialty, requestSpecialties} from "../../../redux/SpecialtyReducer";
-import SpecialtyForm from "./SpecialtyForm";
+import CabinetsForm from "./CabinetsForm";
+import {deleteCabinet, requestCabinets} from "../../../redux/CabinetsReducer";
 
 
-const SpecialtyManager = (props) => {
-    const [specialtyEditMode, setSpecialtyEditMode] = useState(false);
-    const [specialtyToEdit, setSpecialtyToEdit] = useState({});
+const CabinetsTab = (props) => {
+    const [cabinetEditMode, setCabinetEditMode] = useState(false);
+    const [cabinetToEdit, setCabinetToEdit] = useState({});
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [specialtyToDelete, setSpecialtyToDelete] = useState(null);
+    const [cabinetToDelete, setCabinetToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.specialtyReducer.isFetching);
-    const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
+    const isFetching = useSelector(state => state.cabinetsReducer.isFetching);
+    const cabinets = useSelector(state => state.cabinetsReducer.allCabinets);
 
     useEffect(() => {
-        dispatch(requestSpecialties());
+        dispatch(requestCabinets());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteSpecialty(idToDelete))
+            dispatch(deleteCabinet(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -37,8 +37,9 @@ const SpecialtyManager = (props) => {
         <div className="container-fluid">
 
             <div className="row justify-content-center mt-1 ">
-                <button className="btn btn-sm btn-light mx-1" onClick={() => setSpecialtyEditMode(true)}>
-                    Добавить Специальность
+
+                <button className="btn btn-sm btn-light mx-1" onClick={() => setCabinetEditMode(true)}>
+                    Добавить Кабинет
                 </button>
             </div>
 
@@ -48,49 +49,56 @@ const SpecialtyManager = (props) => {
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Специальности"
+                        title="Кабинеты"
                         columns={[
                             {
-                                title: 'Факультет',
-                                field: 'code',
-                                render: rowData => <NavLink to={`/faculties/${rowData.faculty.publicId}`}>{rowData.faculty.name}</NavLink>,
-                                customSort: (a, b) => a.faculty.name.localeCompare(b.faculty.name),
-                                searchable: true,
-                                customFilterAndSearch: (filter, rowData) => rowData.faculty.name.toUpperCase().includes(filter.toUpperCase())
-                            },
-                            {
-                                title: 'Специальность',
-                                field: 'specialty',
+                                title: 'Здание',
+                                field: 'building',
                                 render: rowData => <NavLink
-                                    to={`/specialties/${rowData.publicId}`}>{rowData.name}</NavLink>,
-                                customSort: (a, b) => a.name.localeCompare(b.name),
+                                    to={`/buildings/${rowData.buildingId}`}>{rowData.buildingName}</NavLink>,
+                                customSort: (a, b) => a.buildingName.localeCompare(b.buildingName),
                                 searchable: true,
-                                customFilterAndSearch: (filter, rowData) => rowData.name.toUpperCase().includes(filter.toUpperCase())
+                                customFilterAndSearch: (filter, rowData) => rowData.buildingName.toUpperCase().includes(filter.toUpperCase())
                             },
                             {
-                                title: 'Код',
-                                field: 'code',
-                                render: rowData => rowData.code,
-                                customSort: (a, b) => a.code.localeCompare(b.code),
+                                title: 'Номер кабинета',
+                                field: 'cabinet',
+                                render: rowData => <NavLink
+                                    to={`/cabinets/${rowData.publicId}`}>{rowData.number} </NavLink>,
+                                customSort: (a, b) => a.number - b.number,
+                                searchable: true,
+                                customFilterAndSearch: (filter, rowData) => rowData.number.toString().includes(filter)
+                            },
+                            {
+                                title: 'Вместимость',
+                                field: 'capacity',
+                                render: rowData => rowData.maxStudents,
+                                customSort: (a, b) => a.maxStudents - b.maxStudents,
                                 searchable: true
                             },
-
+                            {
+                                title: 'Тип',
+                                field: 'type',
+                                render: rowData => rowData.type,
+                                customSort: (a, b) => a.type.localeCompare(b.type),
+                                searchable: true
+                            },
                         ]}
-                        data={specialties}
+                        data={cabinets}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать кабинет',
                                 onClick: (event, rowData) => {
-                                    setSpecialtyToEdit(rowData);
-                                    setSpecialtyEditMode(true)
+                                    setCabinetToEdit(rowData);
+                                    setCabinetEditMode(true)
                                 }
                             },
                             {
                                 icon: Delete,
                                 tooltip: 'Удалить кабинет',
                                 onClick: (event, rowData) => {
-                                    setSpecialtyToDelete(rowData);
+                                    setCabinetToDelete(rowData);
                                     setDeleteModalOpen(true)
                                 }
                             }
@@ -111,16 +119,17 @@ const SpecialtyManager = (props) => {
                     />
                 </div>
 
-                {specialtyEditMode &&
-                <SpecialtyForm editMode={specialtyEditMode}
-                               setEditMode={setSpecialtyEditMode}
-                               specialty={specialtyToEdit}
-                               setSpecialtyToEdit={setSpecialtyToEdit}/>}
+                {cabinetEditMode &&
+                <CabinetsForm editMode={cabinetEditMode}
+                              setEditMode={setCabinetEditMode}
+                              cabinet={cabinetToEdit}
+                              setCabinetToEdit={setCabinetToEdit}/>}
+
 
                 {deleteModalOpen &&
                 <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`специальность ${specialtyToDelete.name}, код: ${specialtyToDelete.code}`}
-                                    publicId={specialtyToDelete.publicId}
+                                    message={`Кабинет №${cabinetToDelete.number}`}
+                                    publicId={cabinetToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
@@ -129,4 +138,4 @@ const SpecialtyManager = (props) => {
     )
 };
 
-export default SpecialtyManager;
+export default CabinetsTab;

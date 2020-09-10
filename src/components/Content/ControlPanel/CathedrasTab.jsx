@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from "react";
 import MaterialTable from "material-table";
+import tableIcons from "../../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteConfirmation from "../../Common/DeleteConfirmation";
 import Preloader from "../../Common/Preloader";
-import tableIcons from "../../Common/TableIcons";
-import {deleteDiscipline, requestDisciplines} from "../../../redux/DisciplinesReducer";
-import DisciplineForm from "./DisciplineForm";
+import {deleteCathedra, getCathedrasWithFaculties} from "../../../redux/CathedraReducer";
+import CathedraForm from "./CathedraForm";
 
-const DisciplinesManager = (props) => {
+const CathedrasTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
-    const [disciplineToEdit, setDisciplineToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [disciplineToDelete, setDisciplineToDelete] = useState(null);
+    const [cathedraToEdit, setCathedraToEdit] = useState({});
+    const [deleteMode, setDeleteMode] = useState(false);
+    const [cathedraToDelete, setCathedraToDelete] = useState(null);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.disciplinesReducer.isFetching);
-    const disciplines = useSelector(state => state.disciplinesReducer.allDisciplines);
+    const isFetching = useSelector(state => state.cathedraReducer.isFetching);
+    const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
 
     useEffect(() => {
-        dispatch(requestDisciplines());
+        dispatch(getCathedrasWithFaculties());
     }, [dispatch]);
 
 
     useEffect(() => {
         if (idToDelete != undefined) {
-            dispatch(deleteDiscipline(idToDelete))
+            dispatch(deleteCathedra(idToDelete))
         }
     }, [dispatch, idToDelete]);
 
@@ -38,31 +38,39 @@ const DisciplinesManager = (props) => {
 
             <div className="row justify-content-center mt-1 ">
                 <button className="btn btn-sm btn-light mx-1" onClick={() => setEditMode(true)}>Добавить
-                    дисциплину
+                    кафедру
                 </button>
             </div>
 
             <div className="row justify-content-center p-2 m-auto ">
-                <div className="col-md-8 col-xl-6">
+                <div className="col-md-8 col-xl-7">
 
                     <MaterialTable
                         icons={tableIcons}
-                        title="Дисциплины"
+                        title="Кафедры"
                         columns={[
                             {
-                                title: 'Дисциплина',
+                                title: 'Название кафедры',
                                 field: 'name',
                                 render: rowData => <NavLink
-                                    to={`/disciplines/${rowData.publicId}`}>{rowData.name}</NavLink>
+                                    to={`/cathedras/${rowData.publicId}`}>{rowData.name}</NavLink>,
+                                customSort: (a, b) => a.name.localeCompare(b.name)
+                            },
+                            {
+                                title: 'Факультет',
+                                field: 'faculty',
+                                render: rowData => <NavLink
+                                    to={`/faculties/${rowData.faculty.publicId}`}>{rowData.faculty.name}</NavLink>,
+                                customSort: (a, b) => a.faculty.name.localeCompare(b.faculty.name)
                             },
                         ]}
-                        data={disciplines}
+                        data={cathedras}
                         actions={[
                             {
                                 icon: Edit,
                                 tooltip: 'Редактировать',
                                 onClick: (event, rowData) => {
-                                    setDisciplineToEdit(rowData);
+                                    setCathedraToEdit(rowData);
                                     setEditMode(true)
                                 }
                             },
@@ -70,16 +78,16 @@ const DisciplinesManager = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setDisciplineToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    setCathedraToDelete(rowData);
+                                    setDeleteMode(true)
                                 }
                             }
                         ]}
                         options={{
                             actionsColumnIndex: -1,
                             padding: "dense",
-                            pageSize: 10,
-                            pageSizeOptions: [5, 10, 15],
+                            pageSize: 15,
+                            pageSizeOptions: [5, 10, 15, 25],
                             headerStyle: {
                                 backgroundColor: '#ebebeb',
                                 color: 'black',
@@ -92,13 +100,14 @@ const DisciplinesManager = (props) => {
                 </div>
 
                 {editMode &&
-                <DisciplineForm editMode={editMode} setEditMode={setEditMode} discipline={disciplineToEdit}
-                             setDisciplineToEdit={setDisciplineToEdit}/>}
+                <CathedraForm setEditMode={setEditMode}
+                              cathedra={cathedraToEdit}
+                              setCathedraToEdit={setCathedraToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={disciplineToDelete.name}
-                                    publicId={disciplineToDelete.publicId}
+                {deleteMode &&
+                <DeleteConfirmation setOpen={setDeleteMode}
+                                    message={cathedraToDelete.name}
+                                    publicId={cathedraToDelete.publicId}
                                     setIdToDelete={setIdToDelete}/>}
             </div>
 
@@ -107,4 +116,4 @@ const DisciplinesManager = (props) => {
     )
 };
 
-export default DisciplinesManager;
+export default CathedrasTab;
