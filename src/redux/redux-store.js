@@ -9,6 +9,8 @@ import studentsReducer from "./StudentsReducer";
 import buildingsReducer from "./BuildingsReducer";
 import learnPlanReducer from "./LearnPlanReducer";
 import disciplinesReducer from "./DisciplinesReducer";
+import messageReducer from "./MessageReducer";
+import deleteReducer from "./DeleteReducer";
 
 let reducers = combineReducers({
     cathedraReducer: cathedraReducer,
@@ -19,8 +21,9 @@ let reducers = combineReducers({
     specialtyReducer: specialtyReducer,
     studentsReducer: studentsReducer,
     learnPlanReducer: learnPlanReducer,
-    disciplinesReducer: disciplinesReducer
-
+    disciplinesReducer: disciplinesReducer,
+    messageReducer: messageReducer,
+    deleteReducer: deleteReducer,
 });
 
 const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;

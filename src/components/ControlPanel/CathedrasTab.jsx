@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteCathedra, getCathedrasWithFaculties} from "../../redux/CathedraReducer";
 import CathedraForm from "./CathedraForm";
@@ -105,10 +105,10 @@ const CathedrasTab = (props) => {
                               setCathedraToEdit={setCathedraToEdit}/>}
 
                 {deleteMode &&
-                <DeleteConfirmation setOpen={setDeleteMode}
-                                    message={cathedraToDelete.name}
-                                    publicId={cathedraToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteMode}
+                             message={cathedraToDelete.name}
+                             publicId={cathedraToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

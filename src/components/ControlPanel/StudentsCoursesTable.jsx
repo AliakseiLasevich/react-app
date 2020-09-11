@@ -1,33 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {requestStudentCourses} from "../../redux/StudentsReducer";
+import {deleteStudentCourse, requestStudentCourses} from "../../redux/StudentsReducer";
 import MaterialTable from "material-table";
 import tableIcons from "../Common/TableIcons";
 import StudentsGroupDetails from "./StudentsGroupDetails";
-import StudentsGroupForm from "./StudentsGroupForm";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-
-
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 export default function StudentsCoursesTable(props) {
+
     const dispatch = useDispatch();
     const allCourses = useSelector(state => state.studentsReducer.allStudentCourses);
-    const [groupEditMode, setGroupEditMode] = useState(false);
-    const [newGroupForm, setNewGroupForm] = useState();
 
     useEffect(() => {
         dispatch(requestStudentCourses());
     }, []);
-
-    const createNewGroupWindow = (course) => {
-      setNewGroupForm(
-            <StudentsGroupForm editMode={groupEditMode}
-                               setEditMode={setGroupEditMode}
-                               course={course}
-                               setNewGroupForm={setNewGroupForm}/>
-        )
-    };
 
     return (
         <div className="row justify-content-center p-2 m-auto ">
@@ -40,8 +28,9 @@ export default function StudentsCoursesTable(props) {
                     columns={[
                         {
                             title: 'Номер Курса',
-                            field: 'name',
-                            render: rowData => rowData.courseNumber
+                            field: 'number',
+                            render: rowData => rowData.courseNumber,
+
                         },
                         {
                             title: 'Специальность',
@@ -50,22 +39,7 @@ export default function StudentsCoursesTable(props) {
                         },
                     ]}
                     data={allCourses}
-                    detailPanel={rowData => {
-                        return (
-                            <div className="p-2" style={{backgroundColor: "#6b706e"}}>
-                                <button className="btn btn-sm btn-success m-1"
-                                        onClick={() => createNewGroupWindow(rowData)}>
-                                    Добавить группу
-                                </button>
-                                {rowData.studentGroups.map(studentGroup => (
-                                        <>
-                                            <StudentsGroupDetails studentGroup={studentGroup}/>
-                                        </>
-                                    )
-                                )}
-                            </div>
-                        )
-                    }}
+                    detailPanel={rowData => <StudentsGroupDetails studentCourse={rowData}/>}
                     options={{
                         actionsColumnIndex: -1,
                         padding: "dense",
@@ -82,26 +56,26 @@ export default function StudentsCoursesTable(props) {
                     actions={[
                         {
                             icon: Edit,
-                            tooltip: 'Редактировать номер курса',
+                            tooltip: 'Редактировать курс',
                             onClick: (event, rowData) => {
-                                // setCabinetToEdit(rowData);
-                                // setCabinetEditMode(true)
-                            }
+                                props.setStudentCourseToEdit(rowData);
+                            },
+
                         },
                         {
                             icon: Delete,
                             tooltip: 'Удалить курс',
                             onClick: (event, rowData) => {
-                                // setCabinetToDelete(rowData);
-                                // setDeleteModalOpen(true)
+                                dispatch(setIdToDelete(rowData.publicId));
+                                dispatch(setDeleteMessage(`Удалить курс: ${rowData.courseNumber}`));
+                                dispatch(setDeleteFunction(() => {
+                                    dispatch(deleteStudentCourse(rowData.publicId))
+                                }));
                             }
                         }
                     ]}
                 />
             </div>
-
-            {newGroupForm}
-
         </div>
     )
 

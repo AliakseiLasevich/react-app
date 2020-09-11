@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 import Delete from "@material-ui/icons/Delete";
 import tableIcons from "../Common/TableIcons";
 import BuildingsForm from "./BuildingsForm";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteBuilding, requestBuildings} from "../../redux/BuildingsReducer";
 import Edit from "@material-ui/icons/Edit";
@@ -101,10 +101,10 @@ const BuildingsTab = (props) => {
                                setBuildingToEdit={setBuildingToEdit}/>}
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`Здание ${buildingToDelete.name}. Кабинеты здания также будут удалены.`}
-                                    publicId={buildingToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={`Здание ${buildingToDelete.name}. Кабинеты здания также будут удалены.`}
+                             publicId={buildingToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

@@ -7,7 +7,7 @@ import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import MaterialTable from "material-table";
 
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import LearnPlanForm from "./LearnPlanForm";
 import {BsFillEyeFill} from "react-icons/bs";
@@ -129,10 +129,10 @@ const LearnPlanTab = (props) => {
 
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`Кабинет №${learnPlanToDelete.number}`}
-                                    publicId={learnPlanToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={`Кабинет №${learnPlanToDelete.number}`}
+                             publicId={learnPlanToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

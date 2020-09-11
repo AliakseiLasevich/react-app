@@ -5,7 +5,7 @@ import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import CabinetsForm from "./CabinetsForm";
 import {deleteCabinet, requestCabinets} from "../../redux/CabinetsReducer";
@@ -127,10 +127,10 @@ const CabinetsTab = (props) => {
 
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`Кабинет №${cabinetToDelete.number}`}
-                                    publicId={cabinetToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={`Кабинет №${cabinetToDelete.number}`}
+                             publicId={cabinetToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

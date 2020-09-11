@@ -1,11 +1,13 @@
 import {cabinetAPI} from "../api/api";
+import {setMessage} from "./MessageReducer";
 
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const SET_CABINETS = "SET_CABINETS";
 
+
 let initialState = {
     allCabinets: [],
-    isFetching: true
+    isFetching: true,
 };
 
 const cabinetsReducer = (state = initialState, action) => {
@@ -21,6 +23,7 @@ const cabinetsReducer = (state = initialState, action) => {
                 ...state,
                 allCabinets: action.cabinets
             };
+
         default:
             return state;
     }
@@ -32,6 +35,7 @@ export const setIsFetching = (isFetching) => {
         isFetching: isFetching
     }
 };
+
 
 export const setCabinets = (cabinets) => {
     return {
@@ -51,7 +55,11 @@ export const requestCabinets = () => {
 
 export const createCabinet = (cabinet) => {
     return async (dispatch) => {
-        await cabinetAPI.postCabinet(cabinet);
+        try {
+            await cabinetAPI.postCabinet(cabinet);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
         dispatch(requestCabinets());
     }
 };

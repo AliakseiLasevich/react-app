@@ -126,8 +126,8 @@ export const studentGroupAPI = {
     postStudentGroup(studentGroup) {
         return instance.post("studentGroups", studentGroup);
     },
-    putStudentGroup(studentGroup) {
-        return instance.put(`studentGroups/${studentGroup.id}`, studentGroup)
+    putStudentGroup(studentGroup, publicId) {
+        return instance.put(`studentGroups/${publicId}`, studentGroup)
     },
     deleteStudentGroup(publicId) {
         return instance.put(`studentGroups/${publicId}`)
@@ -159,6 +159,13 @@ export const studentCourseAPI = {
     },
     getAllStudentCourses(){
         return instance.get(`student_courses`)
+    },
+    putStudentCourse(studentCourse, publicId){
+
+        return instance.put(`student_courses/${publicId}`, studentCourse)
+    },
+    deleteCourse(publicId) {
+        return instance.delete(`student_courses/${publicId}`)
     }
 };
 

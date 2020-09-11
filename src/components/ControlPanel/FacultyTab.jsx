@@ -6,7 +6,7 @@ import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteFaculty, requestFaculties} from "../../redux/FacultyReducer";
 import FacultyForm from "./FacultyForm";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import tableIcons from "../Common/TableIcons";
 
@@ -97,10 +97,10 @@ const FacultyTab = (props) => {
                              setFacultyToEdit={setFacultyToEdit}/>}
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={facultyToDelete.name}
-                                    publicId={facultyToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={facultyToDelete.name}
+                             publicId={facultyToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

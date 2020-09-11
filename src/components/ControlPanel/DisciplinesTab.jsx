@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import tableIcons from "../Common/TableIcons";
 import {deleteDiscipline, requestDisciplines} from "../../redux/DisciplinesReducer";
@@ -96,10 +96,10 @@ const DisciplinesTab = (props) => {
                              setDisciplineToEdit={setDisciplineToEdit}/>}
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={disciplineToDelete.name}
-                                    publicId={disciplineToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={disciplineToDelete.name}
+                             publicId={disciplineToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

@@ -5,7 +5,7 @@ import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteConfirmation from "../Common/DeleteConfirmation";
+import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteSpecialty, requestSpecialties} from "../../redux/SpecialtyReducer";
 import SpecialtyForm from "./SpecialtyForm";
@@ -118,10 +118,10 @@ const SpecialtyTab = (props) => {
                                setSpecialtyToEdit={setSpecialtyToEdit}/>}
 
                 {deleteModalOpen &&
-                <DeleteConfirmation setOpen={setDeleteModalOpen}
-                                    message={`специальность ${specialtyToDelete.name}, код: ${specialtyToDelete.code}`}
-                                    publicId={specialtyToDelete.publicId}
-                                    setIdToDelete={setIdToDelete}/>}
+                <DeleteModal setOpen={setDeleteModalOpen}
+                             message={`специальность ${specialtyToDelete.name}, код: ${specialtyToDelete.code}`}
+                             publicId={specialtyToDelete.publicId}
+                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

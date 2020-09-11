@@ -1,4 +1,5 @@
 import {studentCourseAPI, studentGroupAPI, studentSubgroupAPI} from "../api/api";
+import {setMessage} from "./MessageReducer";
 
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
 const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
@@ -85,10 +86,10 @@ export const createStudentGroup = (studentGroup) => {
     }
 };
 
-export const putStudentGroup = (studentGroup) => {
+export const updateStudentGroup = (studentGroup, publicId) => {
     return async (dispatch) => {
-        await studentGroupAPI.putStudentGroup(studentGroup);
-        dispatch(requestStudentGroups());
+        await studentGroupAPI.putStudentGroup(studentGroup, publicId);
+        dispatch(requestStudentCourses());
     }
 };
 
@@ -99,13 +100,34 @@ export const deleteStudentGroup = (studentGroup) => {
     }
 };
 
-export const postStudentCourse = (studentCourse) => {
+export const createStudentCourse = (studentCourse) => {
     return async (dispatch) => {
-        await studentCourseAPI.postStudentCourse(studentCourse);
-        dispatch(requestStudentGroups());
+        try {
+            await studentCourseAPI.postStudentCourse(studentCourse);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+        dispatch(requestStudentCourses());
     }
 };
 
+export const deleteStudentCourse = (courseId) => {
+    return async (dispatch) => {
+        await studentCourseAPI.deleteCourse(courseId);
+        dispatch(requestStudentCourses());
+    }
+};
+
+export const updateStudentCourse = (studentCourse, courseId) => {
+    return async (dispatch) => {
+        try {
+            await studentCourseAPI.putStudentCourse(studentCourse, courseId);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+        dispatch(requestStudentCourses());
+    }
+};
 
 export const createStudentSubgroup = (subgroup) => {
     return async (dispatch) => {

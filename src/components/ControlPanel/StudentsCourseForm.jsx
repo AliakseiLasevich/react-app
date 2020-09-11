@@ -5,15 +5,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {requestSpecialties} from "../../redux/SpecialtyReducer";
-import {postStudentCourse} from "../../redux/StudentsReducer";
+import {createStudentCourse, updateStudentCourse} from "../../redux/StudentsReducer";
 
 const StudentsCourseForm = (props) => {
 
     const dispatch = useDispatch();
     const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
-    const [specialty, setSpecialty] = useState(props.studentCourse?.specialtyId || {});
-    const [courseNumber, setCourseNumber] = useState("");
-
+    const [specialty, setSpecialty] = useState(props.studentCourseToEdit?.specialty?.publicId || {});
 
     useEffect(() => {
         dispatch(requestSpecialties())
@@ -21,20 +19,18 @@ const StudentsCourseForm = (props) => {
     }, [dispatch]);
 
     const handleClose = () => {
-        props.setStudentGroupToEdit({});
-        props.setEditMode(false);
+        props.setStudentCourseToEdit(null);
     };
 
-    const {register, handleSubmit, errors} = useForm(
-        {
-            defaultValues: {
-                studentGroups: [{}]
-            }
-        }
-    );
+    const {register, handleSubmit, errors} = useForm();
 
     const onSubmit = (data) => {
-        dispatch(postStudentCourse(data));
+        if (props.studentCourseToEdit.publicId != undefined) {
+            dispatch(updateStudentCourse(data, props.studentCourseToEdit.publicId))
+        } else {
+            dispatch(createStudentCourse(data));
+        }
+        props.setStudentCourseToEdit(null);
     };
 
     return (
@@ -59,7 +55,7 @@ const StudentsCourseForm = (props) => {
                             <label htmlFor="courseNumber">Курс:</label>
                             <select className="form-control col" name="courseNumber"
                                     ref={register({required: "Выберите курс"})}
-                                    onChange={e => setCourseNumber(e.target.value)}>
+                                    defaultValue={props.studentCourseToEdit.courseNumber}>
                                 <option></option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
