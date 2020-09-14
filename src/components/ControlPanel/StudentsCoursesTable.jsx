@@ -19,7 +19,6 @@ export default function StudentsCoursesTable(props) {
 
     return (
         <div className="row justify-content-center p-2 m-auto ">
-
             <div className="col-md-12 col-xl-8">
                 <MaterialTable
                     icons={tableIcons}

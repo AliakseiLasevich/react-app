@@ -1,18 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import StudentsSubgroupForm from "./StudentsSubgroupForm";
-import {FaSave, FaRegTrashAlt} from "react-icons/fa";
 import StudentsGroupForm from "./StudentsGroupForm";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
+import {deleteStudentGroup, requestStudentGroupsByCourseId} from "../../redux/StudentsReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {FaRegTrashAlt, FaSave} from "react-icons/fa";
 
 
 export default function StudentsGroupDetails(props) {
-    const {studentCourse} = props;
 
-    const [subgroupEditMode, setSubgroupEditMode] = React.useState(false);
-    const [groupToEdit, setGroupToEdit] = React.useState(null);
+    const {studentCourse} = props;
+    const dispatch = useDispatch();
+    const [subgroupEditMode, setSubgroupEditMode] = useState(false);
+    const [groupToEdit, setGroupToEdit] = useState(null);
+    const groups = useSelector(state => state.studentsReducer.studentGroups[studentCourse.publicId]);
+
+    const deleteGroup = (studentGroup) => {
+        dispatch(setIdToDelete(studentGroup.publicId));
+        dispatch(setDeleteMessage(`Удалить группу: ${studentGroup.number} на ${studentCourse.courseNumber} курсе по специальности ${studentCourse.specialty.name}`));
+        dispatch(setDeleteFunction(() => {
+                dispatch(deleteStudentGroup(studentGroup.publicId))
+            }
+        ))
+    };
+
+    useEffect(() => {
+        dispatch(requestStudentGroupsByCourseId(studentCourse.publicId));
+    }, [studentCourse]);
 
     return (
         <div className="container bg-secondary p-2">
-
             <div className="row justify-content-center mb-2">
                 <button className="btn btn-success align-self-center"
                         onClick={() => {
@@ -22,8 +39,7 @@ export default function StudentsGroupDetails(props) {
                 </button>
             </div>
 
-            {studentCourse.studentGroups.map(studentGroup =>
-
+            {groups?.map(studentGroup =>
                 <div key={studentGroup.publicId} className="col-12">
                     <div className="row  justify-content-center">
                         <table className="mb-3 mx-1 col-xl-11 col-lg-11">
@@ -40,7 +56,11 @@ export default function StudentsGroupDetails(props) {
                                             }}>
                                         Изменить номер группы
                                     </button>
-                                    <button className="btn-outline-danger btn-sm btn mx-1">Удалить группу</button>
+                                    <button className="btn-outline-danger btn-sm btn mx-1"
+                                            onClick={() => {
+                                                deleteGroup(studentGroup)
+                                            }}>Удалить группу
+                                    </button>
                                 </th>
                             </tr>
                             </thead>
@@ -67,7 +87,6 @@ export default function StudentsGroupDetails(props) {
                                                                   id="inputGroupPrepend">Подгруппа</span>
                                                             </div>
                                                             <input type="text" className="form-control"
-                                                                   id="validationCustomUsername"
                                                                    placeholder="Username"
                                                                    aria-describedby="inputGroupPrepend"
                                                                    required
@@ -82,7 +101,6 @@ export default function StudentsGroupDetails(props) {
                                                                       id="inputGroupPrepend">Кол-во студентов</span>
                                                             </div>
                                                             <input type="text" className="form-control"
-                                                                   id="validationCustomUsername"
                                                                    placeholder="Username"
                                                                    aria-describedby="inputGroupPrepend"
                                                                    required
@@ -111,7 +129,6 @@ export default function StudentsGroupDetails(props) {
                             </tbody>
                         </table>
 
-
                         {subgroupEditMode &&
                         <StudentsSubgroupForm editMode={subgroupEditMode}
                                               setEditMode={setSubgroupEditMode}
@@ -122,8 +139,8 @@ export default function StudentsGroupDetails(props) {
             )}
 
             {groupToEdit && <StudentsGroupForm groupToEdit={groupToEdit}
-                                                 setGroupToEdit={setGroupToEdit}
-                                                 studentCourse={studentCourse}/>
+                                               setGroupToEdit={setGroupToEdit}
+                                               studentCourse={studentCourse}/>
             }
 
         </div>

@@ -12,7 +12,7 @@ const StudentsGroupForm = (props) => {
 
     const onSubmit = (studentGroup) => {
         studentGroup.courseId = props.studentCourse.publicId;
-        
+
         if (props.groupToEdit.publicId != undefined) {
             dispatch(updateStudentGroup(studentGroup, props.groupToEdit.publicId))
         } else {

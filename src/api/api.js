@@ -130,7 +130,10 @@ export const studentGroupAPI = {
         return instance.put(`studentGroups/${publicId}`, studentGroup)
     },
     deleteStudentGroup(publicId) {
-        return instance.put(`studentGroups/${publicId}`)
+        return instance.delete(`studentGroups/${publicId}`)
+    },
+    getStudentGroupsByCourseId(courseId) {
+        return instance.get(`studentGroups/courses/${courseId}`)
     }
 };
 
@@ -157,10 +160,10 @@ export const studentCourseAPI = {
     postStudentCourse(studentCourse) {
         return instance.post(`student_courses`, studentCourse)
     },
-    getAllStudentCourses(){
+    getAllStudentCourses() {
         return instance.get(`student_courses`)
     },
-    putStudentCourse(studentCourse, publicId){
+    putStudentCourse(studentCourse, publicId) {
 
         return instance.put(`student_courses/${publicId}`, studentCourse)
     },

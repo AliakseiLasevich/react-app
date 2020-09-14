@@ -8,7 +8,7 @@ const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 let initialState = {
     allStudentCourses: [],
-    allStudentGroups: [],
+    studentGroups: [],
     isFetching: true,
 };
 
@@ -29,9 +29,13 @@ export const studentGroupReducer = (state = initialState, action) => {
             };
 
         case SET_STUDENT_GROUPS:
+            const courseId = action.studentGroups.courseId;
+            const groups = {...state.studentGroups};
+            groups[courseId] = action.studentGroups.groups;
+
             return {
                 ...state,
-                allStudentGroups: action.allStudentGroups
+                studentGroups: groups
             };
 
         default:
@@ -39,10 +43,10 @@ export const studentGroupReducer = (state = initialState, action) => {
     }
 };
 
-export const setStudentGroups = (allStudentGroups) => {
+export const setStudentGroups = (studentGroups) => {
     return {
         type: SET_STUDENT_GROUPS,
-        allStudentGroups
+        studentGroups
     }
 };
 
@@ -60,15 +64,7 @@ export const setIsFetching = (isFetching) => {
     }
 };
 
-export const requestStudentGroups = () => {
-    return async (dispatch) => {
-        dispatch(setIsFetching(true));
-        const response = await studentGroupAPI.getStudentGroups();
-        dispatch(setStudentGroups(response.data));
-        dispatch(setIsFetching(false));
-    };
-};
-
+//COURSES
 export const requestStudentCourses = () => {
     return async (dispatch) => {
         dispatch(setIsFetching(true));
@@ -78,28 +74,6 @@ export const requestStudentCourses = () => {
     };
 };
 
-export const createStudentGroup = (studentGroup) => {
-    return async (dispatch) => {
-        await studentGroupAPI.postStudentGroup(studentGroup);
-        dispatch(requestStudentCourses());
-        dispatch(requestStudentGroups());
-    }
-};
-
-export const updateStudentGroup = (studentGroup, publicId) => {
-    return async (dispatch) => {
-        await studentGroupAPI.putStudentGroup(studentGroup, publicId);
-        dispatch(requestStudentCourses());
-    }
-};
-
-export const deleteStudentGroup = (studentGroup) => {
-    return async (dispatch) => {
-        await studentGroupAPI.delete(studentGroup);
-        dispatch(requestStudentGroups());
-    }
-};
-
 export const createStudentCourse = (studentCourse) => {
     return async (dispatch) => {
         try {
@@ -107,13 +81,6 @@ export const createStudentCourse = (studentCourse) => {
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
-        dispatch(requestStudentCourses());
-    }
-};
-
-export const deleteStudentCourse = (courseId) => {
-    return async (dispatch) => {
-        await studentCourseAPI.deleteCourse(courseId);
         dispatch(requestStudentCourses());
     }
 };
@@ -129,9 +96,78 @@ export const updateStudentCourse = (studentCourse, courseId) => {
     }
 };
 
+export const deleteStudentCourse = (courseId) => {
+    return async (dispatch) => {
+        await studentCourseAPI.deleteCourse(courseId);
+        dispatch(requestStudentCourses());
+    }
+};
+
+//GROUPS
+
+// export const requestStudentGroups = () => {
+//     return async (dispatch) => {
+//         dispatch(setIsFetching(true));
+//         const response = await studentGroupAPI.getStudentGroups();
+//         dispatch(setStudentGroups(response.data));
+//         dispatch(setIsFetching(false));
+//     };
+// };
+
+export const requestStudentGroupsByCourseId = (courseId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        // try {
+        const response = await studentGroupAPI.getStudentGroupsByCourseId(courseId);
+        const embedded = {groups: response.data, courseId};
+        dispatch(setStudentGroups(embedded));
+
+        // } catch (err) {
+        //     dispatch(setMessage(err.response.data.message))
+        // }
+        dispatch(setIsFetching(false));
+
+    };
+};
+
+export const createStudentGroup = (studentGroup) => {
+    return async (dispatch) => {
+        try {
+            await studentGroupAPI.postStudentGroup(studentGroup);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+    }
+};
+
+export const updateStudentGroup = (studentGroup, publicId) => {
+    return async (dispatch) => {
+        try {
+            await studentGroupAPI.putStudentGroup(studentGroup, publicId);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+    }
+};
+
+export const deleteStudentGroup = (publicId) => {
+    return async (dispatch) => {
+        try {
+            await studentGroupAPI.deleteStudentGroup(publicId);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+    }
+};
+
+//SUBGROUPS
 export const createStudentSubgroup = (subgroup) => {
     return async (dispatch) => {
-        await studentSubgroupAPI.postStudentSubgroup(subgroup);
+        try {
+            await studentSubgroupAPI.postStudentSubgroup(subgroup);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
         dispatch(requestStudentCourses());
     }
 };
@@ -139,7 +175,16 @@ export const createStudentSubgroup = (subgroup) => {
 export const updateStudentSubgroup = (subgroup, publicId) => {
     return async (dispatch) => {
         await studentSubgroupAPI.putStudentSubgroup(subgroup);
-        dispatch(requestStudentGroups());
+    }
+};
+
+export const deleteStudentSubgroup = (subgroupId) => {
+    return async (dispatch) => {
+        try {
+            await studentSubgroupAPI.deleteStudentSubgroup(subgroupId);
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
     }
 };
 
