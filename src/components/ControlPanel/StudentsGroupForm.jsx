@@ -18,6 +18,7 @@ const StudentsGroupForm = (props) => {
         } else {
             dispatch(createStudentGroup(studentGroup));
         }
+        props.setGroupToEdit(null);
     };
 
     const handleClose = () => {

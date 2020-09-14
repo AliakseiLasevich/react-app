@@ -11,7 +11,7 @@ import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/De
 export default function StudentsCoursesTable(props) {
 
     const dispatch = useDispatch();
-    const allCourses = useSelector(state => state.studentsReducer.allStudentCourses);
+    const allCourses = useSelector(state => state.studentsReducer.studentCourses);
 
     useEffect(() => {
         dispatch(requestStudentCourses());

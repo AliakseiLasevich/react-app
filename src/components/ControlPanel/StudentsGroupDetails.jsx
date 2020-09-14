@@ -4,7 +4,8 @@ import StudentsGroupForm from "./StudentsGroupForm";
 import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 import {deleteStudentGroup, requestStudentGroupsByCourseId} from "../../redux/StudentsReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {FaRegTrashAlt, FaSave} from "react-icons/fa";
+
+import StudentsSubgroupDetails from "./StudentsSubgroupDetails";
 
 
 export default function StudentsGroupDetails(props) {
@@ -19,7 +20,7 @@ export default function StudentsGroupDetails(props) {
         dispatch(setIdToDelete(studentGroup.publicId));
         dispatch(setDeleteMessage(`Удалить группу: ${studentGroup.number} на ${studentCourse.courseNumber} курсе по специальности ${studentCourse.specialty.name}`));
         dispatch(setDeleteFunction(() => {
-                dispatch(deleteStudentGroup(studentGroup.publicId))
+                dispatch(deleteStudentGroup(studentGroup.publicId, studentCourse.publicId))
             }
         ))
     };
@@ -76,55 +77,12 @@ export default function StudentsGroupDetails(props) {
                                         <div className="alert-danger mt-1">
                                             В группе нет студентов. Добавьте подгруппу.
                                         </div>}
-
-                                        {studentGroup.studentSubgroups.map(subgroup => (
-                                            <form key={subgroup.publicId}>
-                                                <div className="form-row ">
-                                                    <div className="col-5 mb-1">
-                                                        <div className="input-group">
-                                                            <div className="input-group-prepend">
-                                                            <span className="input-group-text"
-                                                                  id="inputGroupPrepend">Подгруппа</span>
-                                                            </div>
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Username"
-                                                                   aria-describedby="inputGroupPrepend"
-                                                                   required
-                                                                   defaultValue={subgroup.name}/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-5 mb-1">
-                                                        <div className="input-group">
-                                                            <div className="input-group-prepend">
-                                                                <span className="input-group-text"
-                                                                      id="inputGroupPrepend">Кол-во студентов</span>
-                                                            </div>
-                                                            <input type="text" className="form-control"
-                                                                   placeholder="Username"
-                                                                   aria-describedby="inputGroupPrepend"
-                                                                   required
-                                                                   defaultValue={subgroup.studentsCount}/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-2 mb-1 w-auto d-flex justify-content-around">
-                                                        <button className="btn btn-warning" onClick={() => {
-                                                        }}>
-                                                            <FaSave/>
-                                                        </button>
-                                                        <button className="btn btn-danger"
-                                                                onClick={() => {
-                                                                }}>
-                                                            <FaRegTrashAlt/>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        ))}
+                                        {studentGroup.studentSubgroups
+                                            .map(subgroup => <StudentsSubgroupDetails key={subgroup.publicId}
+                                                                                      subgroup={subgroup}
+                                                                                      studentGroup={studentGroup}/>)}
                                     </div>
                                 </td>
-
                             </tr>
                             </tbody>
                         </table>
@@ -132,7 +90,8 @@ export default function StudentsGroupDetails(props) {
                         {subgroupEditMode &&
                         <StudentsSubgroupForm editMode={subgroupEditMode}
                                               setEditMode={setSubgroupEditMode}
-                                              studentGroup={studentGroup}/>}
+                                              studentGroup={studentGroup}
+                                              studentCourse={studentCourse}/>}
                     </div>
 
                 </div>

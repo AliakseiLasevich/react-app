@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import {useDispatch} from "react-redux";
-import {createStudentSubgroup, updateStudentSubgroup} from "../../redux/StudentsReducer";
+import {createStudentSubgroup} from "../../redux/StudentsReducer";
 
 const StudentsSubgroupForm = (props) => {
     const {register, handleSubmit, errors} = useForm({});
@@ -14,14 +14,7 @@ const StudentsSubgroupForm = (props) => {
 
     const onSubmit = (subgroup) => {
         subgroup.studentGroupId = props.studentGroup.publicId;
-        // if (props.subgroup.publicId) {
-        //     dispatch(updateStudentSubgroup(subgroup, props.subgroup.publicId))
-        // } else {
-        //     dispatch(createStudentSubgroup(subgroup))
-        // }
-
-        dispatch(createStudentSubgroup(subgroup))
-        // props.setSpecialtyToEdit({});
+        dispatch(createStudentSubgroup(subgroup, props.studentCourse.publicId));
         props.setEditMode(false);
     };
 

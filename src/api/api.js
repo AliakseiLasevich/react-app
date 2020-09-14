@@ -147,11 +147,11 @@ export const studentSubgroupAPI = {
     postStudentSubgroup(subgroup) {
         return instance.post("studentSubgroups", subgroup);
     },
-    putStudentSubgroup(subgroup) {
-        return instance.put(`studentSubgroups/${subgroup.id}`, subgroup)
+    putStudentSubgroup(subgroup, publicId) {
+        return instance.put(`studentSubgroups/${publicId}`, subgroup)
     },
     deleteStudentSubgroup(publicId) {
-        return instance.put(`studentSubgroups/${publicId}`)
+        return instance.delete(`studentSubgroups/${publicId}`)
     }
 };
 
