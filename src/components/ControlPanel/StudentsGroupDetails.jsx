@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import StudentsSubgroupForm from "./StudentsSubgroupForm";
 import StudentsGroupForm from "./StudentsGroupForm";
 import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 import {deleteStudentGroup, requestStudentGroupsByCourseId} from "../../redux/StudentsReducer";
 import {useDispatch, useSelector} from "react-redux";
-
 import StudentsSubgroupDetails from "./StudentsSubgroupDetails";
 
+import {HiUsers} from "react-icons/hi";
 
 export default function StudentsGroupDetails(props) {
 
     const {studentCourse} = props;
     const dispatch = useDispatch();
-    const [subgroupEditMode, setSubgroupEditMode] = useState(false);
+
     const [groupToEdit, setGroupToEdit] = useState(null);
     const groups = useSelector(state => state.studentsReducer.studentGroups[studentCourse.publicId]);
 
@@ -27,7 +26,9 @@ export default function StudentsGroupDetails(props) {
 
     useEffect(() => {
         dispatch(requestStudentGroupsByCourseId(studentCourse.publicId));
-    }, [studentCourse]);
+    }, [dispatch, studentCourse]);
+
+
 
     return (
         <div className="container bg-secondary p-2">
@@ -36,7 +37,8 @@ export default function StudentsGroupDetails(props) {
                         onClick={() => {
                             setGroupToEdit(true);
                         }}>
-                    Добавить группу
+                    <HiUsers/>
+                    <span className="mx-2">Добавить группу</span>
                 </button>
             </div>
 
@@ -69,38 +71,19 @@ export default function StudentsGroupDetails(props) {
                             <tr className="bg-white">
                                 <td colSpan={4}>
                                     <div className="px-5 my-1">
-                                        <button className="btn btn-success btn-sm m-1"
-                                                onClick={() => setSubgroupEditMode(!subgroupEditMode)}>Добавить
-                                            подгруппу
-                                        </button>
-                                        {!studentGroup.studentSubgroups.length &&
-                                        <div className="alert-danger mt-1">
-                                            В группе нет студентов. Добавьте подгруппу.
-                                        </div>}
-                                        {studentGroup.studentSubgroups
-                                            .map(subgroup => <StudentsSubgroupDetails key={subgroup.publicId}
-                                                                                      subgroup={subgroup}
-                                                                                      studentGroup={studentGroup}/>)}
+                                        <StudentsSubgroupDetails studentGroup={studentGroup}/>
                                     </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
-                        {subgroupEditMode &&
-                        <StudentsSubgroupForm editMode={subgroupEditMode}
-                                              setEditMode={setSubgroupEditMode}
-                                              studentGroup={studentGroup}
-                                              studentCourse={studentCourse}/>}
                     </div>
-
                 </div>
             )}
 
             {groupToEdit && <StudentsGroupForm groupToEdit={groupToEdit}
                                                setGroupToEdit={setGroupToEdit}
-                                               studentCourse={studentCourse}/>
-            }
+                                               studentCourse={studentCourse}/>}
 
         </div>
 

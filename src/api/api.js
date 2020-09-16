@@ -152,6 +152,9 @@ export const studentSubgroupAPI = {
     },
     deleteStudentSubgroup(publicId) {
         return instance.delete(`studentSubgroups/${publicId}`)
+    },
+    getStudentSubgroupByGroupId(groupId) {
+        return instance.get(`studentSubgroups/groups/${groupId}`)
     }
 };
 

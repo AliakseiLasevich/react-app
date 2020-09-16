@@ -5,24 +5,24 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {useDispatch} from "react-redux";
 import {createStudentGroup, updateStudentGroup} from "../../redux/StudentsReducer";
 
-const StudentsGroupForm = (props) => {
+const StudentsGroupForm = ({groupToEdit, setGroupToEdit, studentCourse}) => {
 
     const {register, handleSubmit, errors} = useForm({});
     const dispatch = useDispatch();
 
     const onSubmit = (studentGroup) => {
-        studentGroup.courseId = props.studentCourse.publicId;
+        studentGroup.courseId = studentCourse.publicId;
 
-        if (props.groupToEdit.publicId != undefined) {
-            dispatch(updateStudentGroup(studentGroup, props.groupToEdit.publicId))
+        if (groupToEdit.publicId != undefined) {
+            dispatch(updateStudentGroup(studentGroup, groupToEdit.publicId))
         } else {
             dispatch(createStudentGroup(studentGroup));
         }
-        props.setGroupToEdit(null);
+        setGroupToEdit(null);
     };
 
     const handleClose = () => {
-        props.setGroupToEdit(null);
+        setGroupToEdit(null);
     };
 
     return (
@@ -39,7 +39,7 @@ const StudentsGroupForm = (props) => {
                             <input name="number"
                                    placeholder={"Введите Номер группы"}
                                    ref={register({required: "Номер группы"})}
-                                   defaultValue={props.groupToEdit.number}
+                                   defaultValue={groupToEdit.number}
                             />
                         </div>
                     </div>
