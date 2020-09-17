@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {requestStudentSubgroupsByGroupId} from "../../redux/StudentsReducer";
+import {deleteStudentSubgroup, requestStudentSubgroupsByGroupId} from "../../redux/StudentsReducer";
 import {FaRegEdit, FaRegTrashAlt, FaUsers} from "react-icons/fa";
 import StudentsSubgroupForm from "./StudentsSubgroupForm";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 
 const StudentsSubgroupDetails = (props) => {
@@ -46,7 +47,13 @@ const StudentsSubgroupDetails = (props) => {
                         <FaRegEdit/>
                     </button>
 
-                    <button className="btn btn-danger"><FaRegTrashAlt/></button>
+                    <button className="btn btn-danger" onClick={()=>{
+                        dispatch(setIdToDelete(subgroup.publicId));
+                        dispatch(setDeleteMessage(`Удалить подгруппу: ${subgroup.name}`));
+                        dispatch(setDeleteFunction(() => {
+                            dispatch(deleteStudentSubgroup(subgroup.publicId, studentGroup.publicId))
+                        }));
+                    }}><FaRegTrashAlt/></button>
                 </div>
             )}
 

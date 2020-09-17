@@ -5,18 +5,14 @@ import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import CabinetsForm from "./CabinetsForm";
 import {deleteCabinet, requestCabinets} from "../../redux/CabinetsReducer";
-
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 const CabinetsTab = (props) => {
     const [cabinetEditMode, setCabinetEditMode] = useState(false);
     const [cabinetToEdit, setCabinetToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [cabinetToDelete, setCabinetToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.cabinetsReducer.isFetching);
@@ -25,13 +21,6 @@ const CabinetsTab = (props) => {
     useEffect(() => {
         dispatch(requestCabinets());
     }, [dispatch]);
-
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteCabinet(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -42,7 +31,6 @@ const CabinetsTab = (props) => {
                     Добавить Кабинет
                 </button>
             </div>
-
 
             <div className="row justify-content-center p-2 m-auto ">
                 <div className="col-md-12 col-xl-10">
@@ -98,8 +86,11 @@ const CabinetsTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить кабинет',
                                 onClick: (event, rowData) => {
-                                    setCabinetToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить кабинет: ${rowData.number}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteCabinet(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -125,12 +116,6 @@ const CabinetsTab = (props) => {
                               cabinet={cabinetToEdit}
                               setCabinetToEdit={setCabinetToEdit}/>}
 
-
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={`Кабинет №${cabinetToDelete.number}`}
-                             publicId={cabinetToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

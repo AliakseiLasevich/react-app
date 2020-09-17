@@ -1,36 +1,29 @@
 import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
-import {requestAllLearnPlans} from "../../redux/LearnPlanReducer";
+import {deleteLearnPlan, requestAllLearnPlans} from "../../redux/LearnPlanReducer";
 import tableIcons from "../Common/TableIcons";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import MaterialTable from "material-table";
-
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import LearnPlanForm from "./LearnPlanForm";
 import {BsFillEyeFill} from "react-icons/bs";
 import moment from "moment";
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 const LearnPlanTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [learnPlanToEdit, setLearnPlanToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [learnPlanToDelete, setLearnPlanToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
     const [learnPlanIdToRedirect, setLearnPlanIdToRedirect] = useState("");
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.learnPlanReducer.isFetching);
-
 
     useEffect(() => {
         dispatch(requestAllLearnPlans());
     }, [dispatch]);
-
 
     const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
 
@@ -89,7 +82,7 @@ const LearnPlanTab = (props) => {
                             },
                             {
                                 icon: Edit,
-                                tooltip: 'Редактировать кабинет',
+                                tooltip: 'Редактировать учебный план',
                                 onClick: (event, rowData) => {
                                     setLearnPlanToEdit(rowData);
                                     setEditMode(true)
@@ -97,10 +90,13 @@ const LearnPlanTab = (props) => {
                             },
                             {
                                 icon: Delete,
-                                tooltip: 'Удалить кабинет',
+                                tooltip: 'Удалить учебный план',
                                 onClick: (event, rowData) => {
-                                    setLearnPlanToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить учебный план специальности: ${rowData.specialty.name}, ${rowData.courseNumber} курс`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteLearnPlan(rowData.publicId))
+                                    }));
                                 }
                             },
 
@@ -126,13 +122,6 @@ const LearnPlanTab = (props) => {
                                setEditMode={setEditMode}
                                learnPlan={learnPlanToEdit}
                                setLearnPlanToEdit={setLearnPlanToEdit}/>}
-
-
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={`Кабинет №${learnPlanToDelete.number}`}
-                             publicId={learnPlanToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

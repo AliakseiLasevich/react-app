@@ -2,18 +2,11 @@ import {teacherAPI} from "../api/api";
 
 
 const SET_TEACHERS = "SET_TEACHERS";
-const TOGGLE_ISFETCHING = "TOGGLE_ISFETCHING";
+const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 
 let initialState = {
-    allTeachers: [
-        {
-            name: "",
-            id: 0,
-            cathedra: ""
-        }
-    ],
-
+    allTeachers: [],
     isFetching: true
 };
 
@@ -21,13 +14,14 @@ export const teacherReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
-        case TOGGLE_ISFETCHING:
+        case TOGGLE_IS_FETCHING:
             return {
                 ...state,
                 isFetching: action.isFetching
             };
 
         case SET_TEACHERS:
+            debugger
             return {
                 ...state,
                 allTeachers: action.allTeachers
@@ -47,7 +41,7 @@ export const setTeachers = (allTeachers) => {
 
 export const setIsFetching = (isFetching) => {
     return {
-        type: TOGGLE_ISFETCHING,
+        type: TOGGLE_IS_FETCHING,
         isFetching: isFetching
     }
 };
@@ -85,6 +79,5 @@ export const deleteTeacher = (teacher) => {
         })
     }
 };
-
 
 export default teacherReducer;

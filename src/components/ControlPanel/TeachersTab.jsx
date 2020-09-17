@@ -5,19 +5,15 @@ import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import TeacherForm from "./TeacherForm";
 import {deleteTeacher, requestAllTeachers} from "../../redux/TeacherReducer";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 const TeachersTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [teacherToEdit, setTeacherToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [teacherToDelete, setTeacherToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.teacherReducer.isFetching);
     const teachers = useSelector(state => state.teacherReducer.allTeachers);
@@ -25,13 +21,6 @@ const TeachersTab = (props) => {
     useEffect(() => {
         dispatch(requestAllTeachers());
     }, [dispatch]);
-
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteTeacher(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -77,8 +66,11 @@ const TeachersTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setTeacherToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить преподавателя: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteTeacher(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -104,11 +96,6 @@ const TeachersTab = (props) => {
                              teacher={teacherToEdit}
                              setTeacherToEdit={setTeacherToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={teacherToDelete.name}
-                             publicId={teacherToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

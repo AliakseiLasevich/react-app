@@ -5,19 +5,16 @@ import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteCathedra, getCathedrasWithFaculties} from "../../redux/CathedraReducer";
 import CathedraForm from "./CathedraForm";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
+import {deleteCabinet} from "../../redux/CabinetsReducer";
 
 const CathedrasTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [cathedraToEdit, setCathedraToEdit] = useState({});
-    const [deleteMode, setDeleteMode] = useState(false);
-    const [cathedraToDelete, setCathedraToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.cathedraReducer.isFetching);
     const cathedras = useSelector(state => state.cathedraReducer.allCathedras);
@@ -25,13 +22,6 @@ const CathedrasTab = (props) => {
     useEffect(() => {
         dispatch(getCathedrasWithFaculties());
     }, [dispatch]);
-
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteCathedra(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -78,8 +68,11 @@ const CathedrasTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setCathedraToDelete(rowData);
-                                    setDeleteMode(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить кафедру: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteCathedra(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -104,11 +97,6 @@ const CathedrasTab = (props) => {
                               cathedra={cathedraToEdit}
                               setCathedraToEdit={setCathedraToEdit}/>}
 
-                {deleteMode &&
-                <DeleteModal setOpen={setDeleteMode}
-                             message={cathedraToDelete.name}
-                             publicId={cathedraToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

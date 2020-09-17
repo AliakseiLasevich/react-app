@@ -6,18 +6,15 @@ import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteFaculty, requestFaculties} from "../../redux/FacultyReducer";
 import FacultyForm from "./FacultyForm";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import tableIcons from "../Common/TableIcons";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
+import {deleteTeacher} from "../../redux/TeacherReducer";
 
 const FacultyTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [facultyToEdit, setFacultyToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [facultyToDelete, setFacultyToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.facultyReducer.isFetching);
     const faculties = useSelector(state => state.facultyReducer.allFaculties);
@@ -25,13 +22,6 @@ const FacultyTab = (props) => {
     useEffect(() => {
         dispatch(requestFaculties());
     }, [dispatch]);
-
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteFaculty(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -70,9 +60,11 @@ const FacultyTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить',
                                 onClick: (event, rowData) => {
-                                    setFacultyToDelete(rowData);
-
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить факультет: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteFaculty(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -96,11 +88,6 @@ const FacultyTab = (props) => {
                 <FacultyForm editMode={editMode} setEditMode={setEditMode} faculty={facultyToEdit}
                              setFacultyToEdit={setFacultyToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={facultyToDelete.name}
-                             publicId={facultyToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

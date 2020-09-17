@@ -5,17 +5,14 @@ import tableIcons from "../Common/TableIcons";
 import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteSpecialty, requestSpecialties} from "../../redux/SpecialtyReducer";
 import SpecialtyForm from "./SpecialtyForm";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 
 const SpecialtyTab = (props) => {
     const [specialtyEditMode, setSpecialtyEditMode] = useState(false);
     const [specialtyToEdit, setSpecialtyToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [specialtyToDelete, setSpecialtyToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.specialtyReducer.isFetching);
@@ -25,12 +22,6 @@ const SpecialtyTab = (props) => {
         dispatch(requestSpecialties());
     }, [dispatch]);
 
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteSpecialty(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
-
     return (
         <div className="container-fluid">
 
@@ -39,7 +30,6 @@ const SpecialtyTab = (props) => {
                     Добавить Специальность
                 </button>
             </div>
-
 
             <div className="row justify-content-center p-2 m-auto ">
                 <div className="col-md-12 col-xl-10">
@@ -88,8 +78,11 @@ const SpecialtyTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить кабинет',
                                 onClick: (event, rowData) => {
-                                    setSpecialtyToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить специальность: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteSpecialty(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -115,11 +108,6 @@ const SpecialtyTab = (props) => {
                                specialty={specialtyToEdit}
                                setSpecialtyToEdit={setSpecialtyToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={`специальность ${specialtyToDelete.name}, код: ${specialtyToDelete.code}`}
-                             publicId={specialtyToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

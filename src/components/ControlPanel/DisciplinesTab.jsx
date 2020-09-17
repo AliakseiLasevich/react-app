@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import DeleteModal from "../Common/DeleteModal";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
 import Preloader from "../Common/Preloader";
 import tableIcons from "../Common/TableIcons";
 import {deleteDiscipline, requestDisciplines} from "../../redux/DisciplinesReducer";
@@ -14,9 +14,6 @@ const DisciplinesTab = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [disciplineToEdit, setDisciplineToEdit] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [disciplineToDelete, setDisciplineToDelete] = useState(null);
-    const [idToDelete, setIdToDelete] = useState(null);
 
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.disciplinesReducer.isFetching);
@@ -25,13 +22,6 @@ const DisciplinesTab = (props) => {
     useEffect(() => {
         dispatch(requestDisciplines());
     }, [dispatch]);
-
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteDiscipline(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -69,9 +59,12 @@ const DisciplinesTab = (props) => {
                             {
                                 icon: Delete,
                                 tooltip: 'Удалить',
-                                onClick: (event, rowData) => {
-                                    setDisciplineToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                onClick: (event ,rowData) => {
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить дисциплину: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteDiscipline(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -95,11 +88,6 @@ const DisciplinesTab = (props) => {
                 <DisciplineForm editMode={editMode} setEditMode={setEditMode} discipline={disciplineToEdit}
                              setDisciplineToEdit={setDisciplineToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={disciplineToDelete.name}
-                             publicId={disciplineToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

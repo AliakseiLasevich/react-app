@@ -6,60 +6,60 @@ const SET_LEARN_PLAN = "SET_LEARN_PLAN";
 
 let initialState = {
     allLearnPlans: [],
-        learnPlan: {
-            startDate: "",
-            endDate: "2020-09-20",
+    learnPlan: {
+        startDate: "",
+        endDate: "2020-09-20",
+        publicId: "",
+        courseNumber: 0,
+        faculty: {
             publicId: "",
-            courseNumber: 0,
+            name: ""
+        },
+        specialty: {
+            publicId: "",
+            name: "",
+            code: "",
             faculty: {
                 publicId: "",
                 name: ""
-            },
-            specialty: {
+            }
+        },
+        disciplinePlan: [
+            {
+                id: 0,
                 publicId: "",
-                name: "",
-                code: "",
-                faculty: {
-                    publicId: "",
-                    name: ""
-                }
-            },
-            disciplinePlan: [
-                {
+                courseProject: 0,
+                courseWork: 0,
+                exam: 0,
+                flow: "",
+                hoursCabinet: 0,
+                hoursKSRL: 0,
+                hoursKSRLR: 0,
+                hoursKSRP: 0,
+                hoursKSRVS: 0,
+                hoursLaboratory: 0,
+                hoursLecture: 0,
+                hoursPracticalSeminary: 0,
+                hoursSummary: 0,
+                summary: 0,
+                test: 0,
+                testCount: 0,
+                discipline: {
                     id: 0,
                     publicId: "",
-                    courseProject: 0,
-                    courseWork: 0,
-                    exam: 0,
-                    flow: "",
-                    hoursCabinet: 0,
-                    hoursKSRL: 0,
-                    hoursKSRLR: 0,
-                    hoursKSRP: 0,
-                    hoursKSRVS: 0,
-                    hoursLaboratory: 0,
-                    hoursLecture: 0,
-                    hoursPracticalSeminary: 0,
-                    hoursSummary: 0,
-                    summary: 0,
-                    test: 0,
-                    testCount: 0,
-                    discipline: {
+                    name: "",
+                    active: true
+                },
+                lessons: {
+                    "2000-01-01": {
                         id: 0,
-                        publicId: "",
-                        name: "",
-                        active: true
-                    },
-                    lessons: {
-                        "2000-01-01": {
-                            id: 0,
-                            lecture: 0,
-                            practical: 0
-                        }
+                        lecture: 0,
+                        practical: 0
                     }
                 }
-            ]
-        },
+            }
+        ]
+    },
     isFetching: true
 };
 
@@ -137,8 +137,8 @@ export const createLearnPlan = (learnPlan) => {
 
 export const deleteLearnPlan = (learnPlanId) => {
     return async (dispatch) => {
-        const response = await learnPlanAPI.deleteLearnPlan(learnPlanId);
-        console.log(response);
+        await learnPlanAPI.deleteLearnPlan(learnPlanId);
+        dispatch(requestAllLearnPlans())
     }
 };
 

@@ -6,19 +6,16 @@ import {NavLink} from "react-router-dom";
 import Delete from "@material-ui/icons/Delete";
 import tableIcons from "../Common/TableIcons";
 import BuildingsForm from "./BuildingsForm";
-import DeleteModal from "../Common/DeleteModal";
 import Preloader from "../Common/Preloader";
 import {deleteBuilding, requestBuildings} from "../../redux/BuildingsReducer";
 import Edit from "@material-ui/icons/Edit";
+import {setDeleteFunction, setDeleteMessage, setIdToDelete} from "../../redux/DeleteReducer";
+import {deleteCabinet} from "../../redux/CabinetsReducer";
 
 
 const BuildingsTab = (props) => {
     const [buildingEditMode, setBuildingEditMode] = useState(false);
     const [buildingToEdit, setBuildingToEdit] = useState({});
-    const [buildingToDelete, setBuildingToDelete] = useState({});
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [idToDelete, setIdToDelete] = useState(null);
-
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.buildingsReducer.isFetching);
     const buildings = useSelector(state => state.buildingsReducer.allBuildings);
@@ -26,12 +23,6 @@ const BuildingsTab = (props) => {
     useEffect(() => {
         dispatch(requestBuildings());
     }, [dispatch]);
-
-    useEffect(() => {
-        if (idToDelete != undefined) {
-            dispatch(deleteBuilding(idToDelete))
-        }
-    }, [dispatch, idToDelete]);
 
     return (
         <div className="container-fluid">
@@ -72,8 +63,11 @@ const BuildingsTab = (props) => {
                                 icon: Delete,
                                 tooltip: 'Удалить здание',
                                 onClick: (event, rowData) => {
-                                    setBuildingToDelete(rowData);
-                                    setDeleteModalOpen(true)
+                                    dispatch(setIdToDelete(rowData.publicId));
+                                    dispatch(setDeleteMessage(`Удалить здание: ${rowData.name}`));
+                                    dispatch(setDeleteFunction(() => {
+                                        dispatch(deleteBuilding(rowData.publicId))
+                                    }));
                                 }
                             }
                         ]}
@@ -93,18 +87,12 @@ const BuildingsTab = (props) => {
                     />
                 </div>
 
-
                 {buildingEditMode &&
                 <BuildingsForm editMode={buildingEditMode}
                                setEditMode={setBuildingEditMode}
                                building={buildingToEdit}
                                setBuildingToEdit={setBuildingToEdit}/>}
 
-                {deleteModalOpen &&
-                <DeleteModal setOpen={setDeleteModalOpen}
-                             message={`Здание ${buildingToDelete.name}. Кабинеты здания также будут удалены.`}
-                             publicId={buildingToDelete.publicId}
-                             setIdToDelete={setIdToDelete}/>}
             </div>
 
             {isFetching && <div className="row justify-content-center p-2 m-2"><Preloader/></div>}

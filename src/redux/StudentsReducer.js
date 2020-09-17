@@ -179,10 +179,11 @@ export const updateStudentSubgroup = (subgroup, publicId) => {
     }
 };
 
-export const deleteStudentSubgroup = (subgroupId) => {
+export const deleteStudentSubgroup = (subgroupId, studentGroupId) => {
     return async (dispatch) => {
         try {
             await studentSubgroupAPI.deleteStudentSubgroup(subgroupId);
+            dispatch(requestStudentSubgroupsByGroupId(studentGroupId))
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
