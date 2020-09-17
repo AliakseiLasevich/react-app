@@ -2,6 +2,7 @@ import {studentCourseAPI, studentGroupAPI, studentSubgroupAPI} from "../api/api"
 import {setMessage} from "./MessageReducer";
 
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
+const SET_STUDENT_SUBGROUPS = "SET_STUDENT_SUBGROUPS";
 const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
@@ -9,6 +10,7 @@ const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 let initialState = {
     studentCourses: [],
     studentGroups: [],
+    studentSubgroups: [],
     isFetching: true,
 };
 
@@ -17,36 +19,32 @@ export const studentGroupReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case TOGGLE_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
-            };
+            state.isFetching = action.isFetching;
+            return state;
 
         case SET_STUDENT_COURSES:
-            return {
-                ...state,
-                studentCourses: action.studentCourses
-            };
+            state.studentCourses = action.studentCourses;
+            return state;
 
         case SET_STUDENT_GROUPS:
-            const courseId = action.studentGroups.courseId;
-            const groups = {...state.studentGroups};
-            groups[courseId] = action.studentGroups.groups;
+            state.studentGroups[action.courseId] = action.studentGroups;
+            return state;
 
-            return {
-                ...state,
-                studentGroups: groups
-            };
+        case SET_STUDENT_SUBGROUPS:
+            state.studentSubgroups = {...state.studentSubgroups}
+            state.studentSubgroups[action.groupId] = action.studentSubgroups;
+            return state;
 
         default:
             return state;
     }
 };
 
-export const setStudentGroups = (studentGroups) => {
+export const setStudentGroups = (studentGroups, courseId) => {
     return {
         type: SET_STUDENT_GROUPS,
-        studentGroups
+        studentGroups,
+        courseId
     }
 };
 
@@ -54,6 +52,14 @@ export const setStudentCourses = (studentCourses) => {
     return {
         type: SET_STUDENT_COURSES,
         studentCourses
+    }
+};
+
+export const setStudentSubgroups = (studentSubgroups, groupId) => {
+    return {
+        type: SET_STUDENT_SUBGROUPS,
+        studentSubgroups,
+        groupId
     }
 };
 
@@ -78,6 +84,7 @@ export const createStudentCourse = (studentCourse) => {
     return async (dispatch) => {
         try {
             await studentCourseAPI.postStudentCourse(studentCourse);
+            dispatch(requestStudentCourses());
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
@@ -88,6 +95,7 @@ export const updateStudentCourse = (studentCourse, courseId) => {
     return async (dispatch) => {
         try {
             await studentCourseAPI.putStudentCourse(studentCourse, courseId);
+            dispatch(requestStudentCourses());
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
@@ -97,6 +105,7 @@ export const updateStudentCourse = (studentCourse, courseId) => {
 export const deleteStudentCourse = (courseId) => {
     return async (dispatch) => {
         await studentCourseAPI.deleteCourse(courseId);
+        dispatch(requestStudentCourses());
     }
 };
 
@@ -106,8 +115,7 @@ export const requestStudentGroupsByCourseId = (courseId) => {
         dispatch(setIsFetching(true));
         try {
             const response = await studentGroupAPI.getStudentGroupsByCourseId(courseId);
-            const responseWithCourseId = {groups: response.data, courseId};
-            dispatch(setStudentGroups(responseWithCourseId));
+            dispatch(setStudentGroups(response.data, courseId));
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
@@ -149,11 +157,11 @@ export const deleteStudentGroup = (publicId, courseId) => {
 };
 
 //SUBGROUPS
-export const createStudentSubgroup = (subgroup, courseId) => {
+export const createStudentSubgroup = (subgroup) => {
     return async (dispatch) => {
         try {
             await studentSubgroupAPI.postStudentSubgroup(subgroup);
-            dispatch(requestStudentGroupsByCourseId(courseId));
+            dispatch(requestStudentSubgroupsByGroupId(subgroup.studentGroupId))
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
@@ -164,6 +172,7 @@ export const updateStudentSubgroup = (subgroup, publicId) => {
     return async (dispatch) => {
         try {
             await studentSubgroupAPI.putStudentSubgroup(subgroup, publicId);
+            dispatch(requestStudentSubgroupsByGroupId(subgroup.studentGroupId))
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }
@@ -178,6 +187,19 @@ export const deleteStudentSubgroup = (subgroupId) => {
             dispatch(setMessage(err.response.data.message))
         }
     }
+};
+
+export const requestStudentSubgroupsByGroupId = (groupId) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setIsFetching(true));
+            const response = await studentSubgroupAPI.getStudentSubgroupByGroupId(groupId);
+            dispatch(setStudentSubgroups(response.data, groupId));
+            dispatch(setIsFetching(false));
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+    };
 };
 
 export default studentGroupReducer;

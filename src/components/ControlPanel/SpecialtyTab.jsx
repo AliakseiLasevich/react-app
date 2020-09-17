@@ -10,7 +10,6 @@ import Preloader from "../Common/Preloader";
 import {deleteSpecialty, requestSpecialties} from "../../redux/SpecialtyReducer";
 import SpecialtyForm from "./SpecialtyForm";
 
-
 const SpecialtyTab = (props) => {
     const [specialtyEditMode, setSpecialtyEditMode] = useState(false);
     const [specialtyToEdit, setSpecialtyToEdit] = useState({});
@@ -25,7 +24,6 @@ const SpecialtyTab = (props) => {
     useEffect(() => {
         dispatch(requestSpecialties());
     }, [dispatch]);
-
 
     useEffect(() => {
         if (idToDelete != undefined) {

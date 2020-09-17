@@ -22,10 +22,6 @@ const StudentsSubgroupForm = ({studentGroup, subgroupToEdit, setSubgroupToEdit})
         }
     };
 
-    const deleteSubgroup = () => {
-        // dispatch(deleteStudentSubgroup(subgroup.publicId))
-    };
-
     const handleClose = () => {
         setSubgroupToEdit(null)
     };

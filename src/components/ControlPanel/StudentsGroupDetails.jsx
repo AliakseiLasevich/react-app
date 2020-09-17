@@ -13,7 +13,7 @@ export default function StudentsGroupDetails(props) {
     const dispatch = useDispatch();
 
     const [groupToEdit, setGroupToEdit] = useState(null);
-    const groups = useSelector(state => state.studentsReducer.studentGroups[studentCourse.publicId]);
+    const groups = useSelector(state => state.studentsReducer.studentGroups[studentCourse.publicId] );
 
     const deleteGroup = (studentGroup) => {
         dispatch(setIdToDelete(studentGroup.publicId));
@@ -27,8 +27,6 @@ export default function StudentsGroupDetails(props) {
     useEffect(() => {
         dispatch(requestStudentGroupsByCourseId(studentCourse.publicId));
     }, [dispatch, studentCourse]);
-
-
 
     return (
         <div className="container bg-secondary p-2">

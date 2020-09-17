@@ -8,11 +8,15 @@ import TeachersPlan from "./components/TeachersPlan/TeachersPlan";
 import MessageModal from "./components/Common/MessageModal";
 import {useSelector} from "react-redux";
 import DeleteModal from "./components/Common/DeleteModal";
+import {setAutoFreeze} from "immer";
 
 function App(props) {
 
     const message = useSelector(state => state.messageReducer.message);
     const idToDelete = useSelector(state => state.deleteReducer.idToDelete);
+
+    //надо для корректной работы material-table и immer
+    setAutoFreeze(false);
 
     return (
         <div style={{height: "100vh", backgroundColor: "grey", overflowY: "scroll"}}>

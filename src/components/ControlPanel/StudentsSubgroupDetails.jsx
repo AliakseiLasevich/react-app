@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {requestStudentSubgroupsByGroupId} from "../../redux/StudentsReducer";
-import {FaRegTrashAlt, FaRegEdit, FaUsers} from "react-icons/fa";
+import {FaRegEdit, FaRegTrashAlt, FaUsers} from "react-icons/fa";
 import StudentsSubgroupForm from "./StudentsSubgroupForm";
 
-const StudentsSubgroupDetails = ({studentGroup}) => {
 
+const StudentsSubgroupDetails = (props) => {
+
+    const {studentGroup} = props;
     const dispatch = useDispatch();
     const [subgroupToEdit, setSubgroupToEdit] = useState(null);
 
@@ -13,7 +15,7 @@ const StudentsSubgroupDetails = ({studentGroup}) => {
         dispatch(requestStudentSubgroupsByGroupId(studentGroup.publicId));
     }, [dispatch, studentGroup]);
 
-    const subgroups = useSelector(state => state.studentsReducer.studentSubgroups);
+    const subgroups = useSelector(state => state.studentsReducer.studentSubgroups[studentGroup.publicId]);
 
     return (
         <>
@@ -23,30 +25,30 @@ const StudentsSubgroupDetails = ({studentGroup}) => {
                 <span className="mx-2">Добавить подгруппу</span>
             </button>
 
-            {/*{subgroups[studentGroup.publicId]?.length ? "" :*/}
-            {/*    <div className="alert-danger mt-1"> В группе нет студентов. Добавьте подгруппу. </div>}*/}
+            {subgroups?.length ? "" :
+                <div className="alert-danger mt-1"> В группе нет студентов. Добавьте подгруппу. </div>}
 
-            {/*{subgroups[studentGroup.publicId]?.map((subgroup) =>*/}
-            {/*    <div className="input-group mb-2 mr-sm-2" key={subgroup.publicId}>*/}
-            {/*        <div className="input-group-prepend">*/}
-            {/*            <div className="input-group-text">Подгруппа</div>*/}
-            {/*        </div>*/}
-            {/*        <input type="text" className="form-control"*/}
-            {/*               placeholder="Username" disabled defaultValue={subgroup.name}/>*/}
+            {subgroups?.map((subgroup) =>
+                <div className="input-group mb-2 mr-sm-2" key={subgroup.publicId}>
+                    <div className="input-group-prepend">
+                        <div className="input-group-text">Подгруппа</div>
+                    </div>
+                    <input type="text" className="form-control"
+                           placeholder="Username" disabled value={subgroup.name}/>
 
-            {/*        <div className="input-group-prepend">*/}
-            {/*            <div className="input-group-text">Количество студентов</div>*/}
-            {/*        </div>*/}
-            {/*        <input type="text" className="form-control"*/}
-            {/*               placeholder="Username" disabled defaultValue={subgroup.studentsCount}/>*/}
+                    <div className="input-group-prepend">
+                        <div className="input-group-text">Количество студентов</div>
+                    </div>
+                    <input type="text" className="form-control"
+                           placeholder="Username" disabled value={subgroup.studentsCount}/>
 
-            {/*        <button className="btn btn-warning" onClick={() => setSubgroupToEdit(subgroup)}>*/}
-            {/*            <FaRegEdit/>*/}
-            {/*        </button>*/}
+                    <button className="btn btn-warning" onClick={() => setSubgroupToEdit(subgroup)}>
+                        <FaRegEdit/>
+                    </button>
 
-            {/*        <button className="btn btn-danger"><FaRegTrashAlt/></button>*/}
-            {/*    </div>*/}
-            {/*)}*/}
+                    <button className="btn btn-danger"><FaRegTrashAlt/></button>
+                </div>
+            )}
 
             {subgroupToEdit &&
             <StudentsSubgroupForm subgroupToEdit={subgroupToEdit}
