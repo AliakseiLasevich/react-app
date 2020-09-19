@@ -158,7 +158,6 @@ export const studentSubgroupAPI = {
     }
 };
 
-
 export const studentCourseAPI = {
     postStudentCourse(studentCourse) {
         return instance.post(`student_courses`, studentCourse)
@@ -172,6 +171,9 @@ export const studentCourseAPI = {
     },
     deleteCourse(publicId) {
         return instance.delete(`student_courses/${publicId}`)
+    },
+    getStudentCoursesByFaculty(facultyId) {
+        return instance.get(`student_courses/faculties/${facultyId}`)
     }
 };
 
@@ -195,8 +197,6 @@ export const learnPlanAPI = {
             }
         })
     }
-
-
 };
 
 export const disciplinesAPI = {

@@ -8,33 +8,12 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {createLearnPlan} from "../../redux/LearnPlanReducer";
 import {requestFaculties} from "../../redux/FacultyReducer";
-import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../redux/SpecialtyReducer";
 import {requestDisciplines} from "../../redux/DisciplinesReducer";
+import {requestStudentCoursesByFacultyId, resetStudentCourses} from "../../redux/StudentsReducer";
 
 const LearnPlanForm = (props) => {
 
     const dispatch = useDispatch();
-
-    const onSubmit = (data) => {
-        data.startDate = startDate.format("YYYY-MM-DD");
-        data.endDate = moment(endDate).add(6, 'days').format("YYYY-MM-DD");
-        dispatch(createLearnPlan(data));
-    };
-
-    const handleClose = () => {
-        props.setEditMode(false);
-    };
-
-    const {register, control, handleSubmit, errors} = useForm({
-        defaultValues: {
-            disciplinePlan: [{}]
-        }
-    });
-
-    const {fields, append, remove} = useFieldArray({
-        control, name: "disciplinePlan",
-    });
-
     const [from, setFrom] = useState();
     const [to, setTo] = useState();
     const [weeks, setWeeks] = useState([]);
@@ -54,11 +33,22 @@ const LearnPlanForm = (props) => {
         calculateWeeks(startDate)
     }, [startDate, endDate]);
 
+
+
+    const {register, control, handleSubmit, errors} = useForm({
+        defaultValues: {
+            disciplinePlan: [{}]
+        }
+    });
+
+    const {fields, append, remove} = useFieldArray({
+        control, name: "disciplinePlan",
+    });
+
     const [facultyId, setFacultyId] = useState({});
-    const [specialtyId, setSpecialtyId] = useState({});
-    const [courseNumber, setCourseNumber] = useState("");
+    const [studentsCourseId, setStudentsCourseId] = useState(null);
     const faculties = useSelector(state => state.facultyReducer.allFaculties);
-    const specialities = useSelector(state => state.specialtyReducer.allSpecialties);
+    const studentCourses = useSelector(state => state.studentsReducer.studentCourses);
     const disciplines = useSelector(state => state.disciplinesReducer.allDisciplines);
 
     useEffect(() => {
@@ -71,11 +61,22 @@ const LearnPlanForm = (props) => {
     };
 
     useEffect(() => {
-        dispatch(requestSpecialtiesByFacultyId(facultyId));
+        dispatch(requestStudentCoursesByFacultyId(facultyId));
         return () => {
-            dispatch(resetSpecialties())
+            dispatch(resetStudentCourses())
         };
     }, [dispatch, facultyId]);
+
+    const onSubmit = (data) => {
+        data.startDate = startDate.format("YYYY-MM-DD");
+        data.endDate = moment(endDate).add(6, 'days').format("YYYY-MM-DD");
+        data.studentsCourseId = studentsCourseId;
+        dispatch(createLearnPlan(data));
+    };
+
+    const handleClose = () => {
+        props.setEditMode(false);
+    };
 
     return (
         <div>
@@ -106,32 +107,19 @@ const LearnPlanForm = (props) => {
                                 </select>
                                 <div className="text-danger">  {errors.facultyId && errors.facultyId.message} </div>
                             </div>
-                            <div>
-                                <label htmlFor="facultyId">Специализация:</label>
-                                <select className="form-control" name="specialtyId"
-                                        ref={register({required: "Выберите специализацию"})}
-                                        value={specialtyId} onChange={e => setSpecialtyId(e.target.value)}>
-                                    <option></option>
-                                    {specialities.map(specialty => <option key={specialty.publicId}
-                                                                           value={specialty.publicId}>{specialty.name}</option>)}
-                                </select>
-                                <div className="text-danger">  {errors.specialtyId && errors.specialtyId.message} </div>
-                            </div>
-                            <div>
-                                <label htmlFor="courseNumber">Курс:</label>
-                                <select className="form-control col" name="courseNumber"
-                                        ref={register({required: "Выберите курс"})}
-                                        onChange={e => setCourseNumber(e.target.value)}>
-                                    <option></option>
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                    <option value={5}>5</option>
-                                </select>
-                                <div className="text-danger mx-1">  {errors.courseNumber && errors.courseNumber.message} </div>
-                            </div>
 
+                            <div>
+                                <label htmlFor="studentsCourseId">Выберите курс студентов:</label>
+                                <select className="form-control" name="studentsCourseId"
+                                        ref={register({required: "Выберите курс"})}
+                                        value={studentsCourseId} onChange={e => setStudentsCourseId(e.target.value)}>
+                                    <option></option>
+                                    {studentCourses.map(studentCourse => <option key={studentCourse.publicId}
+                                                                                 value={studentCourse.publicId}>{studentCourse.specialty.name} / {studentCourse.courseNumber} курс </option>)}
+                                </select>
+                                <div
+                                    className="text-danger">  {errors.studentCourseId && errors.studentCourseId.message} </div>
+                            </div>
                         </div>
 
                         <div>

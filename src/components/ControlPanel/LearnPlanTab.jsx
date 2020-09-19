@@ -48,14 +48,9 @@ const LearnPlanTab = (props) => {
                                 render: rowData => rowData.faculty.name,
                             },
                             {
-                                title: 'Специальность',
-                                field: 'specialty',
-                                render: rowData => rowData.specialty.name,
-                            },
-                            {
                                 title: 'Курс',
-                                field: 'courseNumber',
-                                render: rowData => rowData.courseNumber,
+                                field: 'course',
+                                render: rowData => `${rowData.studentCourse.specialty.name} / ${rowData.studentCourse.courseNumber} курс`,
                             },
                             {
                                 title: 'Начало',

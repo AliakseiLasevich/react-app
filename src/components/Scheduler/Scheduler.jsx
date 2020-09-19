@@ -6,6 +6,8 @@ import {requestFaculties} from "../../redux/FacultyReducer";
 import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../redux/SpecialtyReducer";
 import {requestLearnPlansWithDateInclude} from "../../redux/LearnPlanReducer";
 import LearnWeek from "./LearnWeek";
+import {useForm} from "react-hook-form";
+import {createCathedra, updateCathedra} from "../../redux/CathedraReducer";
 
 
 const Scheduler = () => {
@@ -18,6 +20,7 @@ const Scheduler = () => {
     const faculties = useSelector(state => state.facultyReducer.allFaculties);
     const specialties = useSelector(state => state.specialtyReducer.allSpecialties);
     const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
+    const {register, handleSubmit, errors} = useForm();
 
     useEffect(() => {
         dispatch(requestFaculties());
@@ -38,6 +41,13 @@ const Scheduler = () => {
     const facultyHasLearnPlan = (facultyId) => {
         return allLearnPlans.filter(learnPlan => learnPlan.faculty.publicId === facultyId).length;
     };
+
+    const onSubmit = ({facultyId, specialtyId, courseNumber}) => {
+      console.log(facultyId)
+      console.log(specialtyId)
+      console.log(courseNumber)
+    };
+
     return (
         <div className="bg-light">
 
@@ -49,15 +59,14 @@ const Scheduler = () => {
 
             </div>
 
-            <div className="row px-2">
-                <form className="col-8">
-
+            <div className="row px-2 justify-content-center">
+                <form className="col-8" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-row justify-content-center">
 
                         <div className="form-group col-md-4">
                             <label htmlFor="facultyId">Факультет:</label>
                             <select className="form-control col" name="facultyId"
-                                    onChange={e => setFacultyId(e.target.value)}>
+                                    onChange={e => setFacultyId(e.target.value)} ref={register}>
                                 <option></option>
                                 {faculties.map(faculty => <option key={faculty.publicId}
                                                                   value={faculty.publicId}>{faculty.name}</option>)}
@@ -67,7 +76,7 @@ const Scheduler = () => {
                         <div className="form-group col-md-4">
                             <label htmlFor="facultyId">Специальность:</label>
                             <select className="form-control col" name="specialtyId"
-                                    onChange={e => setSpecialtyId(e.target.value)}>
+                                    onChange={e => setSpecialtyId(e.target.value)} ref={register}>
                                 <option></option>
                                 {specialties.map(specialty => <option key={specialty.publicId}
                                                                       value={specialty.publicId}>{specialty.name}</option>)}
@@ -77,7 +86,7 @@ const Scheduler = () => {
                         <div className="form-group col-sm-2 col-xl-1">
                             <label htmlFor="courseNumber">Курс:</label>
                             <select className="form-control col" name="courseNumber"
-                                    onChange={e => setCourseNumber(e.target.value)}>
+                                    onChange={e => setCourseNumber(e.target.value)} ref={register}>
                                 <option></option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
@@ -86,7 +95,7 @@ const Scheduler = () => {
                                 <option value={5}>5</option>
                             </select>
                         </div>
-
+                        <button className="btn btn-sm btn-info col-4">Найти</button>
                     </div>
                 </form>
 

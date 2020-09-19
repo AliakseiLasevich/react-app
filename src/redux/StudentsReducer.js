@@ -27,11 +27,12 @@ export const studentGroupReducer = (state = initialState, action) => {
             return state;
 
         case SET_STUDENT_GROUPS:
+            state.studentGroups = {...state.studentGroups};
             state.studentGroups[action.courseId] = action.studentGroups;
             return state;
 
         case SET_STUDENT_SUBGROUPS:
-            state.studentSubgroups = {...state.studentSubgroups}
+            state.studentSubgroups = {...state.studentSubgroups};
             state.studentSubgroups[action.groupId] = action.studentSubgroups;
             return state;
 
@@ -80,6 +81,15 @@ export const requestStudentCourses = () => {
     };
 };
 
+export const requestStudentCoursesByFacultyId = (facultyId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await studentCourseAPI.getStudentCoursesByFaculty(facultyId);
+        dispatch(setStudentCourses(response.data));
+        dispatch(setIsFetching(false));
+    };
+};
+
 export const createStudentCourse = (studentCourse) => {
     return async (dispatch) => {
         try {
@@ -106,6 +116,12 @@ export const deleteStudentCourse = (courseId) => {
     return async (dispatch) => {
         await studentCourseAPI.deleteCourse(courseId);
         dispatch(requestStudentCourses());
+    }
+};
+
+export const resetStudentCourses = () => {
+    return (dispatch) => {
+        dispatch(setStudentCourses([]));
     }
 };
 
