@@ -13,6 +13,7 @@ import disciplinesReducer from "./DisciplinesReducer";
 import messageReducer from "./MessageReducer";
 import deleteReducer from "./DeleteReducer";
 import produce from 'immer';
+import lessonReducer from "./LessonReducer";
 
 let reducers = {
     cathedraReducer: cathedraReducer,
@@ -26,6 +27,7 @@ let reducers = {
     disciplinesReducer: disciplinesReducer,
     messageReducer: messageReducer,
     deleteReducer: deleteReducer,
+    lessonReducer: lessonReducer
 };
 
 const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;

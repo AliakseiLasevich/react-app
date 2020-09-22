@@ -213,3 +213,17 @@ export const disciplinesAPI = {
         return instance.post("disciplines", discipline);
     }
 };
+
+export const lessonsAPI = {
+    postLesson(lesson) {
+        return instance.post("lessons", lesson);
+    },
+    getLessonsByCourseAndDateRange(courseId, firstDate, lastDate) {
+        return instance.get(`lessons/student_courses/${courseId}`, {
+            params: {
+                firstDate,
+                lastDate
+            }
+        })
+    },
+}

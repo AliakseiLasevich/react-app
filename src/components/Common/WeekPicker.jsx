@@ -7,7 +7,7 @@ import 'moment/locale/ru';
 
 function getWeekDays(weekStart) {
     const days = [weekStart];
-    for (let i = 1; i < 7; i += 1) {
+    for (let i = 1; i < 6; i += 1) {
         days.push(
             moment(weekStart)
                 .add(i, 'days')

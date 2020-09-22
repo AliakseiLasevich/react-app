@@ -14,7 +14,7 @@ let initialState = {
     isFetching: true,
 };
 
-export const studentGroupReducer = (state = initialState, action) => {
+export const studentsReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
@@ -219,4 +219,4 @@ export const requestStudentSubgroupsByGroupId = (groupId) => {
     };
 };
 
-export default studentGroupReducer;
+export default studentsReducer;
