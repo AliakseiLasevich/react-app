@@ -15,6 +15,7 @@ import {
 import {requestLessonsByCourseAndDateRange} from "../../redux/LessonReducer";
 import LearnPlanInfo from "./LearnPlanInfo";
 import {requestLearnPlansThatDateInclude} from "../../redux/LearnPlanReducer";
+import LessonForm from "./LessonForm";
 
 
 const Scheduler = () => {
@@ -90,9 +91,10 @@ const Scheduler = () => {
                         <button className="btn btn-sm btn-info col-12">Найти</button>
                     </form>
 
-                    <LearnPlanInfo learnPlans={allLearnPlans}
-                                   currentStudentCourse={currentStudentCourse}
-                                   week={week}/>
+                    {currentStudentCourse.publicId && <LearnPlanInfo learnPlans={allLearnPlans}
+                                                                     currentStudentCourse={currentStudentCourse}
+                                                                     week={week}/>}
+
 
                 </div>
 
@@ -100,12 +102,16 @@ const Scheduler = () => {
             </div>
 
             <div className="col-8">
-                {currentStudentCourse.publicId && <SchedulerTable week={week}
-                                                                  lessons={lessons}
-                                                                  currentStudentCourse={currentStudentCourse}/>}
-
+                {currentStudentCourse.publicId &&
+                <div className="row justify-content-center">
+                    <button className="btn btn-success col-3 m-1 p-1">Добавить занятие</button>
+                    <div className="col-12">
+                        <SchedulerTable week={week}
+                                        lessons={lessons}
+                                        currentStudentCourse={currentStudentCourse}/>
+                    </div>
+                </div>}
             </div>
-
 
         </div>
     );
