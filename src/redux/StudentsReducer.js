@@ -4,6 +4,7 @@ import {setMessage} from "./MessageReducer";
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
 const SET_STUDENT_SUBGROUPS = "SET_STUDENT_SUBGROUPS";
 const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
+const SET_CURRENT_STUDENT_COURSE = "SET_CURRENT_STUDENT_COURSE";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
 
@@ -12,6 +13,7 @@ let initialState = {
     studentGroups: [],
     studentSubgroups: [],
     isFetching: true,
+    currentStudentCourse: {}
 };
 
 export const studentsReducer = (state = initialState, action) => {
@@ -24,6 +26,10 @@ export const studentsReducer = (state = initialState, action) => {
 
         case SET_STUDENT_COURSES:
             state.studentCourses = action.studentCourses;
+            return state;
+
+        case SET_CURRENT_STUDENT_COURSE:
+            state.currentStudentCourse = action.currentStudentCourse;
             return state;
 
         case SET_STUDENT_GROUPS:
@@ -56,6 +62,14 @@ export const setStudentCourses = (studentCourses) => {
     }
 };
 
+
+export const setCurrentStudentCourse = (currentStudentCourse) => {
+    return {
+        type: SET_CURRENT_STUDENT_COURSE,
+        currentStudentCourse
+    }
+};
+
 export const setStudentSubgroups = (studentSubgroups, groupId) => {
     return {
         type: SET_STUDENT_SUBGROUPS,
@@ -80,6 +94,17 @@ export const requestStudentCourses = () => {
         dispatch(setIsFetching(false));
     };
 };
+
+export const requestStudentCourseById = (publicId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await studentCourseAPI.getStudentCourseById(publicId);
+        dispatch(setCurrentStudentCourse(response.data));
+        dispatch(setIsFetching(false));
+    };
+};
+
+
 
 export const requestStudentCoursesByFacultyId = (facultyId) => {
     return async (dispatch) => {
@@ -122,6 +147,12 @@ export const deleteStudentCourse = (courseId) => {
 export const resetStudentCourses = () => {
     return (dispatch) => {
         dispatch(setStudentCourses([]));
+    }
+};
+
+export const resetCurrentStudentCourse = () => {
+    return (dispatch) => {
+        dispatch(setCurrentStudentCourse({}));
     }
 };
 

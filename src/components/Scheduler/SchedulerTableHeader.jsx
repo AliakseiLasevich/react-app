@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SchedulerTableHeader = ({studentGroups}) => {
+const SchedulerTableHeader = ({studentGroups, currentStudentCourse}) => {
 
     const groups = Object.values(studentGroups)[0] || [];
     const subgroupsCount = groups.reduce((accumulator, group) => accumulator + group.studentSubgroups?.length, 0);
@@ -10,10 +10,10 @@ const SchedulerTableHeader = ({studentGroups}) => {
         <tr>
             <th rowSpan={4}>День</th>
             <th rowSpan={4}>Время</th>
-            <th colSpan={subgroupsCount}># Курс</th>
+            <th colSpan={subgroupsCount}>{currentStudentCourse.courseNumber} курс</th>
         </tr>
         <tr>
-            <th colSpan={subgroupsCount}>Специальность: ###</th>
+            <th colSpan={subgroupsCount}>Специальность: {currentStudentCourse?.specialty?.name}</th>
         </tr>
 
         <tr>

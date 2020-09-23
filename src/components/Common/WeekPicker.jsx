@@ -86,12 +86,12 @@ export default class WeekPicker extends React.Component {
             hoverRange,
             selectedRange: daysAreSelected && {
                 from: selectedDays[0],
-                to: selectedDays[6],
+                to: selectedDays[5],
             },
             hoverRangeStart: hoverRange && hoverRange.from,
             hoverRangeEnd: hoverRange && hoverRange.to,
             selectedRangeStart: daysAreSelected && selectedDays[0],
-            selectedRangeEnd: daysAreSelected && selectedDays[6],
+            selectedRangeEnd: daysAreSelected && selectedDays[5],
             sundays: {daysOfWeek: [0]},
         };
 

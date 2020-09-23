@@ -142,7 +142,7 @@ export const deleteLearnPlan = (learnPlanId) => {
     }
 };
 
-export const requestLearnPlansWithDateInclude = (date) => {
+export const requestLearnPlansThatDateInclude = (date) => {
     return async (dispatch) => {
         dispatch(setIsFetching(true));
         const response = await learnPlanAPI.requestLearnPlansWithDateInclude(date);

@@ -1,8 +1,8 @@
 import React from 'react';
 import Cell from "./Cell";
 
-const Row = ({time, timeIndex, subgroups, lessons, day}) => {
-    console.log(lessons)
+const LearnDayRow = ({time, timeIndex, subgroups, lessons, day}) => {
+
     return (
         <tr>
             <td>{time}</td>
@@ -15,4 +15,4 @@ const Row = ({time, timeIndex, subgroups, lessons, day}) => {
     );
 };
 
-export default Row;
+export default LearnDayRow;

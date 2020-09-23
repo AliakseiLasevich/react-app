@@ -26,7 +26,7 @@ const LearnPlanTab = (props) => {
     }, [dispatch]);
 
     const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
-
+console.log(allLearnPlans)
     return (
         <>
             <div className="row justify-content-center mt-1 ">
@@ -88,7 +88,7 @@ const LearnPlanTab = (props) => {
                                 tooltip: 'Удалить учебный план',
                                 onClick: (event, rowData) => {
                                     dispatch(setIdToDelete(rowData.publicId));
-                                    dispatch(setDeleteMessage(`Удалить учебный план специальности: ${rowData.specialty.name}, ${rowData.courseNumber} курс`));
+                                    dispatch(setDeleteMessage(`Удалить учебный план специальности: ${rowData.studentCourse?.specialty?.name}, ${rowData.studentCourse?.courseNumber} курс`));
                                     dispatch(setDeleteFunction(() => {
                                         dispatch(deleteLearnPlan(rowData.publicId))
                                     }));

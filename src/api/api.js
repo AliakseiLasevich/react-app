@@ -174,6 +174,9 @@ export const studentCourseAPI = {
     },
     getStudentCoursesByFaculty(facultyId) {
         return instance.get(`student_courses/faculties/${facultyId}`)
+    },
+    getStudentCourseById(publicId) {
+        return instance.get(`student_courses/${publicId}`)
     }
 };
 

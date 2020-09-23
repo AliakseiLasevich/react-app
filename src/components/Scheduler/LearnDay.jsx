@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from "moment";
-import Row from "./Row";
+import LearnDayRow from "./LearnDayRow";
 
 const LearnDay = ({day, studentGroups, lessons}) => {
 
@@ -19,22 +19,23 @@ const LearnDay = ({day, studentGroups, lessons}) => {
 
     return (
         <>
-
             <tr>
-                <td rowSpan="8">{moment(day).format('ll')}</td>
-            </tr>
+                <td rowSpan="8">
+                    <div> {moment(day).format('ll')}</div>
+                    <div>{moment(day).format('dddd')}</div>
+                </td>
 
+            </tr>
             {times.map((time, timeIndex) =>
-                <Row key={time + timeIndex}
-                     time={time}
-                     timeIndex={timeIndex}
-                     subgroups={subgroups}
-                     lessons={lessons}
-                     day={day}/>
+                <LearnDayRow key={time + timeIndex}
+                             time={time}
+                             timeIndex={timeIndex}
+                             subgroups={subgroups}
+                             lessons={lessons}
+                             day={day}/>
             )}
         </>
     );
 };
-
 
 export default LearnDay;

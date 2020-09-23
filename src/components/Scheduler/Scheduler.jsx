@@ -4,11 +4,17 @@ import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {requestFaculties} from "../../redux/FacultyReducer";
 import {requestSpecialtiesByFacultyId, resetSpecialties} from "../../redux/SpecialtyReducer";
-import {requestLearnPlansWithDateInclude} from "../../redux/LearnPlanReducer";
+
 import SchedulerTable from "./SchedulerTable";
 import {useForm} from "react-hook-form";
-import {requestStudentCoursesByFacultyId, resetStudentCourses} from "../../redux/StudentsReducer";
+import {
+    requestStudentCourseById,
+    requestStudentCoursesByFacultyId, resetCurrentStudentCourse,
+    resetStudentCourses
+} from "../../redux/StudentsReducer";
 import {requestLessonsByCourseAndDateRange} from "../../redux/LessonReducer";
+import LearnPlanInfo from "./LearnPlanInfo";
+import {requestLearnPlansThatDateInclude} from "../../redux/LearnPlanReducer";
 
 
 const Scheduler = () => {
@@ -16,10 +22,10 @@ const Scheduler = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState([]);
     const [facultyId, setFacultyId] = useState({});
-    const [studentCourseId, setStudentCourseId] = useState(null);
     const faculties = useSelector(state => state.facultyReducer.allFaculties);
     const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
     const studentCourses = useSelector(state => state.studentsReducer.studentCourses);
+    const currentStudentCourse = useSelector(state => state.studentsReducer.currentStudentCourse);
     const lessons = useSelector(state => state.lessonReducer.lessons);
     const {register, handleSubmit, errors} = useForm();
 
@@ -31,11 +37,12 @@ const Scheduler = () => {
         dispatch(requestSpecialtiesByFacultyId(facultyId))
         return () => {
             dispatch(resetSpecialties())
+            dispatch(resetCurrentStudentCourse());
         };
     }, [dispatch, facultyId]);
 
     useEffect(() => {
-        week && dispatch(requestLearnPlansWithDateInclude(moment(week[0]).format('YYYY-MM-DD')));
+        week && dispatch(requestLearnPlansThatDateInclude(moment(week[0]).format('YYYY-MM-DD')));
     }, [dispatch, week]);
 
     useEffect(() => {
@@ -45,63 +52,60 @@ const Scheduler = () => {
         };
     }, [dispatch, facultyId]);
 
-    const facultyHasLearnPlan = (facultyId) => {
-        return allLearnPlans.filter(learnPlan => learnPlan.faculty.publicId === facultyId).length;
-    };
-
     const onSubmit = ({studentsCourseId}) => {
-        dispatch(requestLessonsByCourseAndDateRange(studentsCourseId, week[0], week[5]))
-        setStudentCourseId(studentsCourseId);
-    };
+        dispatch(requestLessonsByCourseAndDateRange(studentsCourseId, week[0], week[5]));
+        dispatch(requestStudentCourseById(studentsCourseId));
 
+    };
 
     return (
-        <div className="bg-light">
-            <div className="bg-info p-2 text-center">
-                {faculties.map(faculty => <button key={faculty.publicId} type="button"
-                                                  className={facultyHasLearnPlan(faculty.publicId) ? "btn btn-sm btn-warning mx-1" : "btn btn-sm btn-info mx-1"}>
-                    {faculty.name}
-                </button>)}
-            </div>
+        <div className="bg-light row">
+            <div className="col-lg-3 p-2 justify-content-center bg-white m-3">
+                <div>
+                    <div className="col-12">
+                        <WeekPicker setWeek={setWeek}/>
+                    </div>
 
-            <div className="row px-2 justify-content-center">
-                <form className="col-8" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-row justify-content-center">
-
-                        <div className="form-group col-md-5">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="form-group">
                             <label htmlFor="facultyId">Факультет:</label>
-                            <select className="form-control col" name="facultyId"
+                            <select className="form-control col-12" name="facultyId"
                                     onChange={e => setFacultyId(e.target.value)}>
                                 <option></option>
                                 {faculties.map(faculty => <option key={faculty.publicId}
                                                                   value={faculty.publicId}>{faculty.name}</option>)}
                             </select>
+                            <div className="form-group">
+                                <label htmlFor="studentsCourseId">Курс студентов:</label>
+                                <select className="form-control" name="studentsCourseId"
+                                        ref={register({required: "Выберите курс"})}>
+                                    <option></option>
+                                    {studentCourses.map(studentCourse => <option key={studentCourse.publicId}
+                                                                                 value={studentCourse.publicId}>{studentCourse.specialty.name} / {studentCourse.courseNumber} курс </option>)}
+                                </select>
+                                <div
+                                    className="text-danger">                                    {errors.studentCourseId && errors.studentCourseId.message}                                </div>
+                            </div>
                         </div>
+                        <button className="btn btn-sm btn-info col-12">Найти</button>
+                    </form>
 
-                        <div className="form-group col-md-5">
-                            <label htmlFor="studentsCourseId">Выберите курс студентов:</label>
-                            <select className="form-control" name="studentsCourseId"
-                                    ref={register({required: "Выберите курс"})}>
-                                <option></option>
-                                {studentCourses.map(studentCourse => <option key={studentCourse.publicId}
-                                                                             value={studentCourse.publicId}>{studentCourse.specialty.name} / {studentCourse.courseNumber} курс </option>)}
-                            </select>
-                            <div
-                                className="text-danger">  {errors.studentCourseId && errors.studentCourseId.message} </div>
-                        </div>
+                    <LearnPlanInfo learnPlans={allLearnPlans}
+                                   currentStudentCourse={currentStudentCourse}
+                                   week={week}/>
 
-                        <button className="btn btn-sm btn-info col-4">Найти</button>
-                    </div>
-                </form>
-
-                <div className="col-3">
-                    <WeekPicker setWeek={setWeek}/>
                 </div>
+
+
             </div>
 
-            <SchedulerTable week={week}
-                            lessons={lessons}
-                            studentCourseId={studentCourseId}/>
+            <div className="col-8">
+                {currentStudentCourse.publicId && <SchedulerTable week={week}
+                                                                  lessons={lessons}
+                                                                  currentStudentCourse={currentStudentCourse}/>}
+
+            </div>
+
 
         </div>
     );

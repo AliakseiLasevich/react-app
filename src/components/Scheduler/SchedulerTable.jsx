@@ -4,20 +4,20 @@ import {useDispatch, useSelector} from "react-redux";
 import * as studentsReducer from "../../redux/StudentsReducer";
 import SchedulerTableHeader from "./SchedulerTableHeader";
 
-const SchedulerTable = ({week, lessons, studentCourseId}) => {
+const SchedulerTable = ({week, lessons, currentStudentCourse}) => {
     const dispatch = useDispatch();
     const studentGroups = useSelector(state => state.studentsReducer.studentGroups);
 
     useEffect(() => {
-        if (studentCourseId !== null) {
-            dispatch(studentsReducer.requestStudentGroupsByCourseId(studentCourseId));
+        if (currentStudentCourse.publicId) {
+            dispatch(studentsReducer.requestStudentGroupsByCourseId(currentStudentCourse.publicId));
         }
-    }, [dispatch, studentCourseId]);
+    }, [dispatch, currentStudentCourse]);
 
     return (
         <div className="m-1 row justify-content-center">
             <table>
-                <SchedulerTableHeader studentGroups={studentGroups}/>
+                <SchedulerTableHeader studentGroups={studentGroups} currentStudentCourse={currentStudentCourse}/>
                 <tbody>
                 {week.map(day =>
                     <LearnDay day={day}
