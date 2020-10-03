@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "./components/Header/Header";
 import {Route} from "react-router-dom";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-import Scheduler from "./components/Scheduler/Scheduler";
+import PlannerTab from "./components/Scheduler/PlannerTab";
 import StudentsPlan from "./components/StudentsPlan/StudentsPlan";
 import TeachersPlan from "./components/TeachersPlan/TeachersPlan";
 import MessageModal from "./components/Common/MessageModal";
@@ -23,7 +23,7 @@ function App(props) {
             <div className="container-fluid p-2">
                 <Header/>
                 <Route path="/controlPanel" render={() => <ControlPanel/>}/>
-                <Route path="/scheduler" render={() => <Scheduler/>}/>
+                <Route path="/scheduler" render={() => <PlannerTab/>}/>
                 <Route path="/studentsPlan" render={() => <StudentsPlan/>}/>
                 <Route path="/teachersPlan" render={() => <TeachersPlan/>}/>
             </div>

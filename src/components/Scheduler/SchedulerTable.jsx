@@ -1,29 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import LearnDay from "./LearnDay";
-import {useDispatch, useSelector} from "react-redux";
-import * as studentsReducer from "../../redux/StudentsReducer";
 import SchedulerTableHeader from "./SchedulerTableHeader";
 
-const SchedulerTable = ({week, lessons, currentStudentCourse}) => {
-    const dispatch = useDispatch();
-    const studentGroups = useSelector(state => state.studentsReducer.studentGroups);
+const SchedulerTable = ({week, lessons, currentStudentCourse, groups}) => {
 
-    useEffect(() => {
-        if (currentStudentCourse.publicId) {
-            dispatch(studentsReducer.requestStudentGroupsByCourseId(currentStudentCourse.publicId));
-        }
-    }, [dispatch, currentStudentCourse]);
 
     return (
         <div className="m-1 row justify-content-center">
             <table>
-                <SchedulerTableHeader studentGroups={studentGroups} currentStudentCourse={currentStudentCourse}/>
+                <SchedulerTableHeader groups={groups} currentStudentCourse={currentStudentCourse}/>
                 <tbody>
-                {week.map(day =>
+                {week.map((day, i) =>
                     <LearnDay day={day}
-                              key={day.toString()}
+                              key={day + i}
                               lessons={lessons}
-                              studentGroups={studentGroups}/>
+                              groups={groups}/>
                 )}
                 </tbody>
             </table>

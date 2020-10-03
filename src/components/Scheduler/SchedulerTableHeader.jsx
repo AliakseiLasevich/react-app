@@ -1,8 +1,7 @@
 import React from 'react';
 
-const SchedulerTableHeader = ({studentGroups, currentStudentCourse}) => {
+const SchedulerTableHeader = ({groups, currentStudentCourse}) => {
 
-    const groups = Object.values(studentGroups)[0] || [];
     const subgroupsCount = groups.reduce((accumulator, group) => accumulator + group.studentSubgroups?.length, 0);
 
     return (

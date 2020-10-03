@@ -11,6 +11,7 @@ function getWeekDays(weekStart) {
         days.push(
             moment(weekStart)
                 .add(i, 'days')
+                // .add(4, 'hours')
                 .toDate()
         );
     }
@@ -21,9 +22,11 @@ function getWeekRange(date) {
     return {
         from: moment(date)
             .startOf('week')
+            .add(4, 'hours')
             .toDate(),
         to: moment(date)
             .endOf('week')
+            .add(4, 'hours')
             .toDate(),
     };
 }
@@ -50,7 +53,6 @@ export default class WeekPicker extends React.Component {
             selectedDays: getWeekDays(getWeekRange(currentDate).from),
         });
     }
-
 
     handleDayChange = date => {
         this.props.setWeek(getWeekDays(getWeekRange(date).from));
@@ -133,6 +135,8 @@ export default class WeekPicker extends React.Component {
                 'Суббота',
             ],
         };
+
+
 
         return (
             <div className="SelectedWeekExample">
