@@ -26,7 +26,7 @@ const LearnPlanTab = (props) => {
     }, [dispatch]);
 
     const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
-console.log(allLearnPlans)
+
     return (
         <>
             <div className="row justify-content-center mt-1 ">

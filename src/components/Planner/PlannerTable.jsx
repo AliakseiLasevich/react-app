@@ -1,14 +1,14 @@
 import React from 'react';
 import LearnDay from "./LearnDay";
-import SchedulerTableHeader from "./SchedulerTableHeader";
+import PlannerTableHeader from "./PlannerTableHeader";
 
-const SchedulerTable = ({week, lessons, currentStudentCourse, groups}) => {
+const PlannerTable = ({week, lessons, currentStudentCourse, groups}) => {
 
 
     return (
         <div className="m-1 row justify-content-center">
             <table>
-                <SchedulerTableHeader groups={groups} currentStudentCourse={currentStudentCourse}/>
+                <PlannerTableHeader groups={groups} currentStudentCourse={currentStudentCourse}/>
                 <tbody>
                 {week.map((day, i) =>
                     <LearnDay day={day}
@@ -22,4 +22,4 @@ const SchedulerTable = ({week, lessons, currentStudentCourse, groups}) => {
     );
 };
 
-export default SchedulerTable;
+export default PlannerTable;

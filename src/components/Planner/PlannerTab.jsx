@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {requestFaculties} from "../../redux/FacultyReducer";
 import SideBar from "./SideBar";
-import LearnPlanInfo from "./LearnPlanInfo";
-import SchedulerTable from "./SchedulerTable";
+
+import PlannerTable from "./PlannerTable";
 import * as studentsReducer from "../../redux/StudentsReducer";
+import LearnPlanToolbar from "./LearnPlanToolbar";
 
 const PlannerTab = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState([]);
-    const allLearnPlans = useSelector(state => state.learnPlanReducer.allLearnPlans);
     const currentStudentCourse = useSelector(state => state.studentsReducer.currentStudentCourse);
     const lessons = useSelector(state => state.lessonReducer.lessons);
     const studentGroups = useSelector(state => state.studentsReducer.studentGroups);
@@ -32,15 +32,14 @@ const PlannerTab = () => {
                 <div>
                     {currentStudentCourse.publicId &&
                     <>
-                        <LearnPlanInfo learnPlans={allLearnPlans}
-                                       currentStudentCourse={currentStudentCourse}
-                                       groups={groups}
-                                       week={week}
-                                       existingLessons={lessons}/>
-                        <SchedulerTable week={week}
-                                        lessons={lessons}
-                                        currentStudentCourse={currentStudentCourse}
-                                        groups={groups}/>
+                        <LearnPlanToolbar currentStudentCourse={currentStudentCourse}
+                                          groups={groups}
+                                          week={week}
+                                          existingLessons={lessons}/>
+                        <PlannerTable week={week}
+                                      lessons={lessons}
+                                      currentStudentCourse={currentStudentCourse}
+                                      groups={groups}/>
                     </>
                     }
                 </div>

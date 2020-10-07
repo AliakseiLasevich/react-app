@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SchedulerTableHeader = ({groups, currentStudentCourse}) => {
+const PlannerTableHeader = ({groups, currentStudentCourse}) => {
 
     const subgroupsCount = groups.reduce((accumulator, group) => accumulator + group.studentSubgroups?.length, 0);
 
@@ -34,4 +34,4 @@ const SchedulerTableHeader = ({groups, currentStudentCourse}) => {
     );
 };
 
-export default SchedulerTableHeader;
+export default PlannerTableHeader;

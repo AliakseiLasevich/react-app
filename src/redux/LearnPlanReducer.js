@@ -151,5 +151,13 @@ export const requestLearnPlansThatDateInclude = (date) => {
     }
 };
 
+export const requestLearnPlansByDateAndCourse = (date, courseId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        const response = await learnPlanAPI.requestLearnPlanByDateAndStudentCourse(date, courseId);
+        dispatch(setAllLearnPlans(response.data));
+        dispatch(setIsFetching(false));
+    }
+};
 
 export default learnPlanReducer;

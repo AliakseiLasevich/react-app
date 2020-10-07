@@ -2,7 +2,7 @@ import React from 'react';
 import Header from "./components/Header/Header";
 import {Route} from "react-router-dom";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-import PlannerTab from "./components/Scheduler/PlannerTab";
+import PlannerTab from "./components/Planner/PlannerTab";
 import StudentsPlan from "./components/StudentsPlan/StudentsPlan";
 import TeachersPlan from "./components/TeachersPlan/TeachersPlan";
 import MessageModal from "./components/Common/MessageModal";

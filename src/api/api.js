@@ -199,7 +199,14 @@ export const learnPlanAPI = {
                 date
             }
         })
-    }
+    },
+    requestLearnPlanByDateAndStudentCourse(date, courseId) {
+        return instance.get(`learn_plans/courses/${courseId}`, {
+            params: {
+                date
+            }
+        })
+    },
 };
 
 export const disciplinesAPI = {

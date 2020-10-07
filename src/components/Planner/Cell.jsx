@@ -52,8 +52,11 @@ const Cell = ({subgroup, timeIndex, lessons, day}) => {
 
     return (
         <>
-            {filteredLessons.map(lesson =>
-                lesson.order === timeIndex && filterLessonSubgroupsBySubgroup(lesson, subgroup).length > 0 && button(lesson)
+            {filteredLessons.map((lesson, i) =>
+                <div key={lesson+i}>
+                   { lesson.order === timeIndex && filterLessonSubgroupsBySubgroup(lesson, subgroup).length > 0 &&
+                    button(lesson)}
+                </div>
             )}
         </>
 
