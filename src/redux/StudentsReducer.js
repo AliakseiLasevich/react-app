@@ -1,6 +1,7 @@
 import {studentCourseAPI, studentGroupAPI, studentSubgroupAPI} from "../api/api";
 import {setMessage} from "./MessageReducer";
 
+const SET_CURRENT_COURSE_GROUPS = "SET_CURRENT_COURSE_GROUPS";
 const SET_STUDENT_GROUPS = "SET_STUDENT_GROUPS";
 const SET_STUDENT_SUBGROUPS = "SET_STUDENT_SUBGROUPS";
 const SET_STUDENT_COURSES = "SET_STUDENT_COURSES";
@@ -13,7 +14,8 @@ let initialState = {
     studentGroups: [],
     studentSubgroups: [],
     isFetching: true,
-    currentStudentCourse: {}
+    currentStudentCourse: {},
+    currentStudentCourseGroups: []
 };
 
 export const studentsReducer = (state = initialState, action) => {
@@ -35,6 +37,10 @@ export const studentsReducer = (state = initialState, action) => {
         case SET_STUDENT_GROUPS:
             state.studentGroups = {...state.studentGroups};
             state.studentGroups[action.courseId] = action.studentGroups;
+            return state;
+
+        case SET_CURRENT_COURSE_GROUPS:
+            state.currentStudentCourseGroups = action.currentStudentCourseGroups;
             return state;
 
         case SET_STUDENT_SUBGROUPS:
@@ -67,6 +73,13 @@ export const setCurrentStudentCourse = (currentStudentCourse) => {
     return {
         type: SET_CURRENT_STUDENT_COURSE,
         currentStudentCourse
+    }
+};
+
+export const setCurrentStudentCourseGroups = (currentStudentCourseGroups) => {
+    return {
+        type: SET_CURRENT_COURSE_GROUPS,
+        currentStudentCourseGroups
     }
 };
 
@@ -103,7 +116,6 @@ export const requestStudentCourseById = (publicId) => {
         dispatch(setIsFetching(false));
     };
 };
-
 
 
 export const requestStudentCoursesByFacultyId = (facultyId) => {
@@ -163,6 +175,19 @@ export const requestStudentGroupsByCourseId = (courseId) => {
         try {
             const response = await studentGroupAPI.getStudentGroupsByCourseId(courseId);
             dispatch(setStudentGroups(response.data, courseId));
+        } catch (err) {
+            dispatch(setMessage(err.response.data.message))
+        }
+        dispatch(setIsFetching(false));
+    };
+};
+
+export const requestCurrentCourseGroups = (courseId) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        try {
+            const response = await studentGroupAPI.getStudentGroupsByCourseId(courseId);
+            dispatch(setCurrentStudentCourseGroups(response.data));
         } catch (err) {
             dispatch(setMessage(err.response.data.message))
         }

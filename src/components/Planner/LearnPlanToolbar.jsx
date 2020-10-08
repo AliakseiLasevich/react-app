@@ -3,7 +3,7 @@ import moment from 'moment';
 import {useDispatch, useSelector} from "react-redux";
 import {requestLearnPlansByDateAndCourse} from "../../redux/LearnPlanReducer";
 
-const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, groups}) => {
+const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentStudentCourseGroups}) => {
 
         const monday = moment(week[0]).format("YYYY-MM-DD");
         const saturday = moment(week[5]).format("YYYY-MM-DD");
@@ -31,31 +31,30 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, groups})
                 const ob = Object.entries(discipline);
                 const filteredLessons = ob[0][1].lessons.filter(lesson => moment(lesson[0]).isSameOrAfter(firstDate) && moment(lesson[0]).isSameOrBefore(lastDate));
                 const disciplineId = ob[0][0];
-                disciplineLessonsOnCurrentWeek[disciplineId] = filteredLessons[0][1]
+                disciplineLessonsOnCurrentWeek[disciplineId] = filteredLessons[0][1];
+                disciplineLessonsOnCurrentWeek[disciplineId].name = discipline[disciplineId].name;
             });
             return disciplineLessonsOnCurrentWeek;
         };
 
         const filteredPlanByDateRange = filterLessonsInDisciplineByDateRange(monday, saturday, mapDisciplinesFromPlanToFlatObjects(learnPlan));
 
-        console.log(filteredPlanByDateRange)
+        // console.log(filteredPlanByDateRange)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        const subgroupsInCourse = groups.flatMap(group => group.studentSubgroups) || [];
 
         const filterLessonSubgroupsByCourseSubgroups = (lesson, subgroupsInCourse) => {
             const subs = [];
+            const lessonCopy = {...lesson};
             subgroupsInCourse.forEach(subgroupInCourse => {
-                lesson.studentSubgroups.forEach(subgroupInLesson => {
+                lessonCopy.studentSubgroups.forEach(subgroupInLesson => {
                     if (subgroupInCourse.publicId == subgroupInLesson.publicId) {
                         subs.push(subgroupInLesson)
                     }
                 })
             });
-            lesson.studentSubgroups = subs;
-            return lesson;
+            lessonCopy.studentSubgroups = subs;
+            return lessonCopy;
         };
-
 
         const groupLessonsByDisciplines = (existingLessons, subgroupsInCourse) => {
             const lessonsGroupedByDiscipline = {};
@@ -69,7 +68,9 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, groups})
             return lessonsGroupedByDiscipline;
         };
 
-        const groupedByDisciplines = groupLessonsByDisciplines(existingLessons, subgroupsInCourse);
+        const findAllSubgroupsInCourse = (groups) => groups.flatMap(group => group.studentSubgroups) || [];
+
+        const groupedByDisciplines = groupLessonsByDisciplines(existingLessons, findAllSubgroupsInCourse(currentStudentCourseGroups));
 
         const calculateLessonsByTypes = (groupedLessonsByDisciplines) => {
             const counter = {};
@@ -90,7 +91,40 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, groups})
             return counter;
         };
 
-        console.log(calculateLessonsByTypes(groupedByDisciplines))
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        const findDifference = (planned, existingLessons, subgroupsInCourse) => {
+            const toolbar = [];
+
+            for (const [disciplineId, plannedLessons] of Object.entries(planned)) {
+                const studentSubgroupsCount = subgroupsInCourse.length;
+
+                if (existingLessons[disciplineId] === undefined) {
+                    existingLessons[disciplineId] = {lecture: 0, practical: 0, laboratory: 0};
+                }
+
+                if (plannedLessons.lecture * studentSubgroupsCount > existingLessons[disciplineId].lecture) {
+                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Лекц</button>)
+                }
+
+                if (plannedLessons.practical * studentSubgroupsCount > existingLessons[disciplineId].practical) {
+                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Пр</button>)
+                }
+
+                if (plannedLessons.laboratory * studentSubgroupsCount > existingLessons[disciplineId].laboratory) {
+                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Лаб</button>)
+                }
+
+                // console.log(`${plannedLessons.name} - Запланировано на неделю лекций: ${plannedLessons.lecture}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.lecture * studentSubgroupsCount} лекций`);
+                // console.log(`Распланировано лекций: ${existingLessons[disciplineId].lecture}.`);
+            }
+
+            return toolbar;
+        };
+
+        const createButtonToAddLesson = (plannedLessons, type, studentSubgroupsCount, existingLessons) => {
+
+        };
+
 
         return (
             <div className="row justify-content-center">
@@ -98,15 +132,11 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, groups})
                     <div> Специальность: {currentStudentCourse?.specialty && currentStudentCourse?.specialty.name}</div>
                     <div> Курс: {currentStudentCourse?.courseNumber && currentStudentCourse?.courseNumber}</div>
                     <div> План на: <strong>{monday} - {saturday}</strong></div>
-                    <ul>
-                        {/*{filteredPlanByDateRange &&*/}
-                        {/*filteredPlanByDateRange.map((discipline, index) => <li key={discipline + index}>*/}
-                        {/*    <strong> {discipline.name} </strong>:*/}
-                        {/*    Лекции: {discipline.lessons[0][1].lecture} /*/}
-                        {/*    Практические: {discipline.lessons[0][1].practical} /*/}
-                        {/*    Лабораторные: {discipline.lessons[0][1].laboratory}*/}
-                        {/*</li>)}*/}
-                    </ul>
+
+                    {
+                        findDifference(filteredPlanByDateRange, calculateLessonsByTypes(groupedByDisciplines), findAllSubgroupsInCourse(currentStudentCourseGroups))
+                    }
+
                 </div>
             </div>
         );

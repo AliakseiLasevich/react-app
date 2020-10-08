@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PlannerTableHeader = ({groups, currentStudentCourse}) => {
+const PlannerTableHeader = ({currentStudentCourseGroups, currentStudentCourse}) => {
 
-    const subgroupsCount = groups.reduce((accumulator, group) => accumulator + group.studentSubgroups?.length, 0);
+    const subgroupsCount = currentStudentCourseGroups.reduce((accumulator, group) => accumulator + group.studentSubgroups?.length, 0);
 
     return (
         <thead>
@@ -16,7 +16,7 @@ const PlannerTableHeader = ({groups, currentStudentCourse}) => {
         </tr>
 
         <tr>
-            {groups.map(group =>
+            {currentStudentCourseGroups.map(group =>
                 <th key={group.publicId}
                     colSpan={group.studentSubgroups?.length}>
                     {group.number} Группа
@@ -25,7 +25,7 @@ const PlannerTableHeader = ({groups, currentStudentCourse}) => {
         </tr>
 
         <tr>
-            {groups.map(gr =>
+            {currentStudentCourseGroups.map(gr =>
                     gr.studentSubgroups.map(subgroup =>
                         <th key={subgroup.publicId}>{subgroup.name}</th>)
             )}

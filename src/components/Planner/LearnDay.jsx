@@ -2,7 +2,7 @@ import React from 'react';
 import moment from "moment";
 import LearnDayRow from "./LearnDayRow";
 
-const LearnDay = ({day, groups, lessons}) => {
+const LearnDay = ({day, currentStudentCourseGroups, lessons}) => {
 
     const times = [
         '8.00-9.20',
@@ -14,7 +14,7 @@ const LearnDay = ({day, groups, lessons}) => {
         '18.10-19.30'
     ];
 
-    const subgroups = groups.flatMap(group => group.studentSubgroups) || [];
+    const subgroups = currentStudentCourseGroups.flatMap(group => group.studentSubgroups) || [];
 
     return (
         <>

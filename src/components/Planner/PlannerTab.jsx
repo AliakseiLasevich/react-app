@@ -12,12 +12,11 @@ const PlannerTab = () => {
     const [week, setWeek] = useState([]);
     const currentStudentCourse = useSelector(state => state.studentsReducer.currentStudentCourse);
     const lessons = useSelector(state => state.lessonReducer.lessons);
-    const studentGroups = useSelector(state => state.studentsReducer.studentGroups);
-    const groups = Object.values(studentGroups)[0] || [];
+    const currentStudentCourseGroups = useSelector(state => state.studentsReducer.currentStudentCourseGroups);
 
     useEffect(() => {
         if (currentStudentCourse.publicId) {
-            dispatch(studentsReducer.requestStudentGroupsByCourseId(currentStudentCourse.publicId));
+            dispatch(studentsReducer.requestCurrentCourseGroups(currentStudentCourse.publicId));
         }
     }, [dispatch, currentStudentCourse]);
 
@@ -27,19 +26,22 @@ const PlannerTab = () => {
 
     return (
         <div className="bg-light row">
+
             <SideBar week={week} setWeek={setWeek}/>
+
             <div className="col-8">
                 <div>
                     {currentStudentCourse.publicId &&
                     <>
                         <LearnPlanToolbar currentStudentCourse={currentStudentCourse}
-                                          groups={groups}
+                                          currentStudentCourseGroups={currentStudentCourseGroups}
                                           week={week}
                                           existingLessons={lessons}/>
+
                         <PlannerTable week={week}
                                       lessons={lessons}
                                       currentStudentCourse={currentStudentCourse}
-                                      groups={groups}/>
+                                      currentStudentCourseGroups={currentStudentCourseGroups}/>
                     </>
                     }
                 </div>
