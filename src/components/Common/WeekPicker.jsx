@@ -11,7 +11,6 @@ function getWeekDays(weekStart) {
         days.push(
             moment(weekStart)
                 .add(i, 'days')
-                // .add(4, 'hours')
                 .toDate()
         );
     }
@@ -26,7 +25,6 @@ function getWeekRange(date) {
             .toDate(),
         to: moment(date)
             .endOf('week')
-            .add(4, 'hours')
             .toDate(),
     };
 }

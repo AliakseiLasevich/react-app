@@ -31,7 +31,10 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
                 const ob = Object.entries(discipline);
                 const filteredLessons = ob[0][1].lessons.filter(lesson => moment(lesson[0]).isSameOrAfter(firstDate) && moment(lesson[0]).isSameOrBefore(lastDate));
                 const disciplineId = ob[0][0];
-                disciplineLessonsOnCurrentWeek[disciplineId] = filteredLessons[0][1];
+                if (filteredLessons[0] === undefined) {
+                    return []
+                }
+                disciplineLessonsOnCurrentWeek[disciplineId] = filteredLessons[0][1] || [];
                 disciplineLessonsOnCurrentWeek[disciplineId].name = discipline[disciplineId].name;
             });
             return disciplineLessonsOnCurrentWeek;
@@ -47,7 +50,7 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
             const lessonCopy = {...lesson};
             subgroupsInCourse.forEach(subgroupInCourse => {
                 lessonCopy.studentSubgroups.forEach(subgroupInLesson => {
-                    if (subgroupInCourse.publicId == subgroupInLesson.publicId) {
+                    if (subgroupInCourse.publicId === subgroupInLesson.publicId) {
                         subs.push(subgroupInLesson)
                     }
                 })
@@ -79,19 +82,13 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
                     if (counter[disciplineId] === undefined) {
                         counter[disciplineId] = {};
                     }
-                    if (lesson.type === 'LECTURE') {
-                        counter[disciplineId].lecture ? counter[disciplineId].lecture += lesson.studentSubgroups.length : counter[disciplineId].lecture = lesson.studentSubgroups.length;
-                    } else if (lesson.type === 'PRACTICAL') {
-                        counter[disciplineId].practical ? counter[disciplineId].practical += lesson.studentSubgroups.length : counter[disciplineId].practical = lesson.studentSubgroups.length;
-                    } else if (lesson.type === 'LABORATORY') {
-                        counter[disciplineId].laboratory ? counter[disciplineId].laboratory += lesson.studentSubgroups.length : counter[disciplineId].laboratory = lesson.studentSubgroups.length;
-                    }
+                    counter[disciplineId][lesson.type.toLowerCase()] ? counter[disciplineId][lesson.type.toLowerCase()] += lesson.studentSubgroups.length : counter[disciplineId][lesson.type.toLowerCase()] = lesson.studentSubgroups.length;
                 });
             }
             return counter;
         };
 
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         const findDifference = (planned, existingLessons, subgroupsInCourse) => {
             const toolbar = [];
 
@@ -103,28 +100,29 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
                 }
 
                 if (plannedLessons.lecture * studentSubgroupsCount > existingLessons[disciplineId].lecture) {
-                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Лекц</button>)
+                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Лекц</button>)
                 }
 
                 if (plannedLessons.practical * studentSubgroupsCount > existingLessons[disciplineId].practical) {
-                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Пр</button>)
+                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Пр</button>)
                 }
 
                 if (plannedLessons.laboratory * studentSubgroupsCount > existingLessons[disciplineId].laboratory) {
-                    toolbar.push(<button className="btn btn-warning mx-1">{plannedLessons.name}-Лаб</button>)
+                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Лаб</button>)
                 }
 
-                // console.log(`${plannedLessons.name} - Запланировано на неделю лекций: ${plannedLessons.lecture}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.lecture * studentSubgroupsCount} лекций`);
-                // console.log(`Распланировано лекций: ${existingLessons[disciplineId].lecture}.`);
+                console.log(`${plannedLessons.name} - Запланировано на неделю лекций: ${plannedLessons.lecture}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.lecture * studentSubgroupsCount} лекций`);
+                console.log(`==Распланировано лекций: ${existingLessons[disciplineId].lecture}.`);
+
+                console.log(`${plannedLessons.name} - Запланировано на неделю практических: ${plannedLessons.practical}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.practical * studentSubgroupsCount} практик`);
+                console.log(`==Распланировано практик: ${existingLessons[disciplineId].practical}.`);
+
+                console.log(`${plannedLessons.name} - Запланировано на неделю лаб: ${plannedLessons.laboratory}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.laboratory * studentSubgroupsCount} лаб`);
+                console.log(`==Распланировано лаб: ${existingLessons[disciplineId].laboratory}.`);
             }
 
             return toolbar;
         };
-
-        const createButtonToAddLesson = (plannedLessons, type, studentSubgroupsCount, existingLessons) => {
-
-        };
-
 
         return (
             <div className="row justify-content-center">
