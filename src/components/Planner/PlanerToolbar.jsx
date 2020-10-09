@@ -1,19 +1,24 @@
 import React, {useEffect} from 'react';
 import moment from 'moment';
 import {useDispatch, useSelector} from "react-redux";
-import {requestLearnPlansByDateAndCourse} from "../../redux/LearnPlanReducer";
+import {requestLearnPlansByDateAndCourse, resetLearnPlans} from "../../redux/LearnPlanReducer";
 
-const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentStudentCourseGroups}) => {
+const PlanerToolbar = ({currentStudentCourse, week, existingLessons, currentStudentCourseGroups}) => {
 
         const monday = moment(week[0]).format("YYYY-MM-DD");
         const saturday = moment(week[5]).format("YYYY-MM-DD");
         const dispatch = useDispatch();
 
 /////////////////////////////////////////////////////////////////////////
+         // Компоновка в один объект всех занятий по плану
+
         const learnPlan = useSelector(state => state.learnPlanReducer.allLearnPlans);
 
         useEffect(() => {
             dispatch(requestLearnPlansByDateAndCourse(monday, currentStudentCourse.publicId))
+            return ()=>{
+                dispatch(resetLearnPlans());
+            }
         }, [currentStudentCourse.publicId, dispatch, monday]);
 
         const mapDisciplinesFromPlanToFlatObjects = (learnPlan) => learnPlan?.disciplinePlan?.map(plan => {
@@ -42,20 +47,21 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
 
         const filteredPlanByDateRange = filterLessonsInDisciplineByDateRange(monday, saturday, mapDisciplinesFromPlanToFlatObjects(learnPlan));
 
-        // console.log(filteredPlanByDateRange)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Компоновка в один объект всех занятий уже созданных
 
         const filterLessonSubgroupsByCourseSubgroups = (lesson, subgroupsInCourse) => {
-            const subs = [];
+            const filteredSubgroups = [];
             const lessonCopy = {...lesson};
             subgroupsInCourse.forEach(subgroupInCourse => {
                 lessonCopy.studentSubgroups.forEach(subgroupInLesson => {
                     if (subgroupInCourse.publicId === subgroupInLesson.publicId) {
-                        subs.push(subgroupInLesson)
+                        filteredSubgroups.push(subgroupInLesson)
                     }
                 })
             });
-            lessonCopy.studentSubgroups = subs;
+            lessonCopy.studentSubgroups = filteredSubgroups;
             return lessonCopy;
         };
 
@@ -65,8 +71,8 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
                 if (lessonsGroupedByDiscipline[lesson.discipline.publicId] === undefined) {
                     lessonsGroupedByDiscipline[lesson.discipline.publicId] = [];
                 }
-                const z = lesson = filterLessonSubgroupsByCourseSubgroups(lesson, subgroupsInCourse)
-                lessonsGroupedByDiscipline[lesson.discipline?.publicId].push(z)
+                const filteredSubgroups = filterLessonSubgroupsByCourseSubgroups(lesson, subgroupsInCourse);
+                lessonsGroupedByDiscipline[lesson.discipline?.publicId].push(filteredSubgroups)
             });
             return lessonsGroupedByDiscipline;
         };
@@ -89,6 +95,8 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
         };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Сравнение занятий по плану и созданных
+
         const findDifference = (planned, existingLessons, subgroupsInCourse) => {
             const toolbar = [];
 
@@ -141,4 +149,4 @@ const LearnPlanToolbar = ({currentStudentCourse, week, existingLessons, currentS
     }
 ;
 
-export default LearnPlanToolbar;
+export default PlanerToolbar;

@@ -160,4 +160,13 @@ export const requestLearnPlansByDateAndCourse = (date, courseId) => {
     }
 };
 
+export const resetLearnPlans = () => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        dispatch(setAllLearnPlans([]));
+        dispatch(setIsFetching(false));
+    }
+};
+
+
 export default learnPlanReducer;

@@ -5,7 +5,7 @@ import SideBar from "./SideBar";
 
 import PlannerTable from "./PlannerTable";
 import * as studentsReducer from "../../redux/StudentsReducer";
-import LearnPlanToolbar from "./LearnPlanToolbar";
+import PlanerToolbar from "./PlanerToolbar";
 
 const PlannerTab = () => {
     const dispatch = useDispatch();
@@ -33,10 +33,10 @@ const PlannerTab = () => {
                 <div>
                     {currentStudentCourse.publicId &&
                     <>
-                        <LearnPlanToolbar currentStudentCourse={currentStudentCourse}
-                                          currentStudentCourseGroups={currentStudentCourseGroups}
-                                          week={week}
-                                          existingLessons={lessons}/>
+                        <PlanerToolbar currentStudentCourse={currentStudentCourse}
+                                       currentStudentCourseGroups={currentStudentCourseGroups}
+                                       week={week}
+                                       existingLessons={lessons}/>
 
                         <PlannerTable week={week}
                                       lessons={lessons}
