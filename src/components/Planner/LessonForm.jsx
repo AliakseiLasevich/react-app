@@ -5,11 +5,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 
-const LessonForm = () => {
+const LessonForm = ({setLessonToAdd}) => {
     const {register, handleSubmit, errors} = useForm();
     const dispatch = useDispatch();
 
     const handleClose = () => {
+        setLessonToAdd(false);
     };
 
     const onSubmit = (specialty) => {

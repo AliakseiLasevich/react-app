@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import moment from 'moment';
 import {useDispatch, useSelector} from "react-redux";
 import {requestLearnPlansByDateAndCourse, resetLearnPlans} from "../../redux/LearnPlanReducer";
+import NewLessonButton from "./NewLessonButton";
 
 const PlanerToolbar = ({currentStudentCourse, week, existingLessons, currentStudentCourseGroups}) => {
 
@@ -10,13 +11,13 @@ const PlanerToolbar = ({currentStudentCourse, week, existingLessons, currentStud
         const dispatch = useDispatch();
 
 /////////////////////////////////////////////////////////////////////////
-         // Компоновка в один объект всех занятий по плану
+        // Компоновка в один объект всех занятий по плану
 
         const learnPlan = useSelector(state => state.learnPlanReducer.allLearnPlans);
 
         useEffect(() => {
-            dispatch(requestLearnPlansByDateAndCourse(monday, currentStudentCourse.publicId))
-            return ()=>{
+            dispatch(requestLearnPlansByDateAndCourse(monday, currentStudentCourse.publicId));
+            return () => {
                 dispatch(resetLearnPlans());
             }
         }, [currentStudentCourse.publicId, dispatch, monday]);
@@ -88,47 +89,38 @@ const PlanerToolbar = ({currentStudentCourse, week, existingLessons, currentStud
                     if (counter[disciplineId] === undefined) {
                         counter[disciplineId] = {};
                     }
-                    counter[disciplineId][lesson.type.toLowerCase()] ? counter[disciplineId][lesson.type.toLowerCase()] += lesson.studentSubgroups.length : counter[disciplineId][lesson.type.toLowerCase()] = lesson.studentSubgroups.length;
+                    const type = lesson.type.toLowerCase();
+                    counter[disciplineId][type] ? counter[disciplineId][type] += lesson.studentSubgroups.length : counter[disciplineId][type] = lesson.studentSubgroups.length;
                 });
             }
             return counter;
         };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Сравнение занятий по плану и созданных
+        //Сравнение занятий по плану и уже созданных. Исходя из разницы добавить кнопки для добавления новых занятий
+
+        const calculateDifference = (plannedLessons, existing, disciplineId, type, subgroupsCount) => {
+            return plannedLessons[type] * subgroupsCount - existing[disciplineId][type];
+        };
 
         const findDifference = (planned, existingLessons, subgroupsInCourse) => {
+            const types = ['lecture', 'practical', 'laboratory'];
             const toolbar = [];
 
             for (const [disciplineId, plannedLessons] of Object.entries(planned)) {
                 const studentSubgroupsCount = subgroupsInCourse.length;
-
                 if (existingLessons[disciplineId] === undefined) {
                     existingLessons[disciplineId] = {lecture: 0, practical: 0, laboratory: 0};
                 }
-
-                if (plannedLessons.lecture * studentSubgroupsCount > existingLessons[disciplineId].lecture) {
-                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Лекц</button>)
-                }
-
-                if (plannedLessons.practical * studentSubgroupsCount > existingLessons[disciplineId].practical) {
-                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Пр</button>)
-                }
-
-                if (plannedLessons.laboratory * studentSubgroupsCount > existingLessons[disciplineId].laboratory) {
-                    toolbar.push(<button className="btn btn-warning mx-1 btn-sm">{plannedLessons.name}-Лаб</button>)
-                }
-
-                console.log(`${plannedLessons.name} - Запланировано на неделю лекций: ${plannedLessons.lecture}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.lecture * studentSubgroupsCount} лекций`);
-                console.log(`==Распланировано лекций: ${existingLessons[disciplineId].lecture}.`);
-
-                console.log(`${plannedLessons.name} - Запланировано на неделю практических: ${plannedLessons.practical}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.practical * studentSubgroupsCount} практик`);
-                console.log(`==Распланировано практик: ${existingLessons[disciplineId].practical}.`);
-
-                console.log(`${plannedLessons.name} - Запланировано на неделю лаб: ${plannedLessons.laboratory}. При кол-ве подгрупп ${studentSubgroupsCount} должно быть ${plannedLessons.laboratory * studentSubgroupsCount} лаб`);
-                console.log(`==Распланировано лаб: ${existingLessons[disciplineId].laboratory}.`);
+                types.forEach(type => {
+                   const difference = calculateDifference(plannedLessons, existingLessons, disciplineId, type, studentSubgroupsCount);
+                   if(difference){
+                       toolbar.push(<NewLessonButton type={type}
+                                                     name={plannedLessons.name}
+                                                     difference={difference}/>)
+                   }
+                });
             }
-
             return toolbar;
         };
 
@@ -138,11 +130,9 @@ const PlanerToolbar = ({currentStudentCourse, week, existingLessons, currentStud
                     <div> Специальность: {currentStudentCourse?.specialty && currentStudentCourse?.specialty.name}</div>
                     <div> Курс: {currentStudentCourse?.courseNumber && currentStudentCourse?.courseNumber}</div>
                     <div> План на: <strong>{monday} - {saturday}</strong></div>
-
                     {
                         findDifference(filteredPlanByDateRange, calculateLessonsByTypes(groupedByDisciplines), findAllSubgroupsInCourse(currentStudentCourseGroups))
                     }
-
                 </div>
             </div>
         );
